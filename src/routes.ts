@@ -1,6 +1,8 @@
 import { ComponentType } from 'react'
 import Home from './components/Home'
 import About from './components/About'
+import Login from './components/Login'
+import Signup from './components/Signup'
 
 interface RouteConfig {
   path: string
@@ -8,10 +10,11 @@ interface RouteConfig {
 }
 
 export const publicRoutes: RouteConfig[] = [
-  { path: '/', component: Home },
-  { path: '/about', component: About },
+  { path: '/login', component: Login },
+  { path: '/signup', component: Signup },
 ]
 
 export const privateRoutes: RouteConfig[] = [
-  // Add private routes here, e.g., { path: '/dashboard', component: Dashboard }
+  { path: '/', component: Home },
+  { path: '/about', component: About },
 ]

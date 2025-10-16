@@ -1,17 +1,22 @@
 import { ComponentType } from 'react'
-
-// Placeholder for authentication check
-const isAuthenticated = false // Replace with actual auth logic
+import { Navigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 interface PrivateRouteProps {
   component: ComponentType
 }
 
 const PrivateRoute = ({ component: Component }: PrivateRouteProps) => {
-  // If not authenticated, redirect to login or show message
-  if (!isAuthenticated) {
-    return <div>Please log in to access this page.</div> // Or <Navigate to="/login" />
+  const { isAuthenticated, loading } = useAuth()
+
+  if (loading) {
+    return <div>Loading...</div>
   }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
+  }
+
   return <Component />
 }
 
