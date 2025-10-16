@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-import { Container, Typography } from '@mui/material'
+import { publicRoutes, privateRoutes } from './routes'
+import PrivateRoute from './components/PrivateRoute'
+import Layout from './components/Layout'
 
 const theme = createTheme()
 
@@ -10,37 +12,19 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
-        <Container maxWidth="sm">
+        <Layout>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
+            {publicRoutes.map(({ path, component: Component }) => (
+              <Route key={path} path={path} element={<Component />} />
+            ))}
+            {privateRoutes.map(({ path, component: Component }) => (
+              <Route key={path} path={path} element={<PrivateRoute component={Component} />} />
+            ))}
           </Routes>
-        </Container>
+        </Layout>
       </BrowserRouter>
     </ThemeProvider>
   )
 }
-
-const Home = () => (
-  <div>
-    <Typography variant="h4" component="h1" gutterBottom>
-      Home
-    </Typography>
-    <Typography variant="body1">
-      Welcome to the home page.
-    </Typography>
-  </div>
-)
-
-const About = () => (
-  <div>
-    <Typography variant="h4" component="h1" gutterBottom>
-      About
-    </Typography>
-    <Typography variant="body1">
-      This is the about page.
-    </Typography>
-  </div>
-)
 
 export default App
