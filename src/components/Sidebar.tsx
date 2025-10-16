@@ -1,6 +1,6 @@
 import React from 'react'
 import { ListItemIcon, ListItemText, Divider, Typography, Box } from '@mui/material'
-import { Home, Settings, LogOut } from 'lucide-react'
+import { Home, LogOut, UserIcon } from 'lucide-react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import {
@@ -19,7 +19,7 @@ const Sidebar: React.FC = () => {
 
   const navItems = [
     { to: '/', label: 'Home', icon: <Home size={18} /> },
-    { to: '/profile', label: 'Settings', icon: <Settings size={18} /> },
+    { to: '/profile', label: 'Profile', icon: <UserIcon size={18} /> },
   ]
 
   return (
