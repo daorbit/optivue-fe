@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
 import { TextField, Typography } from '@mui/material';
-import { useAuth } from '../contexts/AuthContext';
+import { useAppSelector, useAppDispatch } from '../store/hooks';
+import { signup as signupAction } from '../store/slices/authSlice';
 import {
   SignupContainer,
   SignupWrapper,
@@ -21,7 +22,8 @@ const Signup: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signup, isAuthenticated } = useAuth();
+  const dispatch = useAppDispatch();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />;
@@ -37,11 +39,13 @@ const Signup: React.FC = () => {
     }
 
     setLoading(true);
-    const result = await signup(username, email, password);
-    if (!result.success) {
-      setError(result.message);
+    try {
+      await dispatch(signupAction({ username, email, password })).unwrap();
+    } catch (err: any) {
+      setError(err || 'Signup failed');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (

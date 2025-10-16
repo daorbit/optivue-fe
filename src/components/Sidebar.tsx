@@ -2,19 +2,20 @@ import React, { useState } from 'react'
 import { ListItemIcon, ListItemText, Divider, Typography, Box, IconButton } from '@mui/material'
 import { Home, LogOut, UserIcon, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useAppDispatch } from '../store/hooks'
+import { logout } from '../store/slices/authSlice'
 import {
   SidebarContainer,
   NavigationList
 } from '../styles/Sidebar.styles'
 
 const Sidebar: React.FC = () => {
-  const { logout } = useAuth()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   const handleLogout = () => {
-    logout()
+    dispatch(logout())
     navigate('/')
   }
 

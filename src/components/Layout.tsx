@@ -1,7 +1,8 @@
 import { ReactNode } from 'react'
 import { Typography, Box } from '@mui/material'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useAppSelector, useAppDispatch } from '../store/hooks'
+import { logout } from '../store/slices/authSlice'
 import Sidebar from './Sidebar'
 import {
   StyledAppBar,
@@ -17,12 +18,13 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const { isAuthenticated, user, logout } = useAuth()
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
   const navigate = useNavigate()
   const location = useLocation()
 
   const handleLogout = () => {
-    logout()
+    dispatch(logout())
     navigate('/')
   }
 

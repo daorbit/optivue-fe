@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { refreshUser } from "../store/slices/authSlice";
 import { apiService } from "../services/api";
 import {
   Container,
@@ -18,7 +19,8 @@ import ConnectedApplications from "./profile/ConnectedApplications";
 import AddApplicationDialog from "./profile/AddApplicationDialog";
 
 const Profile: React.FC = () => {
-  const { user, logout, refreshUser } = useAuth();
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
   const [formData, setFormData] = useState({
     username: "",
     applications: [] as Array<{
@@ -33,22 +35,13 @@ const Profile: React.FC = () => {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const fetchAccount = async () => {
-      try {
-        const response = await apiService.getAccount();
-        if (response.success) {
-          setFormData({
-            username: response.user.username || "",
-            applications: response.user.applications || [],
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching account:", error);
-      }
-    };
-
-    fetchAccount();
-  }, []);
+    if (user) {
+      setFormData({
+        username: user.username || "",
+        applications: user.applications || [],
+      });
+    }
+  }, [user]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -80,7 +73,7 @@ const Profile: React.FC = () => {
       const response = await apiService.updateAccount(formData);
       if (response.success) {
         setMessage("Account updated successfully!");
-        await refreshUser(); // Refresh user data in context
+        dispatch(refreshUser()); // Refresh user data in Redux store
       } else {
         setMessage("Failed to update account.");
       }
@@ -163,14 +156,7 @@ const Profile: React.FC = () => {
                   >
                     {loading ? "Updating..." : "Save Changes"}
                   </Button>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={logout}
-                    sx={{ borderRadius: 2, px: 4 }}
-                  >
-                    Logout
-                  </Button>
+                  
                 </Box>
 
                 {message && (
