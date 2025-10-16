@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
-import {
-  Container,
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Alert,
-} from '@mui/material';
+import { TextField, Typography } from '@mui/material';
 import { useAuth } from '../contexts/AuthContext';
+import {
+  LoginContainer,
+  LoginWrapper,
+  LoginPaper,
+  LoginTitle,
+  StyledAlert,
+  LoginForm,
+  StyledTextField,
+  LoginButton,
+  SignupLink
+} from '../styles/Login.styles';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -35,71 +38,65 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Container component="main" maxWidth="sm">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Paper elevation={3} sx={{ padding: 4, width: '100%' }}>
-          <Typography component="h1" variant="h4" align="center" gutterBottom>
+    <LoginContainer>
+      <LoginWrapper>
+        <LoginPaper elevation={3}>
+          <LoginTitle variant="h4">
             Sign In
-          </Typography>
+          </LoginTitle>
           {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <StyledAlert severity="error">
               {error}
-            </Alert>
+            </StyledAlert>
           )}
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button
+          <LoginForm component="form" onSubmit={handleSubmit}>
+            <StyledTextField>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </StyledTextField>
+            <StyledTextField>
+              <TextField
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </StyledTextField>
+            <LoginButton
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
               disabled={loading}
             >
               {loading ? 'Signing In...' : 'Sign In'}
-            </Button>
-            <Box sx={{ textAlign: 'center' }}>
+            </LoginButton>
+            <SignupLink>
               <Typography variant="body2">
                 Don't have an account?{' '}
-                <Link to="/signup" style={{ textDecoration: 'none' }}>
+                <Link to="/signup">
                   Sign Up
                 </Link>
               </Typography>
-            </Box>
-          </Box>
-        </Paper>
-      </Box>
-    </Container>
+            </SignupLink>
+          </LoginForm>
+        </LoginPaper>
+      </LoginWrapper>
+    </LoginContainer>
   );
 };
 
