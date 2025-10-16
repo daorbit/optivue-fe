@@ -1,6 +1,6 @@
-import React from 'react'
-import { ListItemIcon, ListItemText, Divider, Typography, Box } from '@mui/material'
-import { Home, LogOut, UserIcon } from 'lucide-react'
+import React, { useState } from 'react'
+import { ListItemIcon, ListItemText, Divider, Typography, Box, IconButton } from '@mui/material'
+import { Home, LogOut, UserIcon, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import {
@@ -11,10 +11,15 @@ import {
 const Sidebar: React.FC = () => {
   const { logout } = useAuth()
   const navigate = useNavigate()
+  const [isCollapsed, setIsCollapsed] = useState(false)
 
   const handleLogout = () => {
     logout()
     navigate('/')
+  }
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed)
   }
 
   const navItems = [
@@ -23,13 +28,20 @@ const Sidebar: React.FC = () => {
   ]
 
   return (
-    <SidebarContainer>
-      <Typography variant="h6" sx={{ fontWeight: 700, color: '#0f7b76', mb: 2 }}>
-        Optivue
-      </Typography>
+    <SidebarContainer collapsed={isCollapsed}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+        {!isCollapsed && (
+          <Typography variant="h6" sx={{ fontWeight: 700, color: '#0f7b76' }}>
+            Optivue
+          </Typography>
+        )}
+        <IconButton onClick={toggleCollapse} size="small" sx={{ color: '#0f7b76' }}>
+          {isCollapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+        </IconButton>
+      </Box>
       <Divider sx={{ mb: 2, borderColor: 'rgba(0,0,0,0.04)' }} />
 
-      <NavigationList>
+      <NavigationList collapsed={isCollapsed}>
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -39,7 +51,7 @@ const Sidebar: React.FC = () => {
             <ListItemIcon>
               {item.icon}
             </ListItemIcon>
-            <ListItemText primary={item.label} />
+            {!isCollapsed && <ListItemText primary={item.label} />}
           </NavLink>
         ))}
         <Box
@@ -50,7 +62,7 @@ const Sidebar: React.FC = () => {
           <ListItemIcon>
             <LogOut size={18} />
           </ListItemIcon>
-          <ListItemText primary="Logout" />
+          {!isCollapsed && <ListItemText primary="Logout" />}
         </Box>
       </NavigationList>
     </SidebarContainer>
