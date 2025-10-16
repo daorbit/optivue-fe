@@ -5,6 +5,14 @@ interface User {
   id: string;
   username: string;
   email: string;
+  applications?: Array<{
+    category: string;
+    type: string;
+    label: string;
+    configuration: any;
+  }>;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 interface AuthContextType {
@@ -13,6 +21,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<{ success: boolean; message: string }>;
   signup: (username: string, email: string, password: string) => Promise<{ success: boolean; message: string }>;
   logout: () => void;
+  refreshUser: () => Promise<void>;
   loading: boolean;
 }
 
@@ -38,7 +47,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const checkAuth = async () => {
       if (apiService.isAuthenticated()) {
         try {
-          const response = await apiService.getProfile();
+          const response = await apiService.getAccount();
           if (response.success) {
             setUser(response.user);
           } else {
@@ -85,12 +94,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(null);
   };
 
+  const refreshUser = async () => {
+    try {
+      const response = await apiService.getAccount();
+      if (response.success) {
+        setUser(response.user);
+      }
+    } catch (error) {
+      console.error('Error refreshing user:', error);
+    }
+  };
+
   const value: AuthContextType = {
     user,
     isAuthenticated: !!user,
     login,
     signup,
     logout,
+    refreshUser,
     loading,
   };
 

@@ -11,6 +11,16 @@ interface SignupData {
   password: string;
 }
 
+interface UpdateAccountData {
+  username?: string;
+  applications?: Array<{
+    category: string;
+    type: string;
+    label: string;
+    configuration: any;
+  }>;
+}
+
 interface AuthResponse {
   success: boolean;
   message: string;
@@ -68,6 +78,31 @@ class ApiService {
         ...this.getAuthHeaders(),
         'Content-Type': 'application/json',
       },
+    });
+
+    return await response.json();
+  }
+
+  async getAccount(): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/account`, {
+      method: 'GET',
+      headers: {
+        ...this.getAuthHeaders(),
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return await response.json();
+  }
+
+  async updateAccount(data: UpdateAccountData): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/account`, {
+      method: 'PUT',
+      headers: {
+        ...this.getAuthHeaders(),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     });
 
     return await response.json();

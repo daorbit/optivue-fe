@@ -3,6 +3,7 @@ import Home from './components/Home'
 import About from './components/About'
 import Login from './components/Login'
 import Signup from './components/Signup'
+import Profile from './components/Profile'
 
 interface RouteConfig {
   path: string
@@ -17,4 +18,5 @@ export const publicRoutes: RouteConfig[] = [
 export const privateRoutes: RouteConfig[] = [
   { path: '/', component: Home },
   { path: '/about', component: About },
+  { path: '/profile', component: Profile },
 ]

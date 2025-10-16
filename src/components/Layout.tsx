@@ -31,6 +31,9 @@ const Layout = ({ children }: LayoutProps) => {
               <Button color="inherit" component={Link} to="/about">
                 About
               </Button>
+              <Button color="inherit" component={Link} to="/profile">
+                Profile
+              </Button>
             </>
           )}
           {isAuthenticated ? (
