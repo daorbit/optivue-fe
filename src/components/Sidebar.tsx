@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <SidebarContainer collapsed={isCollapsed}>
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: isCollapsed ? 'center' : 'space-between', mb: 2 }}>
         {!isCollapsed && (
           <Typography variant="h6" sx={{ fontWeight: 700, color: '#0f7b76' }}>
             Optivue

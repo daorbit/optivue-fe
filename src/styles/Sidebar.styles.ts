@@ -1,10 +1,12 @@
 import { styled, Box, Button } from '@mui/material';
 
 export const SidebarContainer = styled(Box)<{ collapsed?: boolean }>(({ theme, collapsed }) => ({
-  width: collapsed ? 80 : 240,
-  backgroundColor: '#f6f8f8',
+  width: collapsed ? 60 : 240,
+  backgroundColor: '#F9FFF6',
   height: '100vh',
-  padding: theme.spacing(2.5),
+  paddingTop: theme.spacing(2.5),
+  paddingLeft: theme.spacing(1),
+  paddingRight: theme.spacing(1),
   display: 'flex',
   flexDirection: 'column',
   boxShadow: 'none',
@@ -23,10 +25,11 @@ export const NavigationList = styled('nav')<{ collapsed?: boolean }>(({ theme, c
     color: '#2b3a36',
     display: 'flex',
     alignItems: 'center',
+    gap:"10px",
     justifyContent: collapsed ? 'center' : 'flex-start',
-    padding: theme.spacing(1, collapsed ? 1.5 : 1.5),
+    padding: theme.spacing(1, collapsed ? 1 : 1.5),
     textDecoration: 'none',
-    minHeight: 40,
+    minHeight: collapsed ? 44 : 40,
   },
   '& .nav-item .MuiListItemIcon-root': {
     minWidth: collapsed ? 'auto' : 38,
@@ -38,7 +41,7 @@ export const NavigationList = styled('nav')<{ collapsed?: boolean }>(({ theme, c
     fontWeight: 500,
   },
   '& .nav-item.active': {
-    backgroundColor: '#ffffff',
+    backgroundColor: '#E8FEDF',
     boxShadow: '0 1px 0 rgba(15,123,118,0.06)',
   },
   '& .logout-item': {
