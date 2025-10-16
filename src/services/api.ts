@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'https://optivue-be.vercel.app';
 
 interface LoginData {
   email: string;
