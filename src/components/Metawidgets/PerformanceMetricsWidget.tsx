@@ -31,78 +31,77 @@ const PerformanceMetricsWidget: React.FC<PerformanceMetricsWidgetProps> = ({
       icon: Users,
       label: 'Reach',
       value: formatNumber(totals.reach.toString()),
-      color: '#6366f1',
-      bgColor: 'rgba(99, 102, 241, 0.1)',
+      color: '#0f7b76',
+      bgColor: '#E8FEDF',
     },
     {
       icon: Eye,
       label: 'Impressions',
       value: formatNumber(totals.impressions.toString()),
-      color: '#10b981',
-      bgColor: 'rgba(16, 185, 129, 0.1)',
+      color: '#0f7b76',
+      bgColor: '#E8FEDF',
     },
     {
       icon: MousePointer,
       label: 'Clicks',
       value: formatNumber(totals.clicks.toString()),
-      color: '#f59e0b',
-      bgColor: 'rgba(245, 158, 11, 0.1)',
+      color: '#0f7b76',
+      bgColor: '#E8FEDF',
     },
     {
       icon: DollarSign,
       label: 'Spend',
       value: formatCurrencyWithConversion(totals.spend.toString(), currency),
-      color: '#ef4444',
-      bgColor: 'rgba(239, 68, 68, 0.1)',
+      color: '#0f7b76',
+      bgColor: '#E8FEDF',
     },
   ];
 
   return (
     <Box>
-      <Typography variant="h6" fontWeight="bold" mb={3} sx={{ color: '#1f2937' }}>
+      <Typography variant="h6" fontWeight="600" mb={2} sx={{ color: '#2b3a36', fontSize: '1.1rem' }}>
         Performance Metrics
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {metrics.map((metric, index) => {
           const IconComponent = metric.icon;
           return (
             <Grid item xs={12} sm={6} md={3} key={index}>
               <Card
                 sx={{
-                  borderRadius: 3,
-                  background: `linear-gradient(135deg, ${metric.bgColor} 0%, rgba(255,255,255,0.9) 100%)`,
-                  border: `1px solid ${metric.color}20`,
-                  boxShadow: `0 4px 20px ${metric.color}15`,
-                  transition: 'all 0.3s ease',
+                  borderRadius: 2,
+                  border: '1px solid rgba(15,123,118,0.1)',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.04)',
+                  transition: 'all 0.2s ease',
                   '&:hover': {
-                    transform: 'translateY(-4px)',
-                    boxShadow: `0 8px 30px ${metric.color}25`,
+                    transform: 'translateY(-2px)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.08)',
                   },
                   height: '100%',
                 }}
               >
-                <CardContent sx={{ p: 3 }}>
-                  <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+                <CardContent sx={{ p: 2 }}>
+                  <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
                     <Box
                       sx={{
-                        p: 1.5,
-                        borderRadius: 2,
-                        backgroundColor: metric.color,
+                        p: 1,
+                        borderRadius: 1,
+                        backgroundColor: '#0f7b76',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}
                     >
-                      <IconComponent size={24} color="white" />
+                      <IconComponent size={18} color="white" />
                     </Box>
                   </Box>
                   <Typography
-                    variant="h4"
-                    fontWeight="bold"
+                    variant="h5"
+                    fontWeight="600"
                     sx={{
-                      color: '#1f2937',
-                      mb: 1,
-                      fontSize: '1.75rem',
+                      color: '#2b3a36',
+                      mb: 0.5,
+                      fontSize: '1.25rem',
                     }}
                   >
                     {metric.value}
@@ -110,11 +109,12 @@ const PerformanceMetricsWidget: React.FC<PerformanceMetricsWidgetProps> = ({
                   <Typography
                     variant="body2"
                     sx={{
-                      color: '#6b7280',
+                      color: '#2b3a36',
                       fontWeight: 500,
+                      opacity: 0.8,
+                      fontSize: '0.75rem',
                       textTransform: 'uppercase',
                       letterSpacing: '0.5px',
-                      fontSize: '0.75rem',
                     }}
                   >
                     {metric.label}

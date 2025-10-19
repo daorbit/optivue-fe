@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Card,
   CardContent,
@@ -13,8 +13,16 @@ import {
   Chip,
   Avatar,
   Tooltip,
-} from '@mui/material';
-import { Play, Pause, Archive, Image, Video, Facebook, Instagram } from 'lucide-react';
+} from "@mui/material";
+import {
+  Play,
+  Pause,
+  Archive,
+  Image,
+  Video,
+  Facebook,
+  Instagram,
+} from "lucide-react";
 
 interface Ad {
   id: string;
@@ -24,7 +32,7 @@ interface Ad {
   campaign_id: string;
   date_start?: string;
   date_stop?: string;
-  platform: 'facebook' | 'instagram' | 'mixed' | 'unknown';
+  platform: "facebook" | "instagram" | "mixed" | "unknown";
   creative: {
     id: string;
     name?: string;
@@ -56,16 +64,21 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
   formatCurrencyWithConversion,
 }) => {
   // Filter ads by status
-  const filteredAds = campaignStatusFilter === 'all'
-    ? ads
-    : ads.filter(ad => ad.status.toLowerCase() === campaignStatusFilter);
+  const filteredAds =
+    campaignStatusFilter === "all"
+      ? ads
+      : ads.filter((ad) => ad.status.toLowerCase() === campaignStatusFilter);
 
   // Helper to read insight values safely for different shapes returned by API
   const readInsight = (ad: Ad, key: string) => {
     if (!ad?.insights) return undefined;
     let insights: any = ad.insights;
     // Some responses return { data: [ { ... } ] }
-    if (insights.data && Array.isArray(insights.data) && insights.data.length > 0) {
+    if (
+      insights.data &&
+      Array.isArray(insights.data) &&
+      insights.data.length > 0
+    ) {
       insights = insights.data[0];
     }
     // Some responses may return an array directly
@@ -77,11 +90,11 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
 
   const getStatusIcon = (status: string) => {
     switch (status.toLowerCase()) {
-      case 'active':
+      case "active":
         return <Play size={16} color="#10b981" />;
-      case 'paused':
+      case "paused":
         return <Pause size={16} color="#f59e0b" />;
-      case 'archived':
+      case "archived":
         return <Archive size={16} color="#6b7280" />;
       default:
         return null;
@@ -90,11 +103,11 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
-      case 'facebook':
+      case "facebook":
         return <Facebook size={16} color="#1877f2" />;
-      case 'instagram':
+      case "instagram":
         return <Instagram size={16} color="#e4405f" />;
-      case 'mixed':
+      case "mixed":
         return (
           <Box display="flex" gap={0.5}>
             <Facebook size={12} color="#1877f2" />
@@ -109,57 +122,139 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
   return (
     <Card
       sx={{
-        borderRadius: 3,
-        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-        mt: 4,
+        borderRadius: 2,
+        border: "1px solid rgba(15,123,118,0.1)",
+        boxShadow: "0 2px 4px rgba(0,0,0,0.04)",
+        mt: 3,
       }}
     >
       <CardContent sx={{ p: 0 }}>
-        <Box sx={{ p: 3, borderBottom: '1px solid #e5e7eb' }}>
-          <Typography variant="h6" fontWeight="bold" sx={{ color: '#1f2937' }}>
+        <Box sx={{ p: 2, borderBottom: "1px solid rgba(15,123,118,0.1)" }}>
+          <Typography
+            variant="h6"
+            fontWeight="600"
+            sx={{ color: "#2b3a36", fontSize: "1.1rem" }}
+          >
             Ads Overview
           </Typography>
-          <Typography variant="body2" sx={{ color: '#6b7280', mt: 1 }}>
-            {filteredAds.length} ad{filteredAds.length !== 1 ? 's' : ''} found
+          <Typography
+            variant="body2"
+            sx={{ color: "#2b3a36", opacity: 0.7, mt: 0.5, fontSize: "0.8rem" }}
+          >
+            {filteredAds.length} ad{filteredAds.length !== 1 ? "s" : ""} found
           </Typography>
         </Box>
 
         <TableContainer>
           <Table>
             <TableHead>
-              <TableRow sx={{ backgroundColor: '#f9fafb' }}>
-                <TableCell sx={{ fontWeight: 'bold', color: '#374151', py: 2 }}>Ad</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: '#374151' }}>Status</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: '#374151' }}>Platform</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: '#374151' }}>Impressions</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: '#374151' }}>Clicks</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: '#374151' }}>Spend</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: '#374151' }}>CTR</TableCell>
-                <TableCell sx={{ fontWeight: 'bold', color: '#374151' }}>Media</TableCell>
+              <TableRow>
+                <TableCell
+                  sx={{
+                    fontWeight: "600",
+                    color: "#2b3a36",
+                    py: 1.5,
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Ad
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: "600",
+                    color: "#2b3a36",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Status
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: "600",
+                    color: "#2b3a36",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Platform
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: "600",
+                    color: "#2b3a36",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Impressions
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: "600",
+                    color: "#2b3a36",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Clicks
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: "600",
+                    color: "#2b3a36",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Spend
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: "600",
+                    color: "#2b3a36",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  CTR
+                </TableCell>
+                <TableCell
+                  sx={{
+                    fontWeight: "600",
+                    color: "#2b3a36",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  Media
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {filteredAds.map((ad) => {
                 const media = {
-                  type: ad.creative?.object_type === 'VIDEO' ? 'video' as const : 'image' as const,
-                  url: ad.creative?.thumbnail_url || ad.creative?.image_url || '',
-                  thumbnail: ad.creative?.thumbnail_url || ad.creative?.image_url
+                  type:
+                    ad.creative?.object_type === "VIDEO"
+                      ? ("video" as const)
+                      : ("image" as const),
+                  url:
+                    ad.creative?.thumbnail_url || ad.creative?.image_url || "",
+                  thumbnail:
+                    ad.creative?.thumbnail_url || ad.creative?.image_url,
                 };
 
                 return (
                   <TableRow
                     key={ad.id}
                     sx={{
-                      '&:hover': { backgroundColor: '#f9fafb' },
-                      borderBottom: '1px solid #e5e7eb',
+                      "&:hover": { backgroundColor: "#f9fafb" },
+                      borderBottom: "1px solid #e5e7eb",
                     }}
                   >
                     <TableCell>
                       <Box>
-                        <Typography variant="body2" fontWeight="600" sx={{ color: '#1f2937' }}>
+                        <Typography
+                          variant="body2"
+                          fontWeight="600"
+                          sx={{ color: "#1f2937" }}
+                        >
                           {ad.name}
                         </Typography>
-                        <Typography variant="caption" sx={{ color: '#6b7280' }}>
+                        <Typography variant="caption" sx={{ color: "#6b7280" }}>
                           ID: {ad.id}
                         </Typography>
                       </Box>
@@ -172,10 +267,14 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                           label={ad.status}
                           size="small"
                           sx={{
-                            backgroundColor: ad.status === 'ACTIVE' ? '#10b98115' : '#f59e0b15',
-                            color: ad.status === 'ACTIVE' ? '#10b981' : '#f59e0b',
-                            fontWeight: 'bold',
-                            fontSize: '0.7rem',
+                            backgroundColor:
+                              ad.status === "ACTIVE"
+                                ? "#10b98115"
+                                : "#f59e0b15",
+                            color:
+                              ad.status === "ACTIVE" ? "#10b981" : "#f59e0b",
+                            fontWeight: "bold",
+                            fontSize: "0.7rem",
                           }}
                         />
                       </Box>
@@ -184,7 +283,10 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                     <TableCell>
                       <Box display="flex" alignItems="center" gap={1}>
                         {getPlatformIcon(ad.platform)}
-                        <Typography variant="caption" sx={{ textTransform: 'capitalize' }}>
+                        <Typography
+                          variant="caption"
+                          sx={{ textTransform: "capitalize" }}
+                        >
                           {ad.platform}
                         </Typography>
                       </Box>
@@ -192,61 +294,77 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
 
                     <TableCell>
                       <Typography variant="body2" fontWeight="600">
-                        {readInsight(ad, 'impressions')
-                          ? parseInt(String(readInsight(ad, 'impressions'))).toLocaleString()
-                          : '0'
-                        }
+                        {readInsight(ad, "impressions")
+                          ? parseInt(
+                              String(readInsight(ad, "impressions"))
+                            ).toLocaleString()
+                          : "0"}
                       </Typography>
                     </TableCell>
 
                     <TableCell>
                       <Typography variant="body2" fontWeight="600">
-                        {readInsight(ad, 'clicks')
-                          ? parseInt(String(readInsight(ad, 'clicks'))).toLocaleString()
-                          : '0'
-                        }
+                        {readInsight(ad, "clicks")
+                          ? parseInt(
+                              String(readInsight(ad, "clicks"))
+                            ).toLocaleString()
+                          : "0"}
                       </Typography>
                     </TableCell>
 
                     <TableCell>
                       <Typography variant="body2" fontWeight="600">
-                        {readInsight(ad, 'spend')
-                          ? formatCurrencyWithConversion(String(readInsight(ad, 'spend')), 'USD')
-                          : '$0'
-                        }
+                        {readInsight(ad, "spend")
+                          ? formatCurrencyWithConversion(
+                              String(readInsight(ad, "spend")),
+                              "USD"
+                            )
+                          : "$0"}
                       </Typography>
                     </TableCell>
 
                     <TableCell>
                       <Typography variant="body2" fontWeight="600">
-                        {readInsight(ad, 'ctr')
-                          ? `${parseFloat(String(readInsight(ad, 'ctr'))).toFixed(2)}%`
-                          : '0%'
-                        }
+                        {readInsight(ad, "ctr")
+                          ? `${parseFloat(
+                              String(readInsight(ad, "ctr"))
+                            ).toFixed(2)}%`
+                          : "0%"}
                       </Typography>
                     </TableCell>
 
                     <TableCell>
                       <Box display="flex" gap={1}>
-                        <Tooltip title={media.type === 'video' ? 'Video Ad' : 'Image Ad'}>
+                        <Tooltip
+                          title={
+                            media.type === "video" ? "Video Ad" : "Image Ad"
+                          }
+                        >
                           {media.thumbnail ? (
                             <Avatar
                               src={media.thumbnail}
                               alt={media.type}
-                              sx={{ width: 32, height: 32, cursor: 'pointer' }}
-                              onClick={() => media.url && window.open(media.url, '_blank')}
+                              sx={{ width: 32, height: 32, cursor: "pointer" }}
+                              onClick={() =>
+                                media.url && window.open(media.url, "_blank")
+                              }
                             />
                           ) : (
                             <Avatar
                               sx={{
                                 width: 32,
                                 height: 32,
-                                backgroundColor: media.type === 'video' ? '#ef4444' : '#10b981',
-                                cursor: 'pointer'
+                                backgroundColor:
+                                  media.type === "video"
+                                    ? "#ef4444"
+                                    : "#10b981",
+                                cursor: "pointer",
                               }}
-                              onClick={() => media.url && window.open(media.url, '_blank')}
+                              onClick={() =>
+                                media.url && window.open(media.url, "_blank")
+                              }
                             >
-                              {media.type === 'video' ? (
+                              {media.type === "video" ? (
                                 <Video size={16} color="white" />
                               ) : (
                                 <Image size={16} color="white" />
@@ -264,8 +382,8 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
         </TableContainer>
 
         {filteredAds.length === 0 && (
-          <Box sx={{ p: 6, textAlign: 'center' }}>
-            <Typography variant="body1" sx={{ color: '#6b7280' }}>
+          <Box sx={{ p: 6, textAlign: "center" }}>
+            <Typography variant="body1" sx={{ color: "#6b7280" }}>
               No ads found matching the selected filters.
             </Typography>
           </Box>

@@ -59,18 +59,17 @@ const AccountOverviewWidget: React.FC<AccountOverviewWidgetProps> = ({ account }
   return (
     <Card
       sx={{
-        borderRadius: 3,
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
-        boxShadow: '0 8px 32px rgba(102, 126, 234, 0.3)',
-        mb: 3,
+        borderRadius: 2,
+        border: '1px solid rgba(15,123,118,0.1)',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.04)',
+        mb: 1,
       }}
     >
-      <CardContent sx={{ p: 4 }}>
-        <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-        <Box display="flex" alignItems="center" gap={2}>
-            <Building2 style={{ fontSize: 28 }} />
-            <Typography variant="h5" fontWeight="bold">
+      <CardContent sx={{ p: 3 }}>
+        <Box display="flex" alignItems="center" justifyContent="space-between" mb={2}>
+        <Box display="flex" alignItems="center" gap={1.5}>
+            <Building2 style={{ fontSize: 20, color: '#0f7b76' }} />
+            <Typography variant="h6" fontWeight="600" sx={{ color: '#2b3a36', fontSize: '1.1rem' }}>
               Account Overview
             </Typography>
           </Box>
@@ -79,59 +78,62 @@ const AccountOverviewWidget: React.FC<AccountOverviewWidgetProps> = ({ account }
             color={getAccountStatusColor(account.account_status)}
             size="small"
             sx={{
-              color: 'white',
-              borderColor: 'rgba(255,255,255,0.3)',
-              '& .MuiChip-label': { fontWeight: 'bold' }
+              color: '#2b3a36',
+              backgroundColor: '#E8FEDF',
+              borderColor: 'rgba(15,123,118,0.2)',
+              fontSize: '0.75rem',
+              fontWeight: 500,
+              '& .MuiChip-label': { fontWeight: '500' }
             }}
             variant="outlined"
           />
         </Box>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Box display="flex" alignItems="center" gap={2} mb={1}>
-              <Building2 size={20} opacity={0.8} />
-              <Typography variant="body2" sx={{ opacity: 0.8 }}>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <Building2 size={16} opacity={0.7} color="#0f7b76" />
+              <Typography variant="body2" sx={{ opacity: 0.8, color: '#2b3a36', fontSize: '0.8rem', fontWeight: 500 }}>
                 Account Name
               </Typography>
             </Box>
-            <Typography variant="h6" fontWeight="600">
+            <Typography variant="body1" fontWeight="600" sx={{ color: '#2b3a36', fontSize: '0.95rem' }}>
               {account.name}
             </Typography>
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Box display="flex" alignItems="center" gap={2} mb={1}>
-              <Building2 size={20} opacity={0.8} />
-              <Typography variant="body2" sx={{ opacity: 0.8 }}>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <Building2 size={16} opacity={0.7} color="#0f7b76" />
+              <Typography variant="body2" sx={{ opacity: 0.8, color: '#2b3a36', fontSize: '0.8rem', fontWeight: 500 }}>
                 Account ID
               </Typography>
             </Box>
-            <Typography variant="h6" fontWeight="600">
+            <Typography variant="body1" fontWeight="600" sx={{ color: '#2b3a36', fontSize: '0.95rem' }}>
               {account.account_id}
             </Typography>
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Box display="flex" alignItems="center" gap={2} mb={1}>
-              <Globe size={20} opacity={0.8} />
-              <Typography variant="body2" sx={{ opacity: 0.8 }}>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <Globe size={16} opacity={0.7} color="#0f7b76" />
+              <Typography variant="body2" sx={{ opacity: 0.8, color: '#2b3a36', fontSize: '0.8rem', fontWeight: 500 }}>
                 Currency & Timezone
               </Typography>
             </Box>
-            <Typography variant="h6" fontWeight="600">
+            <Typography variant="body1" fontWeight="600" sx={{ color: '#2b3a36', fontSize: '0.95rem' }}>
               {account.currency} • {account.timezone_name}
             </Typography>
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Box display="flex" alignItems="center" gap={2} mb={1}>
-              <DollarSign size={20} opacity={0.8} />
-              <Typography variant="body2" sx={{ opacity: 0.8 }}>
+            <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+              <DollarSign size={16} opacity={0.7} color="#0f7b76" />
+              <Typography variant="body2" sx={{ opacity: 0.8, color: '#2b3a36', fontSize: '0.8rem', fontWeight: 500 }}>
                 Available Balance
               </Typography>
             </Box>
-            <Typography variant="h6" fontWeight="600">
+            <Typography variant="body1" fontWeight="600" sx={{ color: '#2b3a36', fontSize: '0.95rem' }}>
               {formatCurrency(account.balance, account.currency)}
             </Typography>
           </Grid>

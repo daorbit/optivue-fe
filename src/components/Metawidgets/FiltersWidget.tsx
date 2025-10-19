@@ -34,36 +34,35 @@ const FiltersWidget: React.FC<FiltersWidgetProps> = ({
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Card
         sx={{
-          borderRadius: 3,
-          background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
-          border: '1px solid #e2e8f0',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+          borderRadius: 2,
+          border: '1px solid rgba(15,123,118,0.1)',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.04)',
           mb: 3,
         }}
       >
-        <CardContent sx={{ p: 4 }}>
-          <Box display="flex" alignItems="center" gap={2} mb={3}>
+        <CardContent sx={{ p: 3 }}>
+          <Box display="flex" alignItems="center" gap={2} mb={2}>
             <Box
               sx={{
-                p: 1.5,
-                borderRadius: 2,
-                backgroundColor: '#6366f1',
+                p: 1,
+                borderRadius: 1,
+                backgroundColor: '#0f7b76',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <Filter size={20} color="white" />
+              <Filter size={16} color="white" />
             </Box>
-            <Typography variant="h6" fontWeight="bold" sx={{ color: '#1f2937' }}>
+            <Typography variant="h6" fontWeight="600" sx={{ color: '#2b3a36', fontSize: '1.1rem' }}>
               Dashboard Filters
             </Typography>
           </Box>
 
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12} md={4}>
               <Box>
-                <Typography variant="body2" fontWeight="600" mb={1} sx={{ color: '#374151' }}>
+                <Typography variant="body2" fontWeight="500" mb={1} sx={{ color: '#2b3a36', fontSize: '0.875rem' }}>
                   Start Date
                 </Typography>
                 <DatePicker
@@ -72,10 +71,20 @@ const FiltersWidget: React.FC<FiltersWidgetProps> = ({
                   slotProps={{
                     textField: {
                       fullWidth: true,
+                      size: "small",
                       sx: {
                         '& .MuiOutlinedInput-root': {
-                          borderRadius: 2,
+                          borderRadius: 1,
                           backgroundColor: 'white',
+                          '& fieldset': {
+                            borderColor: 'rgba(15,123,118,0.2)',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: '#0f7b76',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: '#0f7b76',
+                          },
                         },
                       },
                     },
@@ -86,7 +95,7 @@ const FiltersWidget: React.FC<FiltersWidgetProps> = ({
 
             <Grid item xs={12} md={4}>
               <Box>
-                <Typography variant="body2" fontWeight="600" mb={1} sx={{ color: '#374151' }}>
+                <Typography variant="body2" fontWeight="500" mb={1} sx={{ color: '#2b3a36', fontSize: '0.875rem' }}>
                   End Date
                 </Typography>
                 <DatePicker
@@ -95,10 +104,20 @@ const FiltersWidget: React.FC<FiltersWidgetProps> = ({
                   slotProps={{
                     textField: {
                       fullWidth: true,
+                      size: "small",
                       sx: {
                         '& .MuiOutlinedInput-root': {
-                          borderRadius: 2,
+                          borderRadius: 1,
                           backgroundColor: 'white',
+                          '& fieldset': {
+                            borderColor: 'rgba(15,123,118,0.2)',
+                          },
+                          '&:hover fieldset': {
+                            borderColor: '#0f7b76',
+                          },
+                          '&.Mui-focused fieldset': {
+                            borderColor: '#0f7b76',
+                          },
                         },
                       },
                     },
@@ -107,38 +126,45 @@ const FiltersWidget: React.FC<FiltersWidgetProps> = ({
               </Box>
             </Grid>
 
-          <Grid item xs={12} md={6}>
-            <Box>
-              <Typography variant="body2" fontWeight="600" mb={1} sx={{ color: '#374151' }}>
-                Campaign Status
-              </Typography>
-              <FormControl fullWidth>
-                <Select
-                  value={campaignStatusFilter}
-                  onChange={(e) => onCampaignStatusChange(e.target.value)}
-                  sx={{
-                    borderRadius: 2,
-                    backgroundColor: 'white',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#d1d5db',
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#6366f1',
-                    },
-                  }}
-                >
-                  <MenuItem value="all">All Statuses</MenuItem>
-                  <MenuItem value="active">Active</MenuItem>
-                  <MenuItem value="paused">Paused</MenuItem>
-                  <MenuItem value="deleted">Deleted</MenuItem>
-                  <MenuItem value="archived">Archived</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Typography variant="body2" fontWeight="500" mb={1} sx={{ color: '#2b3a36', fontSize: '0.875rem' }}>
+                  Campaign Status
+                </Typography>
+                <FormControl fullWidth size="small">
+                  <Select
+                    value={campaignStatusFilter}
+                    onChange={(e) => onCampaignStatusChange(e.target.value)}
+                    sx={{
+                      borderRadius: 1,
+                      backgroundColor: 'white',
+                      '& .MuiOutlinedInput-notchedOutline': {
+                        borderColor: 'rgba(15,123,118,0.2)',
+                      },
+                      '&:hover .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#0f7b76',
+                      },
+                      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: '#0f7b76',
+                      },
+                      '& .MuiSelect-select': {
+                        color: '#2b3a36',
+                        fontSize: '0.875rem',
+                      },
+                    }}
+                  >
+                    <MenuItem value="all" sx={{ fontSize: '0.875rem' }}>All Statuses</MenuItem>
+                    <MenuItem value="active" sx={{ fontSize: '0.875rem' }}>Active</MenuItem>
+                    <MenuItem value="paused" sx={{ fontSize: '0.875rem' }}>Paused</MenuItem>
+                    <MenuItem value="deleted" sx={{ fontSize: '0.875rem' }}>Deleted</MenuItem>
+                    <MenuItem value="archived" sx={{ fontSize: '0.875rem' }}>Archived</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
     </LocalizationProvider>
   );
 };

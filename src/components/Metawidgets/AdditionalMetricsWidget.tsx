@@ -1,12 +1,6 @@
-import React from 'react';
-import {
-  Card,
-  CardContent,
-  Typography,
-  Grid,
-  Box,
-} from '@mui/material';
-import { Target, TrendingUp, BarChart3 } from 'lucide-react';
+import React from "react";
+import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
+import { Target, TrendingUp, BarChart3 } from "lucide-react";
 
 interface AdditionalMetricsWidgetProps {
   ctr: number;
@@ -26,89 +20,83 @@ const AdditionalMetricsWidget: React.FC<AdditionalMetricsWidgetProps> = ({
   const metrics = [
     {
       icon: Target,
-      label: 'CTR',
+      label: "CTR",
       value: `${ctr.toFixed(2)}%`,
-      description: 'Click-through rate',
-      color: '#6366f1',
-      bgColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      description: "Click-through rate",
     },
     {
       icon: TrendingUp,
-      label: 'CPC',
+      label: "CPC",
       value: formatCurrencyWithConversion(cpc.toString(), currency),
-      description: 'Cost per click',
-      color: '#10b981',
-      bgColor: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+      description: "Cost per click",
     },
     {
       icon: BarChart3,
-      label: 'CPM',
+      label: "CPM",
       value: formatCurrencyWithConversion(cpm.toString(), currency),
-      description: 'Cost per 1,000 impressions',
-      color: '#f59e0b',
-      bgColor: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      description: "Cost per 1,000 impressions",
     },
   ];
 
   return (
-    <Box mt={4}>
-      <Typography variant="h6" fontWeight="bold" mb={3} sx={{ color: '#1f2937' }}>
+    <Box mt={3}>
+      <Typography
+        variant="h6"
+        fontWeight="600"
+        mb={2}
+        sx={{ color: "#2b3a36", fontSize: "1.1rem" }}
+      >
         Advanced Metrics
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {metrics.map((metric, index) => {
           const IconComponent = metric.icon;
           return (
             <Grid item xs={12} md={4} key={index}>
               <Card
                 sx={{
-                  borderRadius: 3,
-                  background: metric.bgColor,
-                  color: 'white',
-                  boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-                  height: '100%',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    width: '100px',
-                    height: '100px',
-                    background: 'rgba(255,255,255,0.1)',
-                    borderRadius: '50%',
-                    transform: 'translate(30px, -30px)',
+                  borderRadius: 2,
+                  border: "1px solid rgba(15,123,118,0.1)",
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.04)",
+                  height: "100%",
+                  transition: "all 0.2s ease",
+                  "&:hover": {
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 4px 8px rgba(0,0,0,0.08)",
                   },
                 }}
               >
-                <CardContent sx={{ p: 4, position: 'relative', zIndex: 1 }}>
-                  <Box display="flex" alignItems="center" mb={3}>
+                <CardContent sx={{ p: 2 }}>
+                  <Box display="flex" alignItems="center" mb={1.5}>
                     <Box
                       sx={{
-                        p: 1.5,
-                        borderRadius: 2,
-                        backgroundColor: 'rgba(255,255,255,0.2)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        mr: 2,
+                        p: 1,
+                        borderRadius: 1,
+                        backgroundColor: "#0f7b76",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        mr: 1.5,
                       }}
                     >
-                      <IconComponent size={24} />
+                      <IconComponent size={18} color="#fff" />
                     </Box>
-                    <Typography variant="h6" fontWeight="bold">
+                    <Typography
+                      variant="body1"
+                      fontWeight="600"
+                      sx={{ color: "#2b3a36", fontSize: "0.9rem" }}
+                    >
                       {metric.label}
                     </Typography>
                   </Box>
 
                   <Typography
-                    variant="h3"
-                    fontWeight="bold"
+                    variant="h5"
+                    fontWeight="600"
                     sx={{
-                      mb: 1,
-                      fontSize: '2.5rem',
-                      textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      mb: 0.5,
+                      fontSize: "1.25rem",
+                      color: "#2b3a36",
                     }}
                   >
                     {metric.value}
@@ -117,8 +105,9 @@ const AdditionalMetricsWidget: React.FC<AdditionalMetricsWidgetProps> = ({
                   <Typography
                     variant="body2"
                     sx={{
-                      opacity: 0.9,
-                      fontSize: '0.9rem',
+                      color: "#2b3a36",
+                      opacity: 0.7,
+                      fontSize: "0.8rem",
                     }}
                   >
                     {metric.description}
