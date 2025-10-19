@@ -32,6 +32,11 @@ interface Ad {
     thumbnail_url?: string;
     image_url?: string;
     object_type?: string;
+    media_urls?: Array<{
+      type: 'image' | 'video';
+      url: string;
+      thumbnail: string;
+    }>;
   };
   insights?: {
     impressions?: string;
@@ -262,16 +267,13 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
             </TableHead>
             <TableBody>
               {filteredAds.map((ad) => {
-                const media = {
-                  type:
-                    ad.creative?.object_type === "VIDEO"
-                      ? ("video" as const)
-                      : ("image" as const),
-                  url:
-                    ad.creative?.thumbnail_url || ad.creative?.image_url || "",
-                  thumbnail:
-                    ad.creative?.thumbnail_url || ad.creative?.image_url,
-                };
+                const media = ad.creative.media_urls && ad.creative.media_urls.length > 0
+                  ? ad.creative.media_urls[0]
+                  : {
+                      type: ad.creative?.object_type === "VIDEO" ? ("video" as const) : ("image" as const),
+                      url: ad.creative?.thumbnail_url || ad.creative?.image_url || "",
+                      thumbnail: ad.creative?.thumbnail_url || ad.creative?.image_url || "",
+                    };
 
                 return (
                   <TableRow
