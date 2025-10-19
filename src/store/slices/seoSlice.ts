@@ -90,24 +90,6 @@ interface SeoAnalysis {
   performance: SeoPerformance;
   technical: SeoTechnical;
   content: SeoContent;
-  contentQuality: number;
-  externalLinks: number;
-  internalLinks: number;
-  readabilityScore: number;
-  headingStructure: Array<{ level: number; count: number; texts?: string[] }>;
-  images: Array<{
-    src: string;
-    alt: string;
-    title: string;
-    width: number | null;
-    height: number | null;
-    loading: string;
-    decoding: string;
-    hasAlt: boolean;
-  }>;
-  keywordDensity: Array<{ word: string; count: number; density: string }>;
-  schemaTypes: string[];
-  schemas: Array<any>;
 }
 
 interface SeoState {
