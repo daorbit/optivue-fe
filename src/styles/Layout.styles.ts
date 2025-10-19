@@ -30,12 +30,18 @@ export const NavButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const MainContent = styled(Box)(() => ({
+export const MainContent = styled(Box)<{ collapsed?: boolean }>(({ collapsed }) => ({
   flex: 1,
   minHeight: '100vh',
   backgroundColor: '#fafafa',
+  marginLeft: collapsed ? 60 : 240, // Account for fixed sidebar width
+  transition: 'margin-left 0.3s ease', // Smooth transition when sidebar collapses
 }));
 
 export const SidebarWrapper = styled(Box)(() => ({
-  position: 'relative',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  height: '100vh',
+  zIndex: 1000,
 }));

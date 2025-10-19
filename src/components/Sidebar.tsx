@@ -9,7 +9,11 @@ import {
   NavigationList
 } from '../styles/Sidebar.styles'
 
-const Sidebar: React.FC = () => {
+interface SidebarProps {
+  onToggle?: (collapsed: boolean) => void;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ onToggle }) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -20,7 +24,9 @@ const Sidebar: React.FC = () => {
   }
 
   const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed)
+    const newCollapsed = !isCollapsed;
+    setIsCollapsed(newCollapsed);
+    onToggle?.(newCollapsed);
   }
 
   const navItems = [
