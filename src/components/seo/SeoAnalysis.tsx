@@ -1,19 +1,21 @@
-import { useState } from 'react';
-import { Box, Typography } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { analyzeSeo, clearAnalysis } from '../../store/slices/seoSlice';
-import { RootState } from '../../store';
-import UrlInputSection from './UrlInputSection.tsx';
-import PerformanceScores from './PerformanceScores.tsx';
-import KeyMetrics from './KeyMetrics.tsx';
-import MetaTagsSection from './MetaTagsSection.tsx';
-import TechnicalSeoSection from './TechnicalSeoSection.tsx';
-import AdditionalSeoDetails from './AdditionalSeoDetails.tsx';
+import { useState } from "react";
+import { Box, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { analyzeSeo, clearAnalysis } from "../../store/slices/seoSlice";
+import { RootState } from "../../store";
+import UrlInputSection from "./UrlInputSection.tsx";
+// import PerformanceScores from "./PerformanceScores.tsx";
+import KeyMetrics from "./KeyMetrics.tsx";
+import MetaTagsSection from "./MetaTagsSection.tsx";
+import TechnicalSeoSection from "./TechnicalSeoSection.tsx";
+import AdditionalSeoDetails from "./AdditionalSeoDetails.tsx";
 
 const SeoAnalysis = () => {
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
   const dispatch = useDispatch();
-  const { analysis, loading, error } = useSelector((state: RootState) => state.seo);
+  const { analysis, loading, error } = useSelector(
+    (state: RootState) => state.seo
+  );
 
   const handleAnalyze = () => {
     if (url.trim()) {
@@ -22,17 +24,14 @@ const SeoAnalysis = () => {
   };
 
   const handleClear = () => {
-    setUrl('');
+    setUrl("");
     dispatch(clearAnalysis());
   };
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h6" gutterBottom sx={{ mb: 3 }}>
         SEO Analysis Tool
-      </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-        Enter a URL to analyze its SEO performance, meta tags, and technical aspects.
       </Typography>
 
       <UrlInputSection
@@ -46,11 +45,9 @@ const SeoAnalysis = () => {
 
       {analysis && !loading && (
         <Box>
-          <Typography variant="h5" gutterBottom sx={{ mt: 3 }}>
-            Analysis Results for: {analysis.url}
-          </Typography>
+          <Typography variant="h5" gutterBottom sx={{ mt: 3 }}></Typography>
 
-          <PerformanceScores analysis={analysis} />
+          {/* <PerformanceScores analysis={analysis} /> */}
           <KeyMetrics analysis={analysis} />
           <MetaTagsSection analysis={analysis} />
           <TechnicalSeoSection analysis={analysis} />
