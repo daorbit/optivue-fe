@@ -6,7 +6,6 @@ import { login as loginAction } from '../store/slices/authSlice';
 import {
   LoginContainer,
   LoginWrapper,
-  LoginPaper,
   LoginTitle,
   StyledAlert,
   LoginForm,
@@ -44,7 +43,6 @@ const Login: React.FC = () => {
   return (
     <LoginContainer>
       <LoginWrapper>
-        <LoginPaper elevation={3}>
           <LoginTitle variant="h4">
             Sign In
           </LoginTitle>
@@ -59,7 +57,6 @@ const Login: React.FC = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -73,7 +70,6 @@ const Login: React.FC = () => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
@@ -98,7 +94,6 @@ const Login: React.FC = () => {
               </Typography>
             </SignupLink>
           </LoginForm>
-        </LoginPaper>
       </LoginWrapper>
     </LoginContainer>
   );

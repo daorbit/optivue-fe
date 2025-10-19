@@ -5,8 +5,6 @@ export const LoginContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  background: `linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%)`,
-  padding: theme.spacing(2),
 }));
 
 export const LoginWrapper = styled(Box)(() => ({
@@ -17,25 +15,7 @@ export const LoginWrapper = styled(Box)(() => ({
   maxWidth: 400,
 }));
 
-export const LoginPaper = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(4),
-  width: '100%',
-  borderRadius: theme.shape.borderRadius * 2,
-  boxShadow: theme.shadows[10],
-  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-  backdropFilter: 'blur(10px)',
-  position: 'relative',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 4,
-    background: `linear-gradient(90deg, #4caf50, #2e7d32)`,
-    borderRadius: `${theme.shape.borderRadius * 2}px ${theme.shape.borderRadius * 2}px 0 0`,
-  },
-}));
+ 
 
 export const LoginTitle = styled(Typography)(({ theme }) => ({
   textAlign: 'center',

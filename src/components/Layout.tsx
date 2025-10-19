@@ -24,7 +24,7 @@ const Layout = ({ children }: LayoutProps) => {
         </SidebarWrapper>
       )}
 
-      <MainContent collapsed={isSidebarCollapsed}>
+      <MainContent collapsed={isSidebarCollapsed} isAuthenticated={isAuthenticated}>
         <Box sx={{ padding: "24px", width: "100%" }}>{children}</Box>
       </MainContent>
     </Box>

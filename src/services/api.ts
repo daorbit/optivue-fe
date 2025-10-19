@@ -290,6 +290,20 @@ class ApiService {
 
     return await response.json();
   }
+
+  // SEO Analysis API
+  async analyzeSeo(url: string): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/seo/analyze`, {
+      method: 'POST',
+      headers: {
+        ...this.getAuthHeaders(),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url }),
+    });
+
+    return await response.json();
+  }
 }
 
 export const apiService = new ApiService();
