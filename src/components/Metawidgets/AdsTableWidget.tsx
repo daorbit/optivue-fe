@@ -188,7 +188,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 </TableCell>
                 <TableCell
                   sx={{
-                    fontWeight: "600",
+                    fontWeight: "500",
                     color: "#1a202c",
                     py: 2,
                     fontSize: "0.875rem",
@@ -200,7 +200,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 </TableCell>
                 <TableCell
                   sx={{
-                    fontWeight: "600",
+                    fontWeight: "500",
                     color: "#1a202c",
                     py: 2,
                     fontSize: "0.875rem",
@@ -212,7 +212,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 </TableCell>
                 <TableCell
                   sx={{
-                    fontWeight: "600",
+                    fontWeight: "500",
                     color: "#1a202c",
                     py: 2,
                     fontSize: "0.875rem",
@@ -224,7 +224,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 </TableCell>
                 <TableCell
                   sx={{
-                    fontWeight: "600",
+                    fontWeight: "500",
                     color: "#1a202c",
                     py: 2,
                     fontSize: "0.875rem",
@@ -236,7 +236,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 </TableCell>
                 <TableCell
                   sx={{
-                    fontWeight: "600",
+                    fontWeight: "500",
                     color: "#1a202c",
                     py: 2,
                     fontSize: "0.875rem",
@@ -248,7 +248,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 </TableCell>
                 <TableCell
                   sx={{
-                    fontWeight: "600",
+                    fontWeight: "500",
                     color: "#1a202c",
                     py: 2,
                     fontSize: "0.875rem",

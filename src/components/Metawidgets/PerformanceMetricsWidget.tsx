@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Card,
   CardContent,
@@ -6,8 +6,8 @@ import {
   Grid,
   Box,
   Skeleton,
-} from '@mui/material';
-import { Users, Eye, MousePointer, DollarSign } from 'lucide-react';
+} from "@mui/material";
+import { Users, Eye, MousePointer, DollarSign } from "lucide-react";
 
 interface PerformanceMetricsWidgetProps {
   totals: {
@@ -39,16 +39,26 @@ const PerformanceMetricsWidget: React.FC<PerformanceMetricsWidgetProps> = ({
               <Card
                 sx={{
                   borderRadius: 2,
-                  border: '1px solid rgba(15,123,118,0.1)',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.04)',
-                  height: '100%',
+                  border: "1px solid rgba(15,123,118,0.1)",
+                  boxShadow: "0 2px 4px rgba(0,0,0,0.04)",
+                  height: "100%",
                 }}
               >
                 <CardContent sx={{ p: 2 }}>
-                  <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    mb={1}
+                  >
                     <Skeleton variant="circular" width={32} height={32} />
                   </Box>
-                  <Skeleton variant="text" width={80} height={32} sx={{ mb: 0.5 }} />
+                  <Skeleton
+                    variant="text"
+                    width={80}
+                    height={32}
+                    sx={{ mb: 0.5 }}
+                  />
                   <Skeleton variant="text" width={60} height={16} />
                 </CardContent>
               </Card>
@@ -62,37 +72,42 @@ const PerformanceMetricsWidget: React.FC<PerformanceMetricsWidgetProps> = ({
   const metrics = [
     {
       icon: Users,
-      label: 'Reach',
+      label: "Reach",
       value: formatNumber(totals.reach.toString()),
-      color: '#0f7b76',
-      bgColor: '#E8FEDF',
+      color: "#1976d2",
+      bgColor: "#e3f2fd",
     },
     {
       icon: Eye,
-      label: 'Impressions',
+      label: "Impressions",
       value: formatNumber(totals.impressions.toString()),
-      color: '#0f7b76',
-      bgColor: '#E8FEDF',
+      color: "#388e3c",
+      bgColor: "#e8f5e8",
     },
     {
       icon: MousePointer,
-      label: 'Clicks',
+      label: "Clicks",
       value: formatNumber(totals.clicks.toString()),
-      color: '#0f7b76',
-      bgColor: '#E8FEDF',
+      color: "#f57c00",
+      bgColor: "#fff3e0",
     },
     {
       icon: DollarSign,
-      label: 'Spend',
+      label: "Spend",
       value: formatCurrencyWithConversion(totals.spend.toString(), currency),
-      color: '#0f7b76',
-      bgColor: '#E8FEDF',
+      color: "#7b1fa2",
+      bgColor: "#f3e5f5",
     },
   ];
 
   return (
     <Box>
-      <Typography variant="h6" fontWeight="600" mb={2} sx={{ color: '#2b3a36', fontSize: '1.1rem' }}>
+      <Typography
+        variant="h5"
+        fontWeight="600"
+        mb={2}
+        sx={{ color: "#2b3a36", fontSize: "1rem" }}
+      >
         Performance Metrics
       </Typography>
       <Grid container spacing={2}>
@@ -102,56 +117,62 @@ const PerformanceMetricsWidget: React.FC<PerformanceMetricsWidgetProps> = ({
             <Grid item xs={12} sm={6} md={3} key={index}>
               <Card
                 sx={{
-                  borderRadius: 2,
-                  border: '1px solid rgba(15,123,118,0.1)',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.04)',
-                  transition: 'all 0.2s ease',
-                  '&:hover': {
-                    transform: 'translateY(-2px)',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.08)',
+                  borderRadius: 3,
+                  border: "1px solid #e0e0e0",
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
                   },
-                  height: '100%',
+                  height: "100%",
                 }}
               >
-                <CardContent sx={{ p: 2 }}>
-                  <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
-                    <Box
+                <CardContent
+                  sx={{ p: 2, display: "flex", alignItems: "center" }}
+                >
+                  <Box
+                    sx={{
+                      p: 1,
+                      borderRadius: 1,
+                      backgroundColor: metric.bgColor,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      mr: 2,
+                    }}
+                  >
+                    <IconComponent size={24} color={metric.color} />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Typography
+                      variant="h5"
+                      fontWeight="600"
                       sx={{
-                        p: 1,
-                        borderRadius: 1,
-                        backgroundColor: '#0f7b76',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
+                        color: "#2b3a36",
+                        mb: 0.5,
                       }}
                     >
-                      <IconComponent size={18} color="white" />
-                    </Box>
+                      {metric.value}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#2b3a36",
+                        fontWeight: 500,
+                        opacity: 0.8,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.5px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      {metric.label}
+                    </Typography>
                   </Box>
-                  <Typography
-                    variant="h5"
-                    fontWeight="600"
-                    sx={{
-                      color: '#2b3a36',
-                      mb: 0.5,
-                      fontSize: '1.25rem',
-                    }}
-                  >
-                    {metric.value}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: '#2b3a36',
-                      fontWeight: 500,
-                      opacity: 0.8,
-                      fontSize: '0.75rem',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px',
-                    }}
-                  >
-                    {metric.label}
-                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
