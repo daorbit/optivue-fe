@@ -13,6 +13,7 @@ import {
   Chip,
   Avatar,
   Tooltip,
+  Skeleton,
 } from "@mui/material";
 import {
   Play,
@@ -56,13 +57,60 @@ interface AdsTableWidgetProps {
   ads: Ad[];
   campaignStatusFilter: string;
   formatCurrencyWithConversion: (amount: string, currency: string) => string;
+  loading?: boolean;
 }
 
 const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
   ads,
   campaignStatusFilter,
   formatCurrencyWithConversion,
+  loading = false,
 }) => {
+  if (loading) {
+    return (
+      <Card
+        sx={{
+          borderRadius: 2,
+          border: "1px solid rgba(15,123,118,0.1)",
+          boxShadow: "0 2px 4px rgba(0,0,0,0.04)",
+          mt: 3,
+        }}
+      >
+        <CardContent sx={{ p: 0 }}>
+          <Box sx={{ p: 2, borderBottom: "1px solid rgba(15,123,118,0.1)" }}>
+            <Skeleton variant="text" width={120} height={24} />
+            <Skeleton variant="text" width={80} height={16} sx={{ mt: 0.5 }} />
+          </Box>
+
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {[...Array(6)].map((_, index) => (
+                    <TableCell key={index}>
+                      <Skeleton variant="text" width={80} height={16} />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {[...Array(5)].map((_, rowIndex) => (
+                  <TableRow key={rowIndex}>
+                    {[...Array(6)].map((_, cellIndex) => (
+                      <TableCell key={cellIndex}>
+                        <Skeleton variant="text" width={cellIndex === 0 ? 120 : 60} height={16} />
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </CardContent>
+      </Card>
+    );
+  }
+
   // Filter ads by status
   const filteredAds =
     campaignStatusFilter === "all"

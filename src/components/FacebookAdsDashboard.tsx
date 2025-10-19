@@ -1,50 +1,70 @@
 import { useState, useEffect } from "react";
-// import { Box } from '@mui/material'
 import {
   PerformanceMetricsWidget,
   FiltersWidget,
   AdsTableWidget,
 } from "./Metawidgets";
 import AnalyticsDrawer from "./AnalyticsDrawer";
-import { apiService } from "../services/api";
-import { HelpCircle } from "lucide-react";
+import { HelpCircle, RefreshCw } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchFacebookAdsData,
+  syncFacebookAdsData,
+  selectFacebookAdsData,
+  selectFacebookAdsLoading,
+  selectFacebookAdsLastFetched,
+} from "../store/slices/facebookAdsSlice";
 
 const FacebookAdsDashboard = () => {
+  const dispatch = useDispatch();
+  const data = useSelector(selectFacebookAdsData);
+  const loading = useSelector(selectFacebookAdsLoading);
+  const lastFetched = useSelector(selectFacebookAdsLastFetched);
+
   const [dateRange, setDateRange] = useState({
     startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
     endDate: new Date(),
   });
   const [campaignStatusFilter, setCampaignStatusFilter] = useState("all");
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // Check if data was fetched recently (within last 10 minutes)
+  const isDataFresh = () => {
+    if (!lastFetched) return false;
+    const tenMinutesAgo = Date.now() - 10 * 60 * 1000;
+    return lastFetched > tenMinutesAgo;
+  };
+
   useEffect(() => {
-    fetchData();
+    if (!data || !isDataFresh()) {
+      fetchData();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      fetchData();
+    }
   }, [campaignStatusFilter]);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
+  const fetchData = () => {
+    const params = {
+      date_preset: "last_30d",
+      status: campaignStatusFilter !== "all" ? campaignStatusFilter : undefined,
+    };
 
-      const params = {
-        date_preset: "last_30d",
-        status:
-          campaignStatusFilter !== "all" ? campaignStatusFilter : undefined,
-      };
+    console.log("Fetching Facebook Ads data with params:", params);
+    dispatch(fetchFacebookAdsData(params) as any);
+  };
 
-      console.log("Fetching Facebook Ads data with params:", params);
-      const response = await apiService.getFacebookAdsOverview(params);
-      console.log("API Response:", response);
+  const handleSync = () => {
+    const params = {
+      date_preset: "last_30d",
+      status: campaignStatusFilter !== "all" ? campaignStatusFilter : undefined,
+    };
 
-      if (response.success) {
-        setData(response.data);
-      }
-    } catch (err) {
-      console.error("Error fetching Facebook Ads data:", err);
-    } finally {
-      setLoading(false);
-    }
+    console.log("Syncing Facebook Ads data with params:", params);
+    dispatch(syncFacebookAdsData(params) as any);
   };
 
   const formatNumber = (num: string | number) => {
@@ -58,12 +78,12 @@ const FacebookAdsDashboard = () => {
     return `$${Number(amount).toFixed(2)} ${currency}`;
   };
 
-  const processCampaignsWithInsights = () => {
-    if (!data?.campaigns || !data?.ads) return data?.campaigns || [];
+  const processCampaignsWithInsights = (campaigns: any[], ads: any[]) => {
+    if (!campaigns || !ads) return campaigns || [];
 
-    return data.campaigns.map((campaign: any) => {
+    return campaigns.map((campaign: any) => {
       // Find all ads for this campaign
-      const campaignAds = data.ads.filter(
+      const campaignAds = ads.filter(
         (ad: any) => ad.campaign_id === campaign.id
       );
 
@@ -124,7 +144,9 @@ const FacebookAdsDashboard = () => {
     });
   };
 
-  const processedCampaigns = processCampaignsWithInsights();
+  const processedCampaigns = data?.campaigns
+    ? processCampaignsWithInsights(data.campaigns, data.ads || [])
+    : [];
 
   // Calculate totals from campaigns
   const calculateTotals = () => {
@@ -162,13 +184,6 @@ const FacebookAdsDashboard = () => {
     return { ctr, cpc, cpm };
   };
 
-  if (loading) {
-    return (
-      <div className="facebook-ads-dashboard">
-        <div>Loading...</div>
-      </div>
-    );
-  }
   const totals = calculateTotals();
 
   const additionalMetrics = calculateAdditionalMetrics();
@@ -193,6 +208,12 @@ const FacebookAdsDashboard = () => {
         >
           Facebook Ads Dashboard
         </h1>
+        <RefreshCw
+          size={14}
+          color="#0f7b76"
+          style={{ cursor: "pointer" }}
+          onClick={handleSync}
+        />
         <HelpCircle
           size={14}
           color="#0f7b76"
@@ -214,12 +235,14 @@ const FacebookAdsDashboard = () => {
             })
           }
           onCampaignStatusChange={setCampaignStatusFilter}
+          loading={loading}
         />
         <PerformanceMetricsWidget
           totals={totals}
           currency="USD"
           formatNumber={formatNumber}
           formatCurrencyWithConversion={formatCurrencyWithConversion}
+          loading={loading}
         />
 
         {/* {processedCampaigns && (
@@ -245,6 +268,7 @@ const FacebookAdsDashboard = () => {
             ads={data.ads}
             campaignStatusFilter={campaignStatusFilter}
             formatCurrencyWithConversion={formatCurrencyWithConversion}
+            loading={loading}
           />
         )}
       </div>

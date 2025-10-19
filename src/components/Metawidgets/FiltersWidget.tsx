@@ -8,6 +8,7 @@ import {
   FormControl,
   Select,
   MenuItem,
+  Skeleton,
 } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -22,6 +23,7 @@ interface FiltersWidgetProps {
   campaignStatusFilter: string;
   onDateRangeChange: (startDate: Date | null, endDate: Date | null) => void;
   onCampaignStatusChange: (status: string) => void;
+  loading?: boolean;
 }
 
 const FiltersWidget: React.FC<FiltersWidgetProps> = ({
@@ -29,7 +31,51 @@ const FiltersWidget: React.FC<FiltersWidgetProps> = ({
   campaignStatusFilter,
   onDateRangeChange,
   onCampaignStatusChange,
+  loading = false,
 }) => {
+  if (loading) {
+    return (
+      <Card
+        sx={{
+          borderRadius: 2,
+          border: '1px solid rgba(15,123,118,0.1)',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.04)',
+          mb: 3,
+        }}
+      >
+        <CardContent sx={{ p: 3 }}>
+          <Box display="flex" alignItems="center" gap={2} mb={2}>
+            <Skeleton variant="circular" width={32} height={32} />
+            <Skeleton variant="text" width={150} height={24} />
+          </Box>
+
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Skeleton variant="text" width={80} height={20} sx={{ mb: 1 }} />
+                <Skeleton variant="rectangular" height={40} sx={{ borderRadius: 1 }} />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Skeleton variant="text" width={70} height={20} sx={{ mb: 1 }} />
+                <Skeleton variant="rectangular" height={40} sx={{ borderRadius: 1 }} />
+              </Box>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Box>
+                <Skeleton variant="text" width={120} height={20} sx={{ mb: 1 }} />
+                <Skeleton variant="rectangular" height={40} sx={{ borderRadius: 1 }} />
+              </Box>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Card

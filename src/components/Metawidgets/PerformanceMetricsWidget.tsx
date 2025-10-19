@@ -5,6 +5,7 @@ import {
   Typography,
   Grid,
   Box,
+  Skeleton,
 } from '@mui/material';
 import { Users, Eye, MousePointer, DollarSign } from 'lucide-react';
 
@@ -18,6 +19,7 @@ interface PerformanceMetricsWidgetProps {
   currency: string;
   formatNumber: (num: string) => string;
   formatCurrencyWithConversion: (amount: string, currency: string) => string;
+  loading?: boolean;
 }
 
 const PerformanceMetricsWidget: React.FC<PerformanceMetricsWidgetProps> = ({
@@ -25,7 +27,38 @@ const PerformanceMetricsWidget: React.FC<PerformanceMetricsWidgetProps> = ({
   currency,
   formatNumber,
   formatCurrencyWithConversion,
+  loading = false,
 }) => {
+  if (loading) {
+    return (
+      <Box>
+        <Skeleton variant="text" width={180} height={28} sx={{ mb: 2 }} />
+        <Grid container spacing={2}>
+          {[...Array(4)].map((_, index) => (
+            <Grid item xs={12} sm={6} md={3} key={index}>
+              <Card
+                sx={{
+                  borderRadius: 2,
+                  border: '1px solid rgba(15,123,118,0.1)',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.04)',
+                  height: '100%',
+                }}
+              >
+                <CardContent sx={{ p: 2 }}>
+                  <Box display="flex" alignItems="center" justifyContent="space-between" mb={1}>
+                    <Skeleton variant="circular" width={32} height={32} />
+                  </Box>
+                  <Skeleton variant="text" width={80} height={32} sx={{ mb: 0.5 }} />
+                  <Skeleton variant="text" width={60} height={16} />
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    );
+  }
+
   const metrics = [
     {
       icon: Users,
