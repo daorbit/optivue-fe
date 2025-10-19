@@ -151,7 +151,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
             sx={{
               color: "#1a202c",
               fontSize: "1rem",
-              fontFamily: "Mulish, sans-serif",
+              
             }}
           >
             Ads Overview
@@ -169,7 +169,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                     py: 2,
                     fontSize: "0.875rem",
                     backgroundColor: "#f7fafc",
-                    fontFamily: "Mulish, sans-serif",
+                    
                   }}
                 >
                   Ad
@@ -181,7 +181,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                     py: 2,
                     fontSize: "0.875rem",
                     backgroundColor: "#f7fafc",
-                    fontFamily: "Mulish, sans-serif",
+                    
                   }}
                 >
                   ID
@@ -193,7 +193,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                     py: 2,
                     fontSize: "0.875rem",
                     backgroundColor: "#f7fafc",
-                    fontFamily: "Mulish, sans-serif",
+                    
                   }}
                 >
                   Status
@@ -205,7 +205,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                     py: 2,
                     fontSize: "0.875rem",
                     backgroundColor: "#f7fafc",
-                    fontFamily: "Mulish, sans-serif",
+                    
                   }}
                 >
                   Impressions
@@ -217,7 +217,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                     py: 2,
                     fontSize: "0.875rem",
                     backgroundColor: "#f7fafc",
-                    fontFamily: "Mulish, sans-serif",
+                    
                   }}
                 >
                   Clicks
@@ -229,7 +229,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                     py: 2,
                     fontSize: "0.875rem",
                     backgroundColor: "#f7fafc",
-                    fontFamily: "Mulish, sans-serif",
+                    
                   }}
                 >
                   Spend
@@ -241,7 +241,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                     py: 2,
                     fontSize: "0.875rem",
                     backgroundColor: "#f7fafc",
-                    fontFamily: "Mulish, sans-serif",
+                    
                   }}
                 >
                   CTR
@@ -253,7 +253,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                     py: 2,
                     fontSize: "0.875rem",
                     backgroundColor: "#f7fafc",
-                    fontFamily: "Mulish, sans-serif",
+                    
                   }}
                 >
                   Media
@@ -289,7 +289,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                           sx={{
                             color: "#1a202c",
                             fontSize: "0.875rem",
-                            fontFamily: "Mulish, sans-serif",
+                            
                           }}
                         >
                           {ad.name}
@@ -303,7 +303,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                         sx={{
                           color: "#4a5568",
                           fontSize: "0.875rem",
-                          fontFamily: "Mulish, sans-serif",
+                          
                         }}
                       >
                         {ad.id}
@@ -323,7 +323,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                             fontWeight: "600",
                             fontSize: "0.75rem",
                             textTransform: "capitalize",
-                            fontFamily: "Mulish, sans-serif",
+                            
                           }}
                         />
                       </Box>
@@ -336,7 +336,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                         sx={{
                           color: "#1a202c",
                           fontSize: "0.875rem",
-                          fontFamily: "Mulish, sans-serif",
+                          
                         }}
                       >
                         {readInsight(ad, "impressions")
@@ -354,7 +354,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                         sx={{
                           color: "#1a202c",
                           fontSize: "0.875rem",
-                          fontFamily: "Mulish, sans-serif",
+                          
                         }}
                       >
                         {readInsight(ad, "clicks")
@@ -372,7 +372,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                         sx={{
                           color: "#1a202c",
                           fontSize: "0.875rem",
-                          fontFamily: "Mulish, sans-serif",
+                          
                         }}
                       >
                         {readInsight(ad, "spend")
@@ -391,7 +391,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                         sx={{
                           color: "#1a202c",
                           fontSize: "0.875rem",
-                          fontFamily: "Mulish, sans-serif",
+                          
                         }}
                       >
                         {readInsight(ad, "ctr")
@@ -463,7 +463,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
               sx={{
                 color: "#4a5568",
                 fontSize: "0.875rem",
-                fontFamily: "Mulish, sans-serif",
+                
               }}
             >
               No ads found matching the selected filters.

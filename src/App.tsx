@@ -9,7 +9,11 @@ import Layout from './components/Layout'
 import { store } from './store'
 import { checkAuth } from './store/slices/authSlice'
 
-const theme = createTheme()
+const theme = createTheme({
+  typography: {
+    fontFamily: "'Mulish', 'Roboto', 'Helvetica', 'Arial', sans-serif",
+  },
+})
 
 function AppContent() {
   useEffect(() => {

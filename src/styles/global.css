@@ -14,10 +14,15 @@
   --transition: all 0.3s ease;
 }
 
+html {
+  font-family: 'Mulish', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: inherit;
 }
 
 body {
@@ -26,6 +31,7 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-variant-numeric: tabular-nums;
 }
 
 .app {
