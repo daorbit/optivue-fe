@@ -93,7 +93,7 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Box>
       <Grid container spacing={4}>
         {/* Account Settings */}
         <Grid item xs={12} md={8}>
@@ -189,7 +189,7 @@ const Profile: React.FC = () => {
         onClose={() => setAddOpen(false)}
         onAdd={addApplication}
       />
-    </Container>
+    </Box>
   );
 };
 

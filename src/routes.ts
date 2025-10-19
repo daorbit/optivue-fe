@@ -4,6 +4,7 @@ import About from './components/About'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Profile from './components/Profile'
+import FacebookAdsDashboard from './components/FacebookAdsDashboard'
 
 interface RouteConfig {
   path: string
@@ -19,4 +20,5 @@ export const privateRoutes: RouteConfig[] = [
   { path: '/', component: Home },
   { path: '/about', component: About },
   { path: '/profile', component: Profile },
+  { path: '/facebook-ads', component: FacebookAdsDashboard },
 ]

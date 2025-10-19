@@ -115,6 +115,71 @@ class ApiService {
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
+
+  // Facebook Ads APIs
+  async getFacebookAdAccount(): Promise<any> {
+    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/account`, {
+      method: 'GET',
+      headers: {
+        ...this.getAuthHeaders(),
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return await response.json();
+  }
+
+  async getFacebookCampaigns(params?: any): Promise<any> {
+    const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
+    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/campaigns${queryString}`, {
+      method: 'GET',
+      headers: {
+        ...this.getAuthHeaders(),
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return await response.json();
+  }
+
+  async getFacebookInsights(params?: any): Promise<any> {
+    const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
+    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/insights${queryString}`, {
+      method: 'GET',
+      headers: {
+        ...this.getAuthHeaders(),
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return await response.json();
+  }
+
+  async getFacebookAdsOverview(params?: any): Promise<any> {
+    const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
+    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/overview${queryString}`, {
+      method: 'GET',
+      headers: {
+        ...this.getAuthHeaders(),
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return await response.json();
+  }
+
+  async getFacebookCampaignCreatives(campaignId: string, params?: any): Promise<any> {
+    const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
+    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/campaigns/${campaignId}/creatives${queryString}`, {
+      method: 'GET',
+      headers: {
+        ...this.getAuthHeaders(),
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return await response.json();
+  }
 }
 
 export const apiService = new ApiService();

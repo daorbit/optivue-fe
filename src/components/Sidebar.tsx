@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ListItemIcon, ListItemText, Divider, Typography, Box, IconButton } from '@mui/material'
-import { Home, LogOut, UserIcon, PanelLeftClose, PanelLeftOpen } from 'lucide-react'
+import { Home, LogOut, UserIcon, PanelLeftClose, PanelLeftOpen, BarChart3 } from 'lucide-react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../store/hooks'
 import { logout } from '../store/slices/authSlice'
@@ -25,6 +25,7 @@ const Sidebar: React.FC = () => {
 
   const navItems = [
     { to: '/', label: 'Home', icon: <Home size={18} /> },
+    { to: '/facebook-ads', label: 'Facebook Ads', icon: <BarChart3 size={18} /> },
     { to: '/profile', label: 'Profile', icon: <UserIcon size={18} /> },
   ]
 
