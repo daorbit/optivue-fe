@@ -25,7 +25,7 @@ const FacebookAdsDashboard = () => {
     startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
     endDate: new Date(),
   });
-  const [campaignStatusFilter, setCampaignStatusFilter] = useState("all");
+  const [campaignStatusFilter, setCampaignStatusFilter] = useState("active");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   // Check if data was fetched recently (within last 10 minutes)

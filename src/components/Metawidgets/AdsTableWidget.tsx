@@ -15,15 +15,7 @@ import {
   Tooltip,
   Skeleton,
 } from "@mui/material";
-import {
-  Play,
-  Pause,
-  Archive,
-  Image,
-  Video,
-  Facebook,
-  Instagram,
-} from "lucide-react";
+import {  Image, Video } from "lucide-react";
 
 interface Ad {
   id: string;
@@ -98,7 +90,11 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                   <TableRow key={rowIndex}>
                     {[...Array(6)].map((_, cellIndex) => (
                       <TableCell key={cellIndex}>
-                        <Skeleton variant="text" width={cellIndex === 0 ? 120 : 60} height={16} />
+                        <Skeleton
+                          variant="text"
+                          width={cellIndex === 0 ? 120 : 60}
+                          height={16}
+                        />
                       </TableCell>
                     ))}
                   </TableRow>
@@ -136,44 +132,15 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
     return insights[key];
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status.toLowerCase()) {
-      case "active":
-        return <Play size={16} color="#10b981" />;
-      case "paused":
-        return <Pause size={16} color="#f59e0b" />;
-      case "archived":
-        return <Archive size={16} color="#6b7280" />;
-      default:
-        return null;
-    }
-  };
-
-  const getPlatformIcon = (platform: string) => {
-    switch (platform) {
-      case "facebook":
-        return <Facebook size={16} color="#1877f2" />;
-      case "instagram":
-        return <Instagram size={16} color="#e4405f" />;
-      case "mixed":
-        return (
-          <Box display="flex" gap={0.5}>
-            <Facebook size={12} color="#1877f2" />
-            <Instagram size={12} color="#e4405f" />
-          </Box>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <Card
       sx={{
-        borderRadius: 2,
-        border: "1px solid rgba(15,123,118,0.1)",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.04)",
+        borderRadius: 3,
+        border: "1px solid #e2e8f0",
+        boxShadow:
+          "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
         mt: 3,
+        overflow: "hidden",
       }}
     >
       <CardContent sx={{ p: 0 }}>
@@ -181,15 +148,13 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
           <Typography
             variant="h6"
             fontWeight="600"
-            sx={{ color: "#2b3a36", fontSize: "1.1rem" }}
+            sx={{
+              color: "#1a202c",
+              fontSize: "1rem",
+              fontFamily: "Mulish, sans-serif",
+            }}
           >
             Ads Overview
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: "#2b3a36", opacity: 0.7, mt: 0.5, fontSize: "0.8rem" }}
-          >
-            {filteredAds.length} ad{filteredAds.length !== 1 ? "s" : ""} found
           </Typography>
         </Box>
 
@@ -199,19 +164,36 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
               <TableRow>
                 <TableCell
                   sx={{
-                    fontWeight: "600",
-                    color: "#2b3a36",
-                    py: 1.5,
-                    fontSize: "0.8rem",
+                    fontWeight: "500",
+                    color: "#1a202c",
+                    py: 2,
+                    fontSize: "0.875rem",
+                    backgroundColor: "#f7fafc",
+                    fontFamily: "Mulish, sans-serif",
                   }}
                 >
                   Ad
                 </TableCell>
                 <TableCell
                   sx={{
+                    fontWeight: "500",
+                    color: "#1a202c",
+                    py: 2,
+                    fontSize: "0.875rem",
+                    backgroundColor: "#f7fafc",
+                    fontFamily: "Mulish, sans-serif",
+                  }}
+                >
+                  ID
+                </TableCell>
+                <TableCell
+                  sx={{
                     fontWeight: "600",
-                    color: "#2b3a36",
-                    fontSize: "0.8rem",
+                    color: "#1a202c",
+                    py: 2,
+                    fontSize: "0.875rem",
+                    backgroundColor: "#f7fafc",
+                    fontFamily: "Mulish, sans-serif",
                   }}
                 >
                   Status
@@ -219,17 +201,11 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 <TableCell
                   sx={{
                     fontWeight: "600",
-                    color: "#2b3a36",
-                    fontSize: "0.8rem",
-                  }}
-                >
-                  Platform
-                </TableCell>
-                <TableCell
-                  sx={{
-                    fontWeight: "600",
-                    color: "#2b3a36",
-                    fontSize: "0.8rem",
+                    color: "#1a202c",
+                    py: 2,
+                    fontSize: "0.875rem",
+                    backgroundColor: "#f7fafc",
+                    fontFamily: "Mulish, sans-serif",
                   }}
                 >
                   Impressions
@@ -237,8 +213,11 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 <TableCell
                   sx={{
                     fontWeight: "600",
-                    color: "#2b3a36",
-                    fontSize: "0.8rem",
+                    color: "#1a202c",
+                    py: 2,
+                    fontSize: "0.875rem",
+                    backgroundColor: "#f7fafc",
+                    fontFamily: "Mulish, sans-serif",
                   }}
                 >
                   Clicks
@@ -246,8 +225,11 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 <TableCell
                   sx={{
                     fontWeight: "600",
-                    color: "#2b3a36",
-                    fontSize: "0.8rem",
+                    color: "#1a202c",
+                    py: 2,
+                    fontSize: "0.875rem",
+                    backgroundColor: "#f7fafc",
+                    fontFamily: "Mulish, sans-serif",
                   }}
                 >
                   Spend
@@ -255,8 +237,11 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 <TableCell
                   sx={{
                     fontWeight: "600",
-                    color: "#2b3a36",
-                    fontSize: "0.8rem",
+                    color: "#1a202c",
+                    py: 2,
+                    fontSize: "0.875rem",
+                    backgroundColor: "#f7fafc",
+                    fontFamily: "Mulish, sans-serif",
                   }}
                 >
                   CTR
@@ -264,8 +249,11 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                 <TableCell
                   sx={{
                     fontWeight: "600",
-                    color: "#2b3a36",
-                    fontSize: "0.8rem",
+                    color: "#1a202c",
+                    py: 2,
+                    fontSize: "0.875rem",
+                    backgroundColor: "#f7fafc",
+                    fontFamily: "Mulish, sans-serif",
                   }}
                 >
                   Media
@@ -289,59 +277,68 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                   <TableRow
                     key={ad.id}
                     sx={{
-                      "&:hover": { backgroundColor: "#f9fafb" },
-                      borderBottom: "1px solid #e5e7eb",
+                      "&:hover": { backgroundColor: "#f8fafc" },
+                      borderBottom: "1px solid #e2e8f0",
                     }}
                   >
-                    <TableCell>
+                    <TableCell sx={{ py: 2 }}>
                       <Box>
                         <Typography
-                          variant="body2"
+                          variant="body1"
                           fontWeight="600"
-                          sx={{ color: "#1f2937" }}
+                          sx={{
+                            color: "#1a202c",
+                            fontSize: "0.875rem",
+                            fontFamily: "Mulish, sans-serif",
+                          }}
                         >
                           {ad.name}
-                        </Typography>
-                        <Typography variant="caption" sx={{ color: "#6b7280" }}>
-                          ID: {ad.id}
                         </Typography>
                       </Box>
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell sx={{ py: 2 }}>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: "#4a5568",
+                          fontSize: "0.875rem",
+                          fontFamily: "Mulish, sans-serif",
+                        }}
+                      >
+                        {ad.id}
+                      </Typography>
+                    </TableCell>
+
+                    <TableCell sx={{ py: 2 }}>
                       <Box display="flex" alignItems="center" gap={1}>
-                        {getStatusIcon(ad.status)}
                         <Chip
                           label={ad.status}
                           size="small"
                           sx={{
                             backgroundColor:
-                              ad.status === "ACTIVE"
-                                ? "#10b98115"
-                                : "#f59e0b15",
+                              ad.status === "ACTIVE" ? "#c6f6d5" : "#fed7d7",
                             color:
-                              ad.status === "ACTIVE" ? "#10b981" : "#f59e0b",
-                            fontWeight: "bold",
-                            fontSize: "0.7rem",
+                              ad.status === "ACTIVE" ? "#22543d" : "#742a2a",
+                            fontWeight: "600",
+                            fontSize: "0.75rem",
+                            textTransform: "capitalize",
+                            fontFamily: "Mulish, sans-serif",
                           }}
                         />
                       </Box>
                     </TableCell>
 
-                    <TableCell>
-                      <Box display="flex" alignItems="center" gap={1}>
-                        {getPlatformIcon(ad.platform)}
-                        <Typography
-                          variant="caption"
-                          sx={{ textTransform: "capitalize" }}
-                        >
-                          {ad.platform}
-                        </Typography>
-                      </Box>
-                    </TableCell>
-
-                    <TableCell>
-                      <Typography variant="body2" fontWeight="600">
+                    <TableCell sx={{ py: 2 }}>
+                      <Typography
+                        variant="body1"
+                        fontWeight="600"
+                        sx={{
+                          color: "#1a202c",
+                          fontSize: "0.875rem",
+                          fontFamily: "Mulish, sans-serif",
+                        }}
+                      >
                         {readInsight(ad, "impressions")
                           ? parseInt(
                               String(readInsight(ad, "impressions"))
@@ -350,8 +347,16 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                       </Typography>
                     </TableCell>
 
-                    <TableCell>
-                      <Typography variant="body2" fontWeight="600">
+                    <TableCell sx={{ py: 2 }}>
+                      <Typography
+                        variant="body1"
+                        fontWeight="600"
+                        sx={{
+                          color: "#1a202c",
+                          fontSize: "0.875rem",
+                          fontFamily: "Mulish, sans-serif",
+                        }}
+                      >
                         {readInsight(ad, "clicks")
                           ? parseInt(
                               String(readInsight(ad, "clicks"))
@@ -360,8 +365,16 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                       </Typography>
                     </TableCell>
 
-                    <TableCell>
-                      <Typography variant="body2" fontWeight="600">
+                    <TableCell sx={{ py: 2 }}>
+                      <Typography
+                        variant="body1"
+                        fontWeight="600"
+                        sx={{
+                          color: "#1a202c",
+                          fontSize: "0.875rem",
+                          fontFamily: "Mulish, sans-serif",
+                        }}
+                      >
                         {readInsight(ad, "spend")
                           ? formatCurrencyWithConversion(
                               String(readInsight(ad, "spend")),
@@ -371,8 +384,16 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                       </Typography>
                     </TableCell>
 
-                    <TableCell>
-                      <Typography variant="body2" fontWeight="600">
+                    <TableCell sx={{ py: 2 }}>
+                      <Typography
+                        variant="body1"
+                        fontWeight="600"
+                        sx={{
+                          color: "#1a202c",
+                          fontSize: "0.875rem",
+                          fontFamily: "Mulish, sans-serif",
+                        }}
+                      >
                         {readInsight(ad, "ctr")
                           ? `${parseFloat(
                               String(readInsight(ad, "ctr"))
@@ -381,7 +402,7 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                       </Typography>
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell sx={{ py: 2 }}>
                       <Box display="flex" gap={1}>
                         <Tooltip
                           title={
@@ -392,7 +413,12 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                             <Avatar
                               src={media.thumbnail}
                               alt={media.type}
-                              sx={{ width: 32, height: 32, cursor: "pointer" }}
+                              sx={{
+                                width: 36,
+                                height: 36,
+                                cursor: "pointer",
+                                border: "1px solid #e2e8f0",
+                              }}
                               onClick={() =>
                                 media.url && window.open(media.url, "_blank")
                               }
@@ -400,22 +426,23 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
                           ) : (
                             <Avatar
                               sx={{
-                                width: 32,
-                                height: 32,
+                                width: 36,
+                                height: 36,
                                 backgroundColor:
                                   media.type === "video"
-                                    ? "#ef4444"
-                                    : "#10b981",
+                                    ? "#e53e3e"
+                                    : "#38a169",
                                 cursor: "pointer",
+                                border: "1px solid #e2e8f0",
                               }}
                               onClick={() =>
                                 media.url && window.open(media.url, "_blank")
                               }
                             >
                               {media.type === "video" ? (
-                                <Video size={16} color="white" />
+                                <Video size={18} color="white" />
                               ) : (
-                                <Image size={16} color="white" />
+                                <Image size={18} color="white" />
                               )}
                             </Avatar>
                           )}
@@ -430,8 +457,15 @@ const AdsTableWidget: React.FC<AdsTableWidgetProps> = ({
         </TableContainer>
 
         {filteredAds.length === 0 && (
-          <Box sx={{ p: 6, textAlign: "center" }}>
-            <Typography variant="body1" sx={{ color: "#6b7280" }}>
+          <Box sx={{ p: 8, textAlign: "center", backgroundColor: "#f8fafc" }}>
+            <Typography
+              variant="body1"
+              sx={{
+                color: "#4a5568",
+                fontSize: "0.875rem",
+                fontFamily: "Mulish, sans-serif",
+              }}
+            >
               No ads found matching the selected filters.
             </Typography>
           </Box>

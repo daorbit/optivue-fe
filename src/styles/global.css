@@ -21,10 +21,11 @@
 }
 
 body {
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Mulish', 'Roboto', 'Helvetica', 'Arial', sans-serif;
   background-color: #f6f9f6;
   color: var(--text-primary);
   line-height: 1.6;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
 .app {
