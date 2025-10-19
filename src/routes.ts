@@ -5,7 +5,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import Profile from './components/Profile'
 import FacebookAdsDashboard from './components/FacebookAdsDashboard'
-import SeoAnalysis from './components/SeoAnalysis'
+import SeoAnalysis from './components/seo/SeoAnalysis'
 
 interface RouteConfig {
   path: string

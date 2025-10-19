@@ -13,6 +13,16 @@ interface SeoMeta {
   twitterImage: string;
   canonical: string;
   robots: string;
+  author: string;
+  charset: string;
+  favicon: string;
+  ogSiteName: string;
+  ogType: string;
+  ogUrl: string;
+  twitterCard: string;
+  twitterSite: string;
+  viewport: string;
+  allMetaTags: Array<{ name: string; content: string }>;
 }
 
 interface SeoContent {
@@ -23,17 +33,32 @@ interface SeoContent {
   linkCount: number;
   wordCount: number;
   hasSchema: boolean;
+  contentQuality: number;
+  externalLinks: number;
+  internalLinks: number;
+  readabilityScore: number;
+  headingStructure: Array<{ level: number; count: number; texts?: string[] }>;
+  images: Array<{
+    src: string;
+    alt: string;
+    title: string;
+    width: number | null;
+    height: number | null;
+    loading: string;
+    decoding: string;
+    hasAlt: boolean;
+  }>;
+  keywordDensity: Array<{ word: string; count: number; density: string }>;
+  schemaTypes: string[];
+  schemas: Array<any>; // You can define a more specific type if needed
 }
 
 interface SeoPerformance {
-  overallScore: number;
-  scores: {
-    performance: number;
-    accessibility: number;
-    bestPractices: number;
-    seo: number;
-  };
-  metrics: {
+  error: string;
+  scores: Record<string, any>; // Empty in the data, but keeping flexible
+  note?: string;
+  overallScore?: number;
+  metrics?: {
     firstContentfulPaint: any;
     speedIndex: any;
     largestContentfulPaint: any;
@@ -41,8 +66,6 @@ interface SeoPerformance {
     totalBlockingTime: any;
     cumulativeLayoutShift: any;
   };
-  note?: string;
-  error?: string;
 }
 
 interface SeoTechnical {
@@ -67,6 +90,24 @@ interface SeoAnalysis {
   performance: SeoPerformance;
   technical: SeoTechnical;
   content: SeoContent;
+  contentQuality: number;
+  externalLinks: number;
+  internalLinks: number;
+  readabilityScore: number;
+  headingStructure: Array<{ level: number; count: number; texts?: string[] }>;
+  images: Array<{
+    src: string;
+    alt: string;
+    title: string;
+    width: number | null;
+    height: number | null;
+    loading: string;
+    decoding: string;
+    hasAlt: boolean;
+  }>;
+  keywordDensity: Array<{ word: string; count: number; density: string }>;
+  schemaTypes: string[];
+  schemas: Array<any>;
 }
 
 interface SeoState {
