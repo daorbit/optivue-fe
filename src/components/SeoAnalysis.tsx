@@ -57,7 +57,7 @@ const SeoAnalysis = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 1200, mx: 'auto', p: 3 }}>
+    <Box >
       <Typography variant="h4" gutterBottom>
         SEO Analysis Tool
       </Typography>
