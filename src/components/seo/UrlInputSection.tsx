@@ -62,7 +62,6 @@ const UrlInputSection = ({
             fullWidth
             variant="contained"
             onClick={onAnalyze}
-            disabled={loading || !url.trim()}
             startIcon={<Search size={14}/>}
             sx={{
               borderRadius: '25px',

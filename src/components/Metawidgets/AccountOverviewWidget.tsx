@@ -8,7 +8,7 @@ import {
   Chip,
 } from '@mui/material';
 import { Building2, Globe, DollarSign } from 'lucide-react';
-
+ 
 interface AccountOverviewWidgetProps {
   account: {
     id: string;
