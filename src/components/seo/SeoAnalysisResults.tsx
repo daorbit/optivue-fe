@@ -7,6 +7,7 @@ import AdditionalSeoDetails from "./AdditionalSeoDetails";
 import MetaTagsTab from "./MetaTagsTab";
 import SchemasTab from "./SchemasTab";
 import WebsitePreview from "./WebsitePreview";
+import PerformanceTab from "./PerformanceTab";
 
 interface SeoAnalysisResultsProps {
   analysis: any;
@@ -119,7 +120,7 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
       {/* Main Content Layout */}
       <Grid container spacing={4}>
         {/* Left Side - SEO Data Tabs */}
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} lg={8}>
           <Tabs
             value={tabValue}
             onChange={(_, newValue) => setTabValue(newValue)}
@@ -146,6 +147,7 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
             variant="scrollable"
             scrollButtons="auto"
           >
+            <Tab label="Performance" />
             <Tab label="Meta Tags & Content" />
             <Tab label="Technical SEO" />
             <Tab label="Additional SEO" />
@@ -187,23 +189,24 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
                   background: '#a8a8a8',
                 }
               }}>
-                {tabValue === 0 && (
+                {tabValue === 0 && <PerformanceTab analysis={analysis} />}
+                {tabValue === 1 && (
                   <Stack spacing={3}>
                     <KeyMetrics analysis={analysis} />
                     <MetaTagsSection analysis={analysis} />
                   </Stack>
                 )}
-                {tabValue === 1 && <TechnicalSeoSection analysis={analysis} />}
-                {tabValue === 2 && <AdditionalSeoDetails analysis={analysis} />}
-                {tabValue === 3 && <MetaTagsTab analysis={analysis} />}
-                {tabValue === 4 && <SchemasTab analysis={analysis} />}
+                {tabValue === 2 && <TechnicalSeoSection analysis={analysis} />}
+                {tabValue === 3 && <AdditionalSeoDetails analysis={analysis} />}
+                {tabValue === 4 && <MetaTagsTab analysis={analysis} />}
+                {tabValue === 5 && <SchemasTab analysis={analysis} />}
               </CardContent>
             </Card>
           </Box>
         </Grid>
 
         {/* Right Side - Website Preview */}
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} lg={4}>
           <Box sx={{ position: 'sticky', top: 24 }}>
             <WebsitePreview url={analysis.url} />
           </Box>
