@@ -19,98 +19,96 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
   return (
     <Box>
       {/* Results Header */}
-      <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-          <Typography variant="h4" sx={{ fontWeight: 600 }}>
+      <Box sx={{ mb: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+          <Typography variant="h6" sx={{ fontWeight: 600 }}>
             Analysis Results
           </Typography>
         </Box>
-        <Typography variant="body1" color="text.secondary">
-          Analysis completed for: <strong>{analysis.url}</strong>
-        </Typography>
+        
       </Box>
 
       {/* Quick Stats Grid */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} md={3}>
+      <Grid container spacing={2} sx={{ mb: 3 }}>
+        <Grid item xs={6} md={3}>
           <Card sx={{
             textAlign: 'center',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            color: 'white',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-            transition: 'transform 0.2s',
+            backgroundColor: 'white',
+            border: '2px solid #667eea',
+            borderRadius: 2,
+            boxShadow: 'none',
             '&:hover': {
-              transform: 'translateY(-4px)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
             }
           }}>
-            <CardContent sx={{ py: 3 }}>
-              <Typography variant="h3" sx={{ fontWeight: 700, mb: 1 }}>
+            <CardContent sx={{ py: 2, px: 1 }}>
+              <Typography variant="h4" sx={{ fontWeight: 600, mb: 0.5 }}>
                 {analysis.content?.h1Count || 0}
               </Typography>
-              <Typography variant="body2" sx={{ opacity: 0.9 }}>
+              <Typography variant="body2" color="text.secondary">
                 H1 Tags
               </Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={6} md={3}>
           <Card sx={{
             textAlign: 'center',
-            background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-            color: 'white',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-            transition: 'transform 0.2s',
+            backgroundColor: 'white',
+            border: '2px solid #f093fb',
+            borderRadius: 2,
+            boxShadow: 'none',
             '&:hover': {
-              transform: 'translateY(-4px)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
             }
           }}>
-            <CardContent sx={{ py: 3 }}>
-              <Typography variant="h3" sx={{ fontWeight: 700, mb: 1 }}>
+            <CardContent sx={{ py: 2, px: 1 }}>
+              <Typography variant="h4" sx={{ fontWeight: 600, mb: 0.5 }}>
                 {analysis.content?.wordCount || 0}
               </Typography>
-              <Typography variant="body2" sx={{ opacity: 0.9 }}>
+              <Typography variant="body2" color="text.secondary">
                 Words
               </Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={6} md={3}>
           <Card sx={{
             textAlign: 'center',
-            background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-            color: 'white',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-            transition: 'transform 0.2s',
+            backgroundColor: 'white',
+            border: '2px solid #4facfe',
+            borderRadius: 2,
+            boxShadow: 'none',
             '&:hover': {
-              transform: 'translateY(-4px)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
             }
           }}>
-            <CardContent sx={{ py: 3 }}>
-              <Typography variant="h3" sx={{ fontWeight: 700, mb: 1 }}>
+            <CardContent sx={{ py: 2, px: 1 }}>
+              <Typography variant="h4" sx={{ fontWeight: 600, mb: 0.5 }}>
                 {analysis.content?.images?.length || 0}
               </Typography>
-              <Typography variant="body2" sx={{ opacity: 0.9 }}>
+              <Typography variant="body2" color="text.secondary">
                 Images
               </Typography>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={6} md={3}>
           <Card sx={{
             textAlign: 'center',
-            background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-            color: 'white',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-            transition: 'transform 0.2s',
+            backgroundColor: 'white',
+            border: '2px solid #43e97b',
+            borderRadius: 2,
+            boxShadow: 'none',
             '&:hover': {
-              transform: 'translateY(-4px)',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
             }
           }}>
-            <CardContent sx={{ py: 3 }}>
-              <Typography variant="h3" sx={{ fontWeight: 700, mb: 1 }}>
+            <CardContent sx={{ py: 2, px: 1 }}>
+              <Typography variant="h4" sx={{ fontWeight: 600, mb: 0.5 }}>
                 {analysis.content?.internalLinks || 0}
               </Typography>
-              <Typography variant="body2" sx={{ opacity: 0.9 }}>
+              <Typography variant="body2" color="text.secondary">
                 Internal Links
               </Typography>
             </CardContent>

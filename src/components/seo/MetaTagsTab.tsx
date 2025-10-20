@@ -10,7 +10,6 @@ interface MetaTagsTabProps {
 const MetaTagsTab = ({ analysis }: MetaTagsTabProps) => {
   return (
     <div>
-      <Typography variant="h6" gutterBottom>All Meta Tags</Typography>
       <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
         {analysis.meta?.allMetaTags?.map((meta: any, index: number) => {
           let tagString = '<meta';

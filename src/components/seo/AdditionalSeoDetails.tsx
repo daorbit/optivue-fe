@@ -13,7 +13,6 @@ interface AdditionalSeoDetailsProps {
 const AdditionalSeoDetails = ({ analysis }: AdditionalSeoDetailsProps) => {
   return (
     <div>
-      <Typography variant="h6" gutterBottom>Additional SEO Details</Typography>
       <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" gutterBottom>Content Statistics</Typography>

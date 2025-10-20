@@ -76,7 +76,7 @@ const WebsitePreview = ({ url }: WebsitePreviewProps) => {
           flexDirection: 'column',
           alignItems: 'center',
           minHeight: '500px',
-          backgroundColor: '#f8f9fa',
+          backgroundColor: '#fff',
         }}>
           <Box sx={{ mb: 2, display: 'flex', gap: 1 }}>
             <Chip
@@ -106,17 +106,7 @@ const WebsitePreview = ({ url }: WebsitePreviewProps) => {
           </DeviceFrameset>
         </Box>
 
-        {/* Footer */}
-        <Box sx={{
-          p: 2,
-          borderTop: '1px solid #e0e0e0',
-          backgroundColor: '#f8f9fa',
-          textAlign: 'center'
-        }}>
-          <Typography variant="body2" color="text.secondary">
-            Previewing: <strong>{url}</strong>
-          </Typography>
-        </Box>
+     
       </CardContent>
     </Card>
   );

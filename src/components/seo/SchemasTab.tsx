@@ -14,7 +14,6 @@ interface SchemasTabProps {
 const SchemasTab = ({ analysis }: SchemasTabProps) => {
   return (
     <div>
-      <Typography variant="h6" gutterBottom>All Schemas ({(analysis.schemas || analysis.content?.schemas)?.length || 0})</Typography>
       <Box sx={{ maxHeight: 500, overflow: 'auto' }}>
         {(analysis.schemas || analysis.content?.schemas)?.map((schema: any, index: number) => (
           <Accordion key={index} sx={{ mb: 1 }}>

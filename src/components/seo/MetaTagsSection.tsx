@@ -13,7 +13,6 @@ interface MetaTagsSectionProps {
 const MetaTagsSection = ({ analysis }: MetaTagsSectionProps) => {
   return (
     <div>
-      <Typography variant="h6" gutterBottom>Meta Tags & Content</Typography>
       <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" gutterBottom>Title</Typography>

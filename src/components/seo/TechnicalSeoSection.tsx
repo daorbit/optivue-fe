@@ -15,7 +15,6 @@ interface TechnicalSeoSectionProps {
 const TechnicalSeoSection = ({ analysis }: TechnicalSeoSectionProps) => {
   return (
     <div>
-      <Typography variant="h6" gutterBottom>Technical SEO</Typography>
       <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" gutterBottom>HTTP Status & Security</Typography>

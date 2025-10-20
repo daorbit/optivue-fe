@@ -2,7 +2,6 @@ import {
   Grid,
   TextField,
   Button,
-  LinearProgress,
   Alert,
 } from '@mui/material';
 import { Search } from 'lucide-react';
@@ -20,7 +19,7 @@ const UrlInputSection = ({
   url,
   setUrl,
   onAnalyze,
-  onClear,
+  // onClear,
   loading,
   error,
 }: UrlInputSectionProps) => {
@@ -79,28 +78,7 @@ const UrlInputSection = ({
             {loading ? 'Analyzing...' : 'Analyze'}
           </Button>
         </Grid>
-        <Grid item xs={6} md={2}>
-          <Button
-            fullWidth
-            variant="outlined"
-            onClick={onClear}
-            disabled={loading}
-            sx={{
-              borderRadius: '25px',
-              padding: '10px 16px',
-              fontSize: '14px',
-              textTransform: 'none',
-              borderColor: '#6c757d',
-              color: '#6c757d',
-              '&:hover': {
-                borderColor: '#5a6268',
-                backgroundColor: '#f8f9fa',
-              },
-            }}
-          >
-            Clear
-          </Button>
-        </Grid>
+        
       </Grid>
 
  
