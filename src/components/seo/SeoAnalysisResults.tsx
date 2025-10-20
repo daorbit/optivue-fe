@@ -130,11 +130,17 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
               '& .MuiTab-root': {
                 textTransform: 'none',
                 fontWeight: 500,
-                fontSize: '1rem',
+                fontSize: '0.95rem',
                 minHeight: 48,
+                color: 'text.secondary',
+                '&.Mui-selected': {
+                  color: '#667eea',
+                  fontWeight: 600,
+                },
               },
               '& .MuiTabs-indicator': {
                 height: 3,
+                backgroundColor: '#667eea',
               }
             }}
             variant="scrollable"
@@ -148,16 +154,47 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
           </Tabs>
 
           <Box>
-            {tabValue === 0 && (
-              <Stack spacing={3}>
-                <KeyMetrics analysis={analysis} />
-                <MetaTagsSection analysis={analysis} />
-              </Stack>
-            )}
-            {tabValue === 1 && <TechnicalSeoSection analysis={analysis} />}
-            {tabValue === 2 && <AdditionalSeoDetails analysis={analysis} />}
-            {tabValue === 3 && <MetaTagsTab analysis={analysis} />}
-            {tabValue === 4 && <SchemasTab analysis={analysis} />}
+            <Card sx={{ 
+              backgroundColor: 'white',
+              borderRadius: 2,
+              boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+              border: '1px solid #e0e0e0',
+              '&:hover': {
+                boxShadow: '0 4px 20px rgba(0,0,0,0.12)',
+              }
+            }}>
+              <CardContent sx={{ 
+                p: 3,
+                overflow: 'auto',
+                '&::-webkit-scrollbar': {
+                  width: '0px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  background: 'transparent',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  background: '#c1c1c1',
+                  borderRadius: '3px',
+                },
+                '&::-webkit-scrollbar-thumb:hover': {
+                  background: '#a8a8a8',
+                },
+                '&:hover::-webkit-scrollbar': {
+                  width: '6px',
+                }
+              }}>
+                {tabValue === 0 && (
+                  <Stack spacing={3}>
+                    <KeyMetrics analysis={analysis} />
+                    <MetaTagsSection analysis={analysis} />
+                  </Stack>
+                )}
+                {tabValue === 1 && <TechnicalSeoSection analysis={analysis} />}
+                {tabValue === 2 && <AdditionalSeoDetails analysis={analysis} />}
+                {tabValue === 3 && <MetaTagsTab analysis={analysis} />}
+                {tabValue === 4 && <SchemasTab analysis={analysis} />}
+              </CardContent>
+            </Card>
           </Box>
         </Grid>
 

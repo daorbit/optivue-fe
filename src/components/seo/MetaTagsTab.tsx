@@ -10,7 +10,26 @@ interface MetaTagsTabProps {
 const MetaTagsTab = ({ analysis }: MetaTagsTabProps) => {
   return (
     <div>
-      <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
+      <Box sx={{ 
+        maxHeight: 300, 
+        overflow: 'auto',
+        '&::-webkit-scrollbar': {
+          width: '0px',
+        },
+        '&::-webkit-scrollbar-track': {
+          background: 'transparent',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: '#c1c1c1',
+          borderRadius: '3px',
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+          background: '#a8a8a8',
+        },
+        '&:hover::-webkit-scrollbar': {
+          width: '6px',
+        }
+      }}>
         {analysis.meta?.allMetaTags?.map((meta: any, index: number) => {
           let tagString = '<meta';
           if (meta.charset) {
