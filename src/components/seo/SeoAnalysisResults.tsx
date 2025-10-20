@@ -34,7 +34,7 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
           <Card sx={{
             textAlign: 'center',
             backgroundColor: 'white',
-            border: '2px solid #667eea',
+            border: '2px solid #66bb6a',
             borderRadius: 2,
             boxShadow: 'none',
             '&:hover': {
@@ -134,13 +134,13 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
                 minHeight: 48,
                 color: 'text.secondary',
                 '&.Mui-selected': {
-                  color: '#667eea',
+                  color: '#66bb6a',
                   fontWeight: 600,
                 },
               },
               '& .MuiTabs-indicator': {
                 height: 3,
-                backgroundColor: '#667eea',
+                backgroundColor: '#66bb6a',
               }
             }}
             variant="scrollable"
@@ -166,6 +166,7 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
               <CardContent sx={{ 
                 p: 3,
                 overflow: 'auto',
+                paddingRight: '6px', // Reserve space for scrollbar
                 '&::-webkit-scrollbar': {
                   width: '0px',
                 },
@@ -173,14 +174,17 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
                   background: 'transparent',
                 },
                 '&::-webkit-scrollbar-thumb': {
-                  background: '#c1c1c1',
+                  background: 'transparent',
                   borderRadius: '3px',
-                },
-                '&::-webkit-scrollbar-thumb:hover': {
-                  background: '#a8a8a8',
                 },
                 '&:hover::-webkit-scrollbar': {
                   width: '6px',
+                },
+                '&:hover::-webkit-scrollbar-thumb': {
+                  background: '#c1c1c1',
+                },
+                '&::-webkit-scrollbar-thumb:hover': {
+                  background: '#a8a8a8',
                 }
               }}>
                 {tabValue === 0 && (

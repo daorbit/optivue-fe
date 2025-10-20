@@ -1,23 +1,36 @@
+import { useState } from 'react';
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Typography,
   Box,
+  Card,
+  CardContent,
+  Button,
+  Collapse,
 } from '@mui/material';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface SchemasTabProps {
   analysis: any;
 }
 
 const SchemasTab = ({ analysis }: SchemasTabProps) => {
+  const [expandedSchemas, setExpandedSchemas] = useState<Set<number>>(new Set());
+
+  const toggleSchema = (index: number) => {
+    const newExpanded = new Set(expandedSchemas);
+    if (newExpanded.has(index)) {
+      newExpanded.delete(index);
+    } else {
+      newExpanded.add(index);
+    }
+    setExpandedSchemas(newExpanded);
+  };
+
   return (
-    <div>
-      <Typography variant="h6" gutterBottom>All Schemas ({(analysis.schemas || analysis.content?.schemas)?.length || 0})</Typography>
-      <Box sx={{ 
-        maxHeight: 500, 
+     <Box sx={{ 
+        maxHeight: 900, 
         overflow: 'auto',
+        paddingRight: '6px', // Reserve space for scrollbar
         '&::-webkit-scrollbar': {
           width: '0px',
         },
@@ -25,71 +38,75 @@ const SchemasTab = ({ analysis }: SchemasTabProps) => {
           background: 'transparent',
         },
         '&::-webkit-scrollbar-thumb': {
-          background: '#c1c1c1',
+          background: 'transparent',
           borderRadius: '3px',
-        },
-        '&::-webkit-scrollbar-thumb:hover': {
-          background: '#a8a8a8',
         },
         '&:hover::-webkit-scrollbar': {
           width: '6px',
+        },
+        '&:hover::-webkit-scrollbar-thumb': {
+          background: '#c1c1c1',
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+          background: '#a8a8a8',
         }
       }}>
+      <Typography variant="h6" gutterBottom>All Schemas ({(analysis.schemas || analysis.content?.schemas)?.length || 0})</Typography>
+      <Box  >
         {(analysis.schemas || analysis.content?.schemas)?.map((schema: any, index: number) => (
-          <Accordion 
+          <Card 
             key={index} 
             sx={{ 
               mb: 2,
               border: '1px solid #e0e0e0',
               borderRadius: 2,
               boxShadow: 'none',
-              '&:before': {
-                display: 'none',
-              },
-              '&.Mui-expanded': {
+              '&:hover': {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                textTransform:"none"
               }
+              
             }}
           >
-            <AccordionSummary 
-              expandIcon={<ChevronDown size={20} />}
-              sx={{
-                backgroundColor: '#f8f9fa',
-                borderRadius: 2,
-                '&.Mui-expanded': {
-                  backgroundColor: '#667eea',
-                  color: 'white',
-                  '& .MuiAccordionSummary-expandIconWrapper': {
-                    color: 'white',
-                  }
-                },
-                '&:hover': {
-                  backgroundColor: '#f0f2f5',
-                }
-              }}
-            >
-              <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                Schema {index + 1}: {schema['@type'] || schema.type || 'Unknown Type'}
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ backgroundColor: '#fafbfc', borderTop: '1px solid #e0e0e0' }}>
-              <pre style={{ 
-                fontSize: '0.85em', 
-                whiteSpace: 'pre-wrap', 
-                backgroundColor: '#ffffff', 
-                padding: '12px', 
-                borderRadius: '6px',
-                border: '1px solid #e0e0e0',
-                margin: 0,
-                overflow: 'auto'
-              }}>
-                {JSON.stringify(schema, null, 2)}
-              </pre>
-            </AccordionDetails>
-          </Accordion>
+            <CardContent sx={{ p: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
+                  Schema {index + 1}: {schema['@type'] || schema.type || 'Unknown Type'}
+                </Typography>
+                <Button
+                  size="small"
+                  onClick={() => toggleSchema(index)}
+                  endIcon={expandedSchemas.has(index) ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  sx={{
+                    textTransform: 'none',
+                    minWidth: 'auto',
+                    px: 1,
+                    py: 0.5,
+                    fontSize: '0.8rem'
+                  }}
+                >
+                  {expandedSchemas.has(index) ? 'Hide' : 'Show'} Details
+                </Button>
+              </Box>
+              <Collapse in={expandedSchemas.has(index)}>
+                <pre style={{ 
+                  fontSize: '0.85em', 
+                  whiteSpace: 'pre-wrap', 
+                  backgroundColor: '#ffffff', 
+                  padding: '12px', 
+                  borderRadius: '6px',
+                  border: '1px solid #e0e0e0',
+                  margin: 0,
+                  overflow: 'auto'
+                }}>
+                  {JSON.stringify(schema, null, 2)}
+                </pre>
+              </Collapse>
+            </CardContent>
+          </Card>
         ))}
       </Box>
-    </div>
+    </Box>
   );
 };
 

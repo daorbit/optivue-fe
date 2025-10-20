@@ -11,8 +11,9 @@ const MetaTagsTab = ({ analysis }: MetaTagsTabProps) => {
   return (
     <div>
       <Box sx={{ 
-        maxHeight: 300, 
+        maxHeight: 600, 
         overflow: 'auto',
+        paddingRight: '6px', // Reserve space for scrollbar
         '&::-webkit-scrollbar': {
           width: '0px',
         },
@@ -20,14 +21,17 @@ const MetaTagsTab = ({ analysis }: MetaTagsTabProps) => {
           background: 'transparent',
         },
         '&::-webkit-scrollbar-thumb': {
-          background: '#c1c1c1',
+          background: 'transparent',
           borderRadius: '3px',
-        },
-        '&::-webkit-scrollbar-thumb:hover': {
-          background: '#a8a8a8',
         },
         '&:hover::-webkit-scrollbar': {
           width: '6px',
+        },
+        '&:hover::-webkit-scrollbar-thumb': {
+          background: '#c1c1c1',
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+          background: '#a8a8a8',
         }
       }}>
         {analysis.meta?.allMetaTags?.map((meta: any, index: number) => {
@@ -49,7 +53,7 @@ const MetaTagsTab = ({ analysis }: MetaTagsTabProps) => {
           }
           tagString += ' />';
           return (
-            <Box key={index} sx={{ mb: 1, p: 1, bgcolor: 'grey.50', borderRadius: 1 }}>
+            <Box key={index} sx={{ mb: 1, p: 1, border: '1px solid #43e97b', borderRadius: 1 }}>
               <Typography variant="body2" component="code" sx={{ fontFamily: 'monospace', wordBreak: 'break-all' }}>
                 {tagString}
               </Typography>

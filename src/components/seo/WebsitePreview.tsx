@@ -39,7 +39,7 @@ const WebsitePreview = ({ url }: WebsitePreviewProps) => {
         <Box sx={{
           p: 1,
           borderBottom: '1px solid #e0e0e0',
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: 'linear-gradient(135deg, #66bb6a 0%, #81c784 100%)',
           color: 'white'
         }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
