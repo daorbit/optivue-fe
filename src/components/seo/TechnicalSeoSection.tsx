@@ -1,7 +1,4 @@
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Typography,
   Grid,
   List,
@@ -10,7 +7,6 @@ import {
   Divider,
   Chip,
 } from '@mui/material';
-import { ChevronDown } from 'lucide-react';
 
 interface TechnicalSeoSectionProps {
   analysis: any;
@@ -18,12 +14,9 @@ interface TechnicalSeoSectionProps {
 
 const TechnicalSeoSection = ({ analysis }: TechnicalSeoSectionProps) => {
   return (
-    <Accordion>
-      <AccordionSummary expandIcon={<ChevronDown />}>
-        <Typography variant="h6">Technical SEO</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Grid container spacing={2}>
+    <div>
+      <Typography variant="h6" gutterBottom>Technical SEO</Typography>
+      <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" gutterBottom>HTTP Status & Security</Typography>
             <List dense>
@@ -77,8 +70,7 @@ const TechnicalSeoSection = ({ analysis }: TechnicalSeoSectionProps) => {
             </Typography>
           </Grid>
         </Grid>
-      </AccordionDetails>
-    </Accordion>
+    </div>
   );
 };
 

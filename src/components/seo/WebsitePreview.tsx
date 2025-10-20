@@ -2,61 +2,25 @@ import { useState } from 'react';
 import {
   Box,
   Typography,
-  Button,
-  Paper,
   Card,
   CardContent,
-  Grid,
   IconButton,
   Tooltip,
+  Chip,
 } from '@mui/material';
 import {
-  Smartphone,
-  Tablet,
   RotateCcw,
-  Maximize2,
   ExternalLink
 } from 'lucide-react';
+import { DeviceFrameset } from 'react-device-frameset';
+import 'react-device-frameset/lib/css/marvel-devices.min.css'
 
 interface WebsitePreviewProps {
   url: string;
 }
 
-type DeviceType = 'tablet' | 'mobile';
-
-interface Device {
-  type: DeviceType;
-  name: string;
-  icon: React.ReactNode;
-  width: number;
-  height: number;
-  scale?: number;
-}
-
-const devices: Device[] = [
-  {
-    type: 'tablet',
-    name: 'Tablet',
-    icon: <Tablet size={20} />,
-    width: 768,
-    height: 1024,
-    scale: 0.6,
-  },
-  {
-    type: 'mobile',
-    name: 'Mobile',
-    icon: <Smartphone size={20} />,
-    width: 375,
-    height: 667,
-    scale: 0.75,
-  },
-];
-
 const WebsitePreview = ({ url }: WebsitePreviewProps) => {
-  const [selectedDevice, setSelectedDevice] = useState<DeviceType>('mobile');
-
-  const currentDevice = devices.find(d => d.type === selectedDevice) || devices[0];
-
+  const [selectedDevice, setSelectedDevice] = useState<'Galaxy Note 8' | 'iPad Mini'>('Galaxy Note 8');
   const handleRefresh = () => {
     const iframe = document.querySelector('iframe[title*="Preview"]') as HTMLIFrameElement;
     if (iframe) {
@@ -73,7 +37,7 @@ const WebsitePreview = ({ url }: WebsitePreviewProps) => {
       <CardContent sx={{ p: 0 }}>
         {/* Header */}
         <Box sx={{
-          p: 3,
+          p: 1,
           borderBottom: '1px solid #e0e0e0',
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white'
@@ -103,176 +67,43 @@ const WebsitePreview = ({ url }: WebsitePreviewProps) => {
               </Tooltip>
             </Box>
           </Box>
-
-          {/* Device Selector */}
-          <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-            {devices.map((device) => (
-              <Button
-                key={device.type}
-                variant={selectedDevice === device.type ? 'contained' : 'outlined'}
-                size="small"
-                startIcon={device.icon}
-                onClick={() => setSelectedDevice(device.type)}
-                sx={{
-                  borderRadius: '20px',
-                  textTransform: 'none',
-                  px: 2,
-                  py: 0.5,
-                  fontSize: '0.875rem',
-                  minWidth: 'auto',
-                  backgroundColor: selectedDevice === device.type ? 'rgba(255,255,255,0.2)' : 'transparent',
-                  borderColor: 'rgba(255,255,255,0.3)',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: selectedDevice === device.type ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.1)',
-                    borderColor: 'rgba(255,255,255,0.5)',
-                  },
-                }}
-              >
-                {device.name}
-              </Button>
-            ))}
-          </Box>
         </Box>
 
         {/* Preview Area */}
         <Box sx={{
           p: 3,
           display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'flex-start',
+          flexDirection: 'column',
+          alignItems: 'center',
           minHeight: '500px',
           backgroundColor: '#f8f9fa',
         }}>
-          <Box sx={{
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '100%',
-          }}>
-            {selectedDevice === 'mobile' && (
-              <Box
-                sx={{
-                  position: 'relative',
-                  transform: `scale(${currentDevice.scale})`,
-                  transformOrigin: 'top center',
-                }}
-              >
-                {/* Phone Frame */}
-                <Box
-                  sx={{
-                    width: currentDevice.width + 24,
-                    height: currentDevice.height + 24,
-                    backgroundColor: '#1a1a1a',
-                    borderRadius: '24px',
-                    position: 'relative',
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    border: '2px solid #333',
-                  }}
-                >
-                  {/* Notch */}
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: '8px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      width: '120px',
-                      height: '24px',
-                      backgroundColor: '#1a1a1a',
-                      borderRadius: '0 0 12px 12px',
-                      zIndex: 2,
-                    }}
-                  />
-                  {/* Screen */}
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: '12px',
-                      left: '12px',
-                      width: currentDevice.width,
-                      height: currentDevice.height,
-                      backgroundColor: '#000',
-                      borderRadius: '16px',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <iframe
-                      src={url}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        border: 'none',
-                      }}
-                      title="Mobile Website Preview"
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            )}
-
-            {selectedDevice === 'tablet' && (
-              <Box
-                sx={{
-                  position: 'relative',
-                  transform: `scale(${currentDevice.scale})`,
-                  transformOrigin: 'top center',
-                }}
-              >
-                {/* Tablet Frame */}
-                <Box
-                  sx={{
-                    width: currentDevice.width + 20,
-                    height: currentDevice.height + 20,
-                    backgroundColor: '#2c2c2c',
-                    borderRadius: '16px',
-                    position: 'relative',
-                    boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                    border: '2px solid #444',
-                  }}
-                >
-                  {/* Home Button */}
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      bottom: '8px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      width: '40px',
-                      height: '4px',
-                      backgroundColor: '#666',
-                      borderRadius: '2px',
-                    }}
-                  />
-                  {/* Screen */}
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: '10px',
-                      left: '10px',
-                      width: currentDevice.width,
-                      height: currentDevice.height,
-                      backgroundColor: '#000',
-                      borderRadius: '8px',
-                      overflow: 'hidden',
-                    }}
-                  >
-                    <iframe
-                      src={url}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        border: 'none',
-                      }}
-                      title="Tablet Website Preview"
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            )}
-
+          <Box sx={{ mb: 2, display: 'flex', gap: 1 }}>
+            <Chip
+              label="Galaxy Note 8"
+              clickable
+              onClick={() => setSelectedDevice('Galaxy Note 8')}
+              variant={selectedDevice === 'Galaxy Note 8' ? 'filled' : 'outlined'}
+            />
+            <Chip
+              label="iPad Mini"
+              clickable
+              onClick={() => setSelectedDevice('iPad Mini')}
+              variant={selectedDevice === 'iPad Mini' ? 'filled' : 'outlined'}
+            />
           </Box>
+          {/* @ts-ignore */}
+          <DeviceFrameset device={selectedDevice}>
+            <iframe
+              src={url}
+              style={{
+                width: '100%',
+                height: '100%',
+                border: 'none',
+              }}
+              title="Website Preview"
+            />
+          </DeviceFrameset>
         </Box>
 
         {/* Footer */}
@@ -284,9 +115,6 @@ const WebsitePreview = ({ url }: WebsitePreviewProps) => {
         }}>
           <Typography variant="body2" color="text.secondary">
             Previewing: <strong>{url}</strong>
-          </Typography>
-          <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
-            Device: {currentDevice.name} ({currentDevice.width} × {currentDevice.height})
           </Typography>
         </Box>
       </CardContent>

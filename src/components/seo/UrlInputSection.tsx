@@ -103,11 +103,7 @@ const UrlInputSection = ({
         </Grid>
       </Grid>
 
-      {/* Loading State */}
-      {loading && (
-        <LinearProgress sx={{ mb: 3, borderRadius: '4px' }} />
-      )}
-
+ 
       {/* Error State */}
       {error && (
         <Alert severity="error" sx={{ mb: 3 }}>

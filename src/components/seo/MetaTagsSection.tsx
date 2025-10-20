@@ -1,14 +1,10 @@
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Typography,
   Grid,
   List,
   ListItem,
   ListItemText,
 } from '@mui/material';
-import { ChevronDown } from 'lucide-react';
 
 interface MetaTagsSectionProps {
   analysis: any;
@@ -16,12 +12,9 @@ interface MetaTagsSectionProps {
 
 const MetaTagsSection = ({ analysis }: MetaTagsSectionProps) => {
   return (
-    <Accordion defaultExpanded>
-      <AccordionSummary expandIcon={<ChevronDown />}>
-        <Typography variant="h6">Meta Tags & Content</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Grid container spacing={2}>
+    <div>
+      <Typography variant="h6" gutterBottom>Meta Tags & Content</Typography>
+      <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" gutterBottom>Title</Typography>
             <Typography variant="body2" sx={{ mb: 2 }}>
@@ -77,8 +70,7 @@ const MetaTagsSection = ({ analysis }: MetaTagsSectionProps) => {
             </List>
           </Grid>
         </Grid>
-      </AccordionDetails>
-    </Accordion>
+    </div>
   );
 };
 

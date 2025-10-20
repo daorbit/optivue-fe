@@ -1,14 +1,10 @@
 import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Typography,
   Grid,
   Divider,
   Chip,
   Box,
 } from '@mui/material';
-import { ChevronDown } from 'lucide-react';
 
 interface AdditionalSeoDetailsProps {
   analysis: any;
@@ -16,12 +12,9 @@ interface AdditionalSeoDetailsProps {
 
 const AdditionalSeoDetails = ({ analysis }: AdditionalSeoDetailsProps) => {
   return (
-    <Accordion>
-      <AccordionSummary expandIcon={<ChevronDown />}>
-        <Typography variant="h6">Additional SEO Details</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Grid container spacing={2}>
+    <div>
+      <Typography variant="h6" gutterBottom>Additional SEO Details</Typography>
+      <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" gutterBottom>Content Statistics</Typography>
             <Grid container spacing={1}>
@@ -176,61 +169,8 @@ const AdditionalSeoDetails = ({ analysis }: AdditionalSeoDetailsProps) => {
               ))}
             </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Divider sx={{ my: 2 }} />
-            <Typography variant="subtitle1" gutterBottom>All Meta Tags</Typography>
-            <Box sx={{ maxHeight: 300, overflow: 'auto' }}>
-              {analysis.meta?.allMetaTags?.map((meta: any, index: number) => {
-                let tagString = '<meta';
-                if (meta.charset) {
-                  tagString += ` charset="${meta.charset}"`;
-                }
-                if (meta.name) {
-                  tagString += ` name="${meta.name}"`;
-                }
-                if (meta.property) {
-                  tagString += ` property="${meta.property}"`;
-                }
-                if (meta.httpEquiv) {
-                  tagString += ` http-equiv="${meta.httpEquiv}"`;
-                }
-                if (meta.content) {
-                  tagString += ` content="${meta.content}"`;
-                }
-                tagString += ' />';
-                return (
-                  <Box key={index} sx={{ mb: 1, p: 1, bgcolor: 'grey.50', borderRadius: 1 }}>
-                    <Typography variant="body2" component="code" sx={{ fontFamily: 'monospace', wordBreak: 'break-all' }}>
-                      {tagString}
-                    </Typography>
-                  </Box>
-                );
-              })}
-            </Box>
-          </Grid>
-          <Grid item xs={12}>
-            <Divider sx={{ my: 2 }} />
-            <Typography variant="subtitle1" gutterBottom>All Schemas ({(analysis.schemas || analysis.content?.schemas)?.length || 0})</Typography>
-            <Box sx={{ maxHeight: 500, overflow: 'auto' }}>
-              {(analysis.schemas || analysis.content?.schemas)?.map((schema: any, index: number) => (
-                <Accordion key={index} sx={{ mb: 1 }}>
-                  <AccordionSummary expandIcon={<ChevronDown />}>
-                    <Typography variant="subtitle2">
-                      Schema {index + 1}: {schema['@type'] || schema.type || 'Unknown Type'}
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <pre style={{ fontSize: '0.8em', whiteSpace: 'pre-wrap', backgroundColor: '#f5f5f5', padding: '8px', borderRadius: '4px' }}>
-                      {JSON.stringify(schema, null, 2)}
-                    </pre>
-                  </AccordionDetails>
-                </Accordion>
-              ))}
-            </Box>
-          </Grid>
         </Grid>
-      </AccordionDetails>
-    </Accordion>
+    </div>
   );
 };
 
