@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Typography, Grid, Card, CardContent, Stack, Button, Tabs, Tab } from "@mui/material";
-import KeyMetrics from "./KeyMetrics";
+// import KeyMetrics from "./KeyMetrics";
 import MetaTagsSection from "./MetaTagsSection";
 import TechnicalSeoSection from "./TechnicalSeoSection";
 import AdditionalSeoDetails from "./AdditionalSeoDetails";
@@ -192,7 +192,7 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
                 {tabValue === 0 && <PerformanceTab analysis={analysis} />}
                 {tabValue === 1 && (
                   <Stack spacing={3}>
-                    <KeyMetrics analysis={analysis} />
+                    {/* <KeyMetrics analysis={analysis} /> */}
                     <MetaTagsSection analysis={analysis} />
                   </Stack>
                 )}
