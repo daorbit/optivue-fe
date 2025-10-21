@@ -32,40 +32,53 @@ const initialState: AuthState = {
 // Async thunks
 export const checkAuth = createAsyncThunk(
   'auth/checkAuth',
-  async () => {
-    if (apiService.isAuthenticated()) {
-      const response = await apiService.getAccount();
-      if (response.success) {
-        return response.user;
-      } else {
-        apiService.logout();
-        throw new Error('Authentication failed');
+  async (_, { rejectWithValue }) => {
+    try {
+      if (apiService.isAuthenticated()) {
+        const response = await apiService.getAccount();
+        if (response.success) {
+          return response.user;
+        } else {
+          apiService.logout();
+          return rejectWithValue('Authentication failed');
+        }
       }
+      return null;
+    } catch (error: any) {
+      apiService.logout();
+      return rejectWithValue(error.message || 'Authentication check failed');
     }
-    return null;
   }
 );
 
 export const login = createAsyncThunk(
   'auth/login',
-  async ({ email, password }: { email: string; password: string }) => {
-    const response = await apiService.login({ email, password });
-    if (response.success && response.user) {
-      return response.user;
-    } else {
-      throw new Error(response.message || 'Login failed');
+  async ({ email, password }: { email: string; password: string }, { rejectWithValue }) => {
+    try {
+      const response = await apiService.login({ email, password });
+      if (response.success && response.user) {
+        return response.user;
+      } else {
+        return rejectWithValue(response.message || 'Login failed');
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Login failed');
     }
   }
 );
 
 export const signup = createAsyncThunk(
   'auth/signup',
-  async ({ username, email, password }: { username: string; email: string; password: string }) => {
-    const response = await apiService.signup({ username, email, password });
-    if (response.success && response.user) {
-      return response.user;
-    } else {
-      throw new Error(response.message || 'Signup failed');
+  async ({ username, email, password }: { username: string; email: string; password: string }, { rejectWithValue }) => {
+    try {
+      const response = await apiService.signup({ username, email, password });
+      if (response.success && response.user) {
+        return response.user;
+      } else {
+        return rejectWithValue(response.message || 'Signup failed');
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Signup failed');
     }
   }
 );
@@ -116,7 +129,7 @@ const authSlice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
         state.loading = false;
-        state.error = action.error.message || 'Authentication check failed';
+        state.error = action.payload as string || action.error.message || 'Authentication check failed';
       })
       // login
       .addCase(login.pending, (state) => {
@@ -131,7 +144,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Login failed';
+        state.error = action.payload as string || action.error.message || 'Login failed';
       })
       // signup
       .addCase(signup.pending, (state) => {
@@ -146,7 +159,7 @@ const authSlice = createSlice({
       })
       .addCase(signup.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Signup failed';
+        state.error = action.payload as string || action.error.message || 'Signup failed';
       })
       // refreshUser
       .addCase(refreshUser.fulfilled, (state, action) => {

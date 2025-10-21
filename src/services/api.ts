@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://optivue-be.vercel.app';
+import ApiUtils from '../utils/apiUtils';
 
 interface LoginData {
   email: string;
@@ -144,165 +144,78 @@ interface FacebookAdsOverviewResponse {
 export type { FacebookAdsOverviewResponse };
 
 class ApiService {
-  private getAuthHeaders(): HeadersInit {
-    const token = localStorage.getItem('token');
-    return token ? { Authorization: `Bearer ${token}` } : {};
-  }
-
   async login(data: LoginData): Promise<AuthResponse> {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await ApiUtils.post<AuthResponse>(
+      '/auth/login',
+      data,
+      'login'
+    );
 
-    const result = await response.json();
-    if (result.success && result.token) {
-      localStorage.setItem('token', result.token);
+    if (response.success && response.token) {
+      ApiUtils.setToken(response.token);
     }
-    return result;
+    
+    return response;
   }
 
   async signup(data: SignupData): Promise<AuthResponse> {
-    const response = await fetch(`${API_BASE_URL}/auth/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await ApiUtils.post<AuthResponse>(
+      '/auth/signup',
+      data,
+      'signup'
+    );
 
-    const result = await response.json();
-    if (result.success && result.token) {
-      localStorage.setItem('token', result.token);
+    if (response.success && response.token) {
+      ApiUtils.setToken(response.token);
     }
-    return result;
+    
+    return response;
   }
 
   async getProfile(): Promise<any> {
-    const response = await fetch(`${API_BASE_URL}/auth/profile`, {
-      method: 'GET',
-      headers: {
-        ...this.getAuthHeaders(),
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return await response.json();
+    return await ApiUtils.get('/auth/profile', undefined, 'get profile');
   }
 
   async getAccount(): Promise<any> {
-    const response = await fetch(`${API_BASE_URL}/api/account`, {
-      method: 'GET',
-      headers: {
-        ...this.getAuthHeaders(),
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return await response.json();
+    return await ApiUtils.get('/api/account', undefined, 'get account');
   }
 
   async updateAccount(data: UpdateAccountData): Promise<any> {
-    const response = await fetch(`${API_BASE_URL}/api/account`, {
-      method: 'PUT',
-      headers: {
-        ...this.getAuthHeaders(),
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    return await response.json();
+    return await ApiUtils.put('/api/account', data, 'update account');
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    ApiUtils.logout();
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+    return ApiUtils.isAuthenticated();
   }
 
   // Facebook Ads APIs
   async getFacebookAdAccount(): Promise<any> {
-    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/account`, {
-      method: 'GET',
-      headers: {
-        ...this.getAuthHeaders(),
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return await response.json();
+    return await ApiUtils.get('/api/facebook-ads/account', undefined, 'get Facebook ad account');
   }
 
   async getFacebookCampaigns(params?: any): Promise<any> {
-    const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
-    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/campaigns${queryString}`, {
-      method: 'GET',
-      headers: {
-        ...this.getAuthHeaders(),
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return await response.json();
+    return await ApiUtils.get('/api/facebook-ads/campaigns', params, 'get Facebook campaigns');
   }
 
   async getFacebookInsights(params?: any): Promise<any> {
-    const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
-    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/insights${queryString}`, {
-      method: 'GET',
-      headers: {
-        ...this.getAuthHeaders(),
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return await response.json();
+    return await ApiUtils.get('/api/facebook-ads/insights', params, 'get Facebook insights');
   }
 
   async getFacebookAdsOverview(params?: any): Promise<FacebookAdsOverviewResponse> {
-    const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
-    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/overview${queryString}`, {
-      method: 'GET',
-      headers: {
-        ...this.getAuthHeaders(),
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return await response.json();
+    return await ApiUtils.get<FacebookAdsOverviewResponse>('/api/facebook-ads/overview', params, 'get Facebook ads overview');
   }
 
   async getFacebookCampaignCreatives(campaignId: string, params?: any): Promise<any> {
-    const queryString = params ? '?' + new URLSearchParams(params).toString() : '';
-    const response = await fetch(`${API_BASE_URL}/api/facebook-ads/campaigns/${campaignId}/creatives${queryString}`, {
-      method: 'GET',
-      headers: {
-        ...this.getAuthHeaders(),
-        'Content-Type': 'application/json',
-      },
-    });
-
-    return await response.json();
+    return await ApiUtils.get(`/api/facebook-ads/campaigns/${campaignId}/creatives`, params, 'get Facebook campaign creatives');
   }
 
   // SEO Analysis API
   async analyzeSeo(url: string): Promise<any> {
-    const response = await fetch(`${API_BASE_URL}/api/seo/analyze`, {
-      method: 'POST',
-      headers: {
-        ...this.getAuthHeaders(),
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ url }),
-    });
-
-    return await response.json();
+    return await ApiUtils.post('/api/seo/analyze', { url }, 'analyze SEO');
   }
 }
 
