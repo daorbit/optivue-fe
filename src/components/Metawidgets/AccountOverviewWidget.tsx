@@ -21,7 +21,7 @@ interface AccountOverviewWidgetProps {
     balance: string;
   };
 }
-
+ 
 const AccountOverviewWidget: React.FC<AccountOverviewWidgetProps> = ({ account }) => {
   const getAccountStatusColor = (status: number) => {
     switch (status) {
