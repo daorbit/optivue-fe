@@ -10,38 +10,55 @@ interface SeoHeroSectionProps {
   error: string | null;
 }
 
-const SeoHeroSection = ({ url, setUrl, onAnalyze, onClear, loading, error }: SeoHeroSectionProps) => {
+const SeoHeroSection = ({
+  url,
+  setUrl,
+  onAnalyze,
+  onClear,
+  loading,
+  error,
+}: SeoHeroSectionProps) => {
   return (
     <Box
       sx={{
-        background: 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)',
-        color: '#2e7d32',
-        py: 6,
+        background: "linear-gradient(135deg, #eef7ee 0%, #dff3df 100%)",
+        py: { xs: 6, md: 8},
         mb: 4,
       }}
     >
       <Container maxWidth="lg">
-        <Box sx={{ textAlign: 'center', mb: 4 }}>
+        <Box sx={{ textAlign: "center", mb: 4 }}>
           <Typography
+            component="h1"
             variant="h2"
             sx={{
-              fontWeight: 700,
+              fontWeight: 800,
               mb: 2,
-              fontSize: { xs: '2rem', md: '3rem' }
+              fontSize: { xs: "2.2rem", md: "3rem" },
+              lineHeight: 1.05,
+              color: "rgba(7, 16, 14, 0.95)",
             }}
           >
-            SEO Analysis Tool
+            <Box component="span" sx={{ fontWeight: 800 }}>
+              SEO Analysis&nbsp;
+            </Box>
+            <Box component="span" sx={{ color: "#2e7d32" }}>
+              Tool
+            </Box>
           </Typography>
           <Typography
             variant="h6"
             sx={{
               opacity: 0.9,
-              maxWidth: 600,
-              mx: 'auto',
-              fontWeight: 400
+              maxWidth: 760,
+              mx: "auto",
+              fontWeight: 400,
+              color: "rgba(7, 16, 14, 0.65)",
+              fontSize: { xs: "1rem", md: "18px" },
             }}
           >
-            Comprehensive SEO analysis to optimize your website's search engine performance
+            Comprehensive SEO analysis to optimize your website's search engine
+            performance
           </Typography>
         </Box>
 

@@ -2,7 +2,6 @@ import {
   Grid,
   TextField,
   Button,
-  Alert,
 } from '@mui/material';
 import { Search } from 'lucide-react';
 
@@ -21,12 +20,10 @@ const UrlInputSection = ({
   onAnalyze,
   // onClear,
   loading,
-  error,
 }: UrlInputSectionProps) => {
   return (
     <>
-      {/* URL Input Section */}
-      <Grid container spacing={2} alignItems="center" sx={{ mb: 3 }}>
+       <Grid container spacing={2} alignItems="center" justifyContent="center" sx={{ mb: 3 }}>
         <Grid item xs={12} md={8}>
           <TextField
             fullWidth
@@ -37,56 +34,58 @@ const UrlInputSection = ({
             onKeyPress={(e) => e.key === 'Enter' && onAnalyze()}
             sx={{
               '& .MuiOutlinedInput-root': {
-                borderRadius: '25px',
-                backgroundColor: '#fff',
+                borderRadius: '12px',
+                backgroundColor: '#ffffff',
+                boxShadow: '0 6px 18px rgba(46,125,50,0.06)',
                 '& fieldset': {
-                  borderColor: '#e9ecef',
+                  borderColor: '#eef2f0',
                 },
                 '&:hover fieldset': {
-                  borderColor: '#007bff',
+                  borderColor: '#cfe9d2',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#007bff',
+                  borderColor: '#2e7d32',
                   borderWidth: '2px',
                 },
+                minHeight: '52px',
               },
               '& .MuiOutlinedInput-input': {
                 padding: '12px 16px',
                 fontSize: '16px',
+                '&::placeholder': {
+                  color: '#bfc9c1',
+                },
               },
             }}
           />
         </Grid>
-        <Grid item xs={6} md={2}>
+        <Grid item xs={12} sm={4} md={2}>
           <Button
             fullWidth
             variant="contained"
             onClick={onAnalyze}
-            startIcon={<Search size={14}/>}
+            startIcon={<Search size={16} color="#fff" />}
             sx={{
-              borderRadius: '25px',
-              padding: '10px 16px',
-              fontSize: '14px',
+              borderRadius: '10px',
+              padding: '11px 18px',
+              fontSize: '15px',
               textTransform: 'none',
-              backgroundColor: '#007bff',
+              backgroundColor: '#2e7d32',
+              color: '#fff',
+              boxShadow: '0 6px 18px rgba(46,125,50,0.15)',
               '&:hover': {
-                backgroundColor: '#0056b3',
+                backgroundColor: '#245e25',
               },
+              minHeight: '48px',
+              fontWeight: 700,
             }}
           >
             {loading ? 'Analyzing...' : 'Analyze'}
           </Button>
         </Grid>
-        
       </Grid>
 
- 
-      {/* Error State */}
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
+     
     </>
   );
 };
