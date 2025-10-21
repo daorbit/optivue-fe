@@ -20,7 +20,7 @@ class ApiUtils {
   static {
     // Initialize axios instance with default configuration
     this.axiosInstance = axios.create({
-      baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000',
+      baseURL: import.meta.env.VITE_API_BASE_URL || 'https://optivue-be.vercel.app',
       timeout: 30000, // 30 seconds timeout
       headers: {
         'Content-Type': 'application/json',

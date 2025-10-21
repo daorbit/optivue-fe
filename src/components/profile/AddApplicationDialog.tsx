@@ -44,7 +44,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
     setModalErrors({});
     setNewApp({
       category: "",
-      type: "",
+      type: "GOOGLE_ANALYTICS",
       label: "",
       ga4: "",
       accountId: "",
@@ -107,14 +107,14 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
     >
       <DialogTitle
         sx={{
-          background: '#2f855a',
-          color: "white",
+           color: "#000",
           display: "flex",
           alignItems: "center",
-          gap: 2,
+          gap: 1,
+          fontSize: 14,
         }}
       >
-        <Plus size={24} />
+        <Plus size={14} />
         Add New Application
       </DialogTitle>
       <DialogContent sx={{ p: 4 }}>

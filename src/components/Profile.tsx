@@ -18,7 +18,7 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import { Activity, Save, Trash2, Plus, BarChart3, Search } from "lucide-react";
+import { Activity, Trash2, Plus, BarChart3, Search } from "lucide-react";
 import AddApplicationDialog from "./profile/AddApplicationDialog";
 
 const Profile: React.FC = () => {
@@ -45,6 +45,13 @@ const Profile: React.FC = () => {
       });
     }
   }, [user]);
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => setMessage(""), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -96,13 +103,21 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ py: 2, position: 'relative' }}>
-      <Typography variant="h4" fontWeight="bold" gutterBottom sx={{ mb: 3, color: '#333' }}>
+    <Container maxWidth="md" sx={{ py: 2, position: "relative" }}>
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        gutterBottom
+        sx={{ mb: 3, color: "#333" }}
+      >
         My Profile
       </Typography>
 
       {/* User Information */}
-      <Card elevation={0} sx={{ borderRadius: 3, border: '1px solid #e0e0e0', mb: 4 }}>
+      <Card
+        elevation={0}
+        sx={{ borderRadius: 3, border: "1px solid #e0e0e0", mb: 4 }}
+      >
         <CardContent sx={{ p: 3 }}>
           <Box sx={{ textAlign: "center", mb: 3 }}>
             <Avatar
@@ -115,7 +130,9 @@ const Profile: React.FC = () => {
                 fontSize: "2rem",
               }}
             >
-              {formData.username ? formData.username.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+              {formData.username
+                ? formData.username.charAt(0).toUpperCase()
+                : user.email.charAt(0).toUpperCase()}
             </Avatar>
             <Typography variant="h5" fontWeight="600" gutterBottom>
               {formData.username || "User"}
@@ -171,7 +188,12 @@ const Profile: React.FC = () => {
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 Connected Services
               </Typography>
-              <Typography variant="h5" fontWeight="bold" color="#2f855a" sx={{ mt: 1 }}>
+              <Typography
+                variant="h5"
+                fontWeight="bold"
+                color="#2f855a"
+                sx={{ mt: 1 }}
+              >
                 {formData.applications?.length || 0}
               </Typography>
             </Grid>
@@ -181,8 +203,15 @@ const Profile: React.FC = () => {
 
       {/* Connected Applications */}
       <Box sx={{ mb: 4 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-          <Typography variant="h5" fontWeight="600" color="text.primary">
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            mb: 3,
+          }}
+        >
+          <Typography variant="h6" fontWeight="600" color="text.primary">
             Connected Applications
           </Typography>
           <Button
@@ -190,9 +219,9 @@ const Profile: React.FC = () => {
             startIcon={<Plus size={18} />}
             onClick={() => setAddOpen(true)}
             sx={{
-              background: '#2f855a',
-              '&:hover': {
-                background: '#38a169',
+              background: "#2f855a",
+              "&:hover": {
+                background: "#38a169",
               },
               borderRadius: 2,
               px: 3,
@@ -206,17 +235,20 @@ const Profile: React.FC = () => {
           <Grid container spacing={2}>
             {formData.applications.map((app, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
-                <Card elevation={0} sx={{ 
-                  borderRadius: 2, 
-                  border: '1px solid #e0e0e0',
-                  position: 'relative',
-                  '&:hover': { borderColor: '#2f855a' }
-                }}>
-                  <CardContent sx={{ p: 2, textAlign: 'center' }}>
+                <Card
+                  elevation={0}
+                  sx={{
+                    borderRadius: 2,
+                    border: "1px solid #e0e0e0",
+                    position: "relative",
+                    "&:hover": { borderColor: "#2f855a" },
+                  }}
+                >
+                  <CardContent sx={{ p: 2, textAlign: "center" }}>
                     <Box sx={{ mb: 2 }}>
-                      {app.type === 'FACEBOOK_INSIGHTS' ? (
+                      {app.type === "FACEBOOK_INSIGHTS" ? (
                         <BarChart3 size={32} color="#2f855a" />
-                      ) : app.type === 'GOOGLE_ANALYTICS' ? (
+                      ) : app.type === "GOOGLE_ANALYTICS" ? (
                         <Search size={32} color="#2f855a" />
                       ) : (
                         <Activity size={32} color="#2f855a" />
@@ -231,7 +263,7 @@ const Profile: React.FC = () => {
                       sx={{
                         bgcolor: "#e3f2fd",
                         color: "#1976d2",
-                        mb: 1
+                        mb: 1,
                       }}
                     />
                     <Typography variant="body2" color="text.secondary">
@@ -241,12 +273,12 @@ const Profile: React.FC = () => {
                       size="small"
                       onClick={() => removeApplication(index)}
                       sx={{
-                        position: 'absolute',
+                        position: "absolute",
                         top: 8,
                         right: 8,
-                        color: '#d32f2f',
-                        '&:hover': {
-                          bgcolor: 'rgba(211, 47, 47, 0.1)',
+                        color: "#d32f2f",
+                        "&:hover": {
+                          bgcolor: "rgba(211, 47, 47, 0.1)",
                         },
                       }}
                     >
@@ -258,26 +290,21 @@ const Profile: React.FC = () => {
             ))}
           </Grid>
         ) : (
-          <Card elevation={0} sx={{ 
-            borderRadius: 2, 
-            border: '2px dashed #ddd',
-            p: 4,
-            textAlign: 'center'
-          }}>
+          <Card
+            elevation={0}
+            sx={{
+              borderRadius: 2,
+              border: "2px dashed #ddd",
+              p: 4,
+              textAlign: "center",
+            }}
+          >
             <Typography variant="h6" color="text.secondary" gutterBottom>
               No applications connected
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
               Connect your analytics platforms to start gathering insights
             </Typography>
-            <Button
-              variant="outlined"
-              startIcon={<Plus size={18} />}
-              onClick={() => setAddOpen(true)}
-              sx={{ borderRadius: 2 }}
-            >
-              Add Your First Application
-            </Button>
           </Card>
         )}
       </Box>
@@ -289,28 +316,30 @@ const Profile: React.FC = () => {
         onClick={handleSubmit}
         disabled={loading}
         sx={{
-          position: 'fixed',
+          position: "fixed",
           bottom: 24,
           right: 24,
-          background: '#2f855a',
-          '&:hover': {
-            background: '#38a169',
+          borderRadius: 2,
+          height: 48,
+          width: 120,
+          background: "#2f855a",
+          "&:hover": {
+            background: "#38a169",
           },
         }}
       >
-        <Save size={24} />
+        Save
       </Fab>
 
-      {/* Message Alert */}
       {message && (
         <Alert
           severity={message.includes("successfully") ? "success" : "error"}
           sx={{
-            position: 'fixed',
+            position: "fixed",
             bottom: 24,
             left: 24,
             borderRadius: 2,
-            minWidth: 300
+            minWidth: 300,
           }}
         >
           {message}

@@ -151,15 +151,15 @@ const AdditionalSeoDetails = ({ analysis }: AdditionalSeoDetailsProps) => {
                       alt={image.alt || 'No alt text'}
                       style={{ maxWidth: '100%', maxHeight: 120, objectFit: 'contain', borderRadius: 4 }}
                     />
-                    <Typography variant="caption" display="block" sx={{ mt: 1, fontWeight: 'bold' }}>
+                    {/* <Typography variant="caption" display="block" sx={{ mt: 1, fontWeight: 'bold' }}>
                       {image.src.split('/').pop()}
-                    </Typography>
+                    </Typography> */}
                     <Typography variant="caption" display="block" color="text.secondary">
                       Alt: {image.alt || 'None'}
                     </Typography>
-                    <Typography variant="caption" display="block" color="text.secondary">
+                    {/* <Typography variant="caption" display="block" color="text.secondary">
                       Size: {image.width || '?'}x{image.height || '?'}
-                    </Typography>
+                    </Typography> */}
                     <Typography variant="caption" display="block" color={image.hasAlt ? 'success.main' : 'error.main'}>
                       Has Alt: {image.hasAlt ? 'Yes' : 'No'}
                     </Typography>

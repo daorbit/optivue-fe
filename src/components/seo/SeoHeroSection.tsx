@@ -14,8 +14,8 @@ const SeoHeroSection = ({ url, setUrl, onAnalyze, onClear, loading, error }: Seo
   return (
     <Box
       sx={{
-        background: 'linear-gradient(135deg, #66bb6a 0%, #81c784 100%)',
-        color: 'white',
+        background: 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)',
+        color: '#2e7d32',
         py: 6,
         mb: 4,
       }}

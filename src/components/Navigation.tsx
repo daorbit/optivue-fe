@@ -86,8 +86,9 @@ const Navigation: React.FC = () => {
                   borderRadius: 2,
                   transition: "all 0.3s ease",
                   "&.active": {
-                    background: "#0f7b76",
-                    color: "#fff",
+                    background:
+                      "linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)",
+                    color: "#2e7d32",
                     fontWeight: 600,
                   },
                 }}

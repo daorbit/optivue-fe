@@ -40,7 +40,7 @@ const SeoAnalysis = () => {
         loading={loading}
         error={error}
       />
-      <Box>
+      <Box sx={{padding:"24px"}}>
         {loading && <SeoLoadingState />}
         <SeoErrorAlert error={error} />
         {analysis && !loading && <SeoAnalysisResults analysis={analysis} onClear={handleClear} />}
