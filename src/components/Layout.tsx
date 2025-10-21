@@ -1,8 +1,8 @@
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { Box } from "@mui/material";
 import { useAppSelector } from "../store/hooks";
-import Sidebar from "./Sidebar";
-import { MainContent, SidebarWrapper } from "../styles/Layout.styles";
+import Navigation from "./Navigation";
+import { MainContent } from "../styles/Layout.styles";
 
 interface LayoutProps {
   children: ReactNode;
@@ -10,22 +10,12 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-
-  const handleSidebarToggle = (collapsed: boolean) => {
-    setIsSidebarCollapsed(collapsed);
-  };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      {isAuthenticated && (
-        <SidebarWrapper>
-          <Sidebar onToggle={handleSidebarToggle} />
-        </SidebarWrapper>
-      )}
-
-      <MainContent collapsed={isSidebarCollapsed} isAuthenticated={isAuthenticated}>
-        <Box sx={{ padding: "24px", width: "100%" }}>{children}</Box>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      {isAuthenticated && <Navigation />}
+      <MainContent isAuthenticated={isAuthenticated}>
+        <Box sx={{ width: "100%" }}>{children}</Box>
       </MainContent>
     </Box>
   );

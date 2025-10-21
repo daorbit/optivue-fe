@@ -30,12 +30,12 @@ export const NavButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const MainContent = styled(Box)<{ collapsed?: boolean; isAuthenticated?: boolean }>(({ collapsed, isAuthenticated }) => ({
+export const MainContent = styled(Box)<{ isAuthenticated?: boolean }>(({ isAuthenticated }) => ({
   flex: 1,
   minHeight: '100vh',
   backgroundColor: '#fafafa',
-  marginLeft: isAuthenticated ? (collapsed ? 60 : 240) : 0, // Only apply margin when sidebar is present
-  transition: 'margin-left 0.3s ease', // Smooth transition when sidebar collapses
+  marginTop: isAuthenticated ? 0 : 0, // Account for AppBar height
+  transition: 'margin-top 0.3s ease',
 }));
 
 export const SidebarWrapper = styled(Box)(() => ({

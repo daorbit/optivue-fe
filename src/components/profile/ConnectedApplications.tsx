@@ -47,15 +47,17 @@ const ConnectedApplications: React.FC<ConnectedApplicationsProps> = ({
           fontWeight="600"
           color="text.primary"
         >
-          Connected Applications
+    Connected Applications
         </Typography>
         <Button
           variant="contained"
           startIcon={<Plus size={18} />}
           onClick={onAddClick}
           sx={{
-            bgcolor: "#0f7b76",
-            "&:hover": { bgcolor: "#0c6b67" },
+            background: '#2f855a',
+            '&:hover': {
+              background: '#38a169',
+            },
             borderRadius: 2,
             px: 3,
           }}

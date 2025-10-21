@@ -107,7 +107,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
     >
       <DialogTitle
         sx={{
-          bgcolor: "#0f7b76",
+          background: '#2f855a',
           color: "white",
           display: "flex",
           alignItems: "center",
@@ -282,8 +282,10 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
           onClick={handleAdd}
           variant="contained"
           sx={{
-            bgcolor: "#0f7b76",
-            "&:hover": { bgcolor: "#0c6b67" },
+            background: '#2f855a',
+            '&:hover': {
+              background: '#38a169',
+            },
             borderRadius: 2,
             px: 4,
           }}

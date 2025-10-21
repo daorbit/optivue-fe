@@ -189,7 +189,7 @@ const FacebookAdsDashboard = () => {
   const additionalMetrics = calculateAdditionalMetrics();
 
   return (
-    <div className="facebook-ads-dashboard">
+    <div className="facebook-ads-dashboard" style={{ padding: "24px"}}>
       <div
         style={{
           display: "flex",
@@ -206,7 +206,7 @@ const FacebookAdsDashboard = () => {
             margin: 0,
           }}
         >
-          Facebook Ads Dashboard
+          Meta Ads Dashboard
         </h1>
         <RefreshCw
           size={14}
