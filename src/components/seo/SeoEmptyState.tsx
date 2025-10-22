@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
+import { ArrowUpWideNarrow } from "lucide-react";
 
 const summaryData = [
   { key: "overall", label: "Overall", value: 85 },
@@ -62,8 +63,15 @@ const SeoEmptyState: React.FC<{ onAnalyzeClick?: () => void }> = () => {
           textAlign="center"
           sx={{ marginTop: "150px", fontWeight: "700" }}
         >
-          For SEO Analysis, Analyze URL
+          For SEO Analysis, Enter URL Above
         </Typography>
+        <ArrowUpWideNarrow
+          style={{
+            marginTop: "152px",
+            marginLeft: "10px",
+            color: "text.secondary",
+          }}
+        />
       </Box>
       {/* Content behind the blur */}
       <Box
