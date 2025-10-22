@@ -1,10 +1,14 @@
 // React import not required with the new JSX transform
-import { useState } from "react";
-import { Box, Card, CardContent, Grid, Typography, Chip } from "@mui/material";
+import { useState, useEffect, useRef } from "react";
+import { Box, Card, CardContent, Grid, Typography, Chip, Button, Alert } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 // removed Recharts line chart — charts are no longer rendered here
 // Gauge rendering moved into PerformanceScores
 import PerformanceScores from "./PerformanceScores";
 import SeoSuggestions from "./SeoSuggestions";
+import AiSuggestions from "./AiSuggestions";
+import { getAiSuggestions } from "../../store/slices/seoSlice";
+import { RootState } from "../../store";
 
 interface PerformanceTabProps {
   analysis: any;
@@ -20,7 +24,17 @@ const metricKeys = [
 ];
 
 const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
+  const dispatch = useDispatch();
+  const { aiSuggestions, aiLoading, aiError } = useSelector((state: RootState) => state.seo);
   const perf = analysis.performance || {};
+  const aiSuggestionsRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to AI suggestions when they load
+  useEffect(() => {
+    if (aiSuggestions && aiSuggestions.length > 0 && aiSuggestionsRef.current) {
+      aiSuggestionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [aiSuggestions]);
 
   // Determine available strategies and selected strategy state
   const desktopAvailable = !!perf.desktop;
@@ -43,6 +57,15 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
     // value may be a string or number
     const n = Number(value);
     return Number.isFinite(n) ? n : null;
+  };
+
+  const handleGetAiSuggestions = () => {
+    // Collect issues from current strategy only
+    const currentSuggestions = strategy === "desktop" ? desktop?.suggestions : mobile?.suggestions;
+
+    if (currentSuggestions && currentSuggestions.length > 0) {
+      dispatch(getAiSuggestions(currentSuggestions) as any);
+    }
   };
 
   const desktopOverall = desktop
@@ -135,8 +158,8 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
                     <Chip
                       label={
                         desktopOverall !== null
-                          ? `Desktop ${Math.round(desktopOverall)}`
-                          : "Desktop N/A"
+                          ? `Desktop`
+                          : "Desktop"
                       }
                       color={strategy === "desktop" ? "primary" : "default"}
                       onClick={() => setStrategy("desktop")}
@@ -148,8 +171,8 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
                     <Chip
                       label={
                         mobileOverall !== null
-                          ? `Mobile ${Math.round(mobileOverall)}`
-                          : "Mobile N/A"
+                          ? `Mobile`
+                          : "Mobile"
                       }
                       color={strategy === "mobile" ? "primary" : "default"}
                       onClick={() => setStrategy("mobile")}
@@ -195,7 +218,24 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
         ))}
       </Grid>
 
-      {/* SEO Suggestions */}
+      <Box sx={{ mt: 3}}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleGetAiSuggestions}
+          disabled={aiLoading}
+          sx={{ minWidth: 200, borderRadius: '6px' ,float: 'right'}}
+        >
+          {aiLoading ? 'Get AI Suggestions...' : 'Get AI Suggestions'}
+        </Button>
+      </Box>
+
+      {aiError && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {aiError}
+        </Alert>
+      )}
+
       {(strategy === "desktop" ? desktop?.suggestions : mobile?.suggestions) && (
         <SeoSuggestions
           suggestions={strategy === "desktop" ? desktop.suggestions : mobile.suggestions}
@@ -203,12 +243,14 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
         />
       )}
 
-      {/* Aggregated Suggestions */}
-      {perf.suggestions && perf.suggestions.length > 0 && (
-        <SeoSuggestions
-          suggestions={perf.suggestions}
-          strategy="aggregated"
-        />
+      {/* AI Suggestions Display */}
+      {aiSuggestions && aiSuggestions.length > 0 && (
+        <Box ref={aiSuggestionsRef} sx={{ mt: 3 }}>
+          <AiSuggestions
+            suggestions={aiSuggestions}
+            strategy={strategy}
+          />
+        </Box>
       )}
     </Box>
   );

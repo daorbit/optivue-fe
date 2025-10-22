@@ -104,12 +104,18 @@ interface SeoAnalysis {
 
 interface SeoState {
   analysis: SeoAnalysis | null;
+  aiSuggestions: any[] | null;
+  aiLoading: boolean;
+  aiError: string | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: SeoState = {
   analysis: null,
+  aiSuggestions: null,
+  aiLoading: false,
+  aiError: null,
   loading: false,
   error: null,
 };
@@ -182,16 +188,37 @@ export const analyzeSeo = createAsyncThunk(
   }
 );
 
+// Async thunk for AI suggestions
+export const getAiSuggestions = createAsyncThunk(
+  'seo/getAiSuggestions',
+  async (issues: any[], { rejectWithValue }) => {
+    try {
+      const response = await apiService.getAiSuggestions(issues);
+      
+      if (!response.success) {
+        return rejectWithValue(response.message || 'AI suggestions failed');
+      }
+
+      return response.data || response.suggestions || [];
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'AI suggestions failed');
+    }
+  }
+);
+
 const seoSlice = createSlice({
   name: 'seo',
   initialState,
   reducers: {
     clearAnalysis: (state) => {
       state.analysis = null;
+      state.aiSuggestions = null;
+      state.aiError = null;
       state.error = null;
     },
     clearError: (state) => {
       state.error = null;
+      state.aiError = null;
     },
   },
   extraReducers: (builder) => {
@@ -208,6 +235,19 @@ const seoSlice = createSlice({
       .addCase(analyzeSeo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string || action.error.message || 'SEO analysis failed';
+      })
+      .addCase(getAiSuggestions.pending, (state) => {
+        state.aiLoading = true;
+        state.aiError = null;
+      })
+      .addCase(getAiSuggestions.fulfilled, (state, action: PayloadAction<any[]>) => {
+        state.aiLoading = false;
+        state.aiSuggestions = action.payload;
+        state.aiError = null;
+      })
+      .addCase(getAiSuggestions.rejected, (state, action) => {
+        state.aiLoading = false;
+        state.aiError = action.payload as string || action.error.message || 'AI suggestions failed';
       });
   },
 });
