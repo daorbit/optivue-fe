@@ -1,15 +1,16 @@
-import { HomeContainer, HomeTitle, HomeDescription } from '../styles/Home.styles'
+import QuickActionsSection from "./Home/QuickActionsSection";
 
-const Home = () => (
-  <HomeContainer>
-    <HomeTitle variant="h4">
-      Welcome to OptiVue
-    </HomeTitle>
-    <HomeDescription variant="body1">
-      Your comprehensive dashboard for managing and optimizing your data visualization needs.
-      Explore features, manage your profile, and get insights from your data.
-    </HomeDescription>
-  </HomeContainer>
-)
+import StatsSection from "./Home/StatsSection";
+import WelcomeSection from "./Home/WelcomeSection";
 
-export default Home
+const Home = () => {
+  return (
+    <div style={{ padding: "24px" }}>
+      <WelcomeSection />
+      <QuickActionsSection />
+      <StatsSection />
+    </div>
+  );
+};
+
+export default Home;

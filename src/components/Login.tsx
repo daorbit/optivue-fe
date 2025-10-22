@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
-import { TextField, Typography } from '@mui/material';
+import { TextField, Typography, IconButton, InputAdornment } from '@mui/material';
+import { Eye, EyeOff } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '../store/hooks';
 import { login as loginAction } from '../store/slices/authSlice';
 import {
@@ -19,6 +20,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
@@ -70,11 +72,24 @@ const Login: React.FC = () => {
                 required
                 fullWidth
                 name="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <EyeOff /> : <Eye />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
             </StyledTextField>
             <LoginButton
