@@ -10,6 +10,25 @@ import { store } from './store'
 import { checkAuth } from './store/slices/authSlice'
 
 const theme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+       main: '#10b981',
+      light: '#6ee7b7',
+      dark: '#059669',
+      contrastText: '#ffffff',
+    },
+    secondary: {
+      main: '#065f46',
+    },
+    background: {
+      default: '#ffffff',
+     },
+    text: {
+      primary: '#042f1b',
+      secondary: '#4b5563',
+    },
+  },
   typography: {
     fontFamily: "'Mulish', 'Roboto', 'Helvetica', 'Arial', sans-serif",
   },

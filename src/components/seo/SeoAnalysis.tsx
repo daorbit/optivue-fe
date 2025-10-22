@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { analyzeSeo, clearAnalysis } from "../../store/slices/seoSlice";
 import { RootState } from "../../store";
+import { useLocation } from "react-router-dom";
 import SeoHeroSection from "./SeoHeroSection";
 import SeoLoadingState from "./SeoLoadingState";
 import SeoErrorAlert from "./SeoErrorAlert";
@@ -16,6 +17,14 @@ const SeoAnalysis = () => {
   const { analysis, loading, error } = useSelector(
     (state: RootState) => state.seo
   );
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.url) {
+      setUrl(location.state.url);
+      dispatch(analyzeSeo(location.state.url) as any);
+    }
+  }, [location.state, dispatch]);
 
   const handleAnalyze = () => {
     if (url.trim()) {
