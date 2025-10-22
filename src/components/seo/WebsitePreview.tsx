@@ -29,9 +29,8 @@ const WebsitePreview = ({ url }: WebsitePreviewProps) => {
   };
 
   return (
-    <Card sx={{ mb: 3, boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}>
+    <Card sx={{ mt: 2, boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}>
       <CardContent sx={{ p: 0 }}>
-        {/* Header */}
         <Box
           sx={{
             p: 1,
@@ -45,8 +44,7 @@ const WebsitePreview = ({ url }: WebsitePreviewProps) => {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              mb: 2,
-            }}
+             }}
           >
             <Typography variant="h6" sx={{ fontWeight: 600 }}>
               Website Preview

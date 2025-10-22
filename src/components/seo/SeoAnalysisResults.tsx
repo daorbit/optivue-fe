@@ -29,21 +29,24 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
         
       </Box>
 
-      {/* Quick Stats Grid */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item xs={6} md={3}>
-          <Card sx={{
-            textAlign: 'center',
-            backgroundColor: 'white',
-            border: '2px solid #66bb6a',
-            borderRadius: 2,
-            boxShadow: 'none',
-            '&:hover': {
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            }
-          }}>
-            <CardContent sx={{ py: 2, px: 1 }}>
-              <Typography variant="h4" sx={{ fontWeight: 600, mb: 0.5 }}>
+       <Grid container spacing={2} sx={{ mb: 3 }}>
+         <Grid item xs={6} md={3}>
+          <Card
+            role="region"
+            aria-label="H1 Tags summary"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              borderRadius: 3,
+              boxShadow: 'none',
+              px: 1,
+              '&:hover': { boxShadow: '0 2px 8px rgba(0,0,0,0.08)' },
+            }}
+          >
+            <Box sx={{ width: 8, height: 56, backgroundColor: '#374151', borderRadius: 2, mr: 2 }} />
+            <CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+              <Typography variant="h5" sx={{ fontWeight: 700 }}>
                 {analysis.content?.h1Count || 0}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -52,19 +55,24 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={6} md={3}>
-          <Card sx={{
-            textAlign: 'center',
-            backgroundColor: 'white',
-            border: '2px solid #f093fb',
-            borderRadius: 2,
-            boxShadow: 'none',
-            '&:hover': {
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            }
-          }}>
-            <CardContent sx={{ py: 2, px: 1 }}>
-              <Typography variant="h4" sx={{ fontWeight: 600, mb: 0.5 }}>
+
+         <Grid item xs={6} md={3}>
+          <Card
+            role="region"
+            aria-label="Words summary"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              borderRadius: 3,
+              boxShadow: 'none',
+              px: 1,
+              '&:hover': { boxShadow: '0 2px 8px rgba(0,0,0,0.08)' },
+            }}
+          >
+            <Box sx={{ width: 8, height: 56, backgroundColor: '#ef4444', borderRadius: 2, mr: 2 }} />
+            <CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+              <Typography variant="h5" sx={{ fontWeight: 700 }}>
                 {analysis.content?.wordCount || 0}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -73,19 +81,24 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={6} md={3}>
-          <Card sx={{
-            textAlign: 'center',
-            backgroundColor: 'white',
-            border: '2px solid #4facfe',
-            borderRadius: 2,
-            boxShadow: 'none',
-            '&:hover': {
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            }
-          }}>
-            <CardContent sx={{ py: 2, px: 1 }}>
-              <Typography variant="h4" sx={{ fontWeight: 600, mb: 0.5 }}>
+
+         <Grid item xs={6} md={3}>
+          <Card
+            role="region"
+            aria-label="Images summary"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              borderRadius: 3,
+              boxShadow: 'none',
+              px: 1,
+              '&:hover': { boxShadow: '0 2px 8px rgba(0,0,0,0.08)' },
+            }}
+          >
+            <Box sx={{ width: 8, height: 56, backgroundColor: '#3b82f6', borderRadius: 2, mr: 2 }} />
+            <CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+              <Typography variant="h5" sx={{ fontWeight: 700 }}>
                 {analysis.content?.images?.length || 0}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -94,19 +107,25 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
             </CardContent>
           </Card>
         </Grid>
+
+        {/* Internal links count (green) */}
         <Grid item xs={6} md={3}>
-          <Card sx={{
-            textAlign: 'center',
-            backgroundColor: 'white',
-            border: '2px solid #43e97b',
-            borderRadius: 2,
-            boxShadow: 'none',
-            '&:hover': {
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            }
-          }}>
-            <CardContent sx={{ py: 2, px: 1 }}>
-              <Typography variant="h4" sx={{ fontWeight: 600, mb: 0.5 }}>
+          <Card
+            role="region"
+            aria-label="Internal Links summary"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              borderRadius: 3,
+              boxShadow: 'none',
+              px: 1,
+              '&:hover': { boxShadow: '0 2px 8px rgba(0,0,0,0.08)' },
+            }}
+          >
+            <Box sx={{ width: 8, height: 56, backgroundColor: '#10b981', borderRadius: 2, mr: 2 }} />
+            <CardContent sx={{ py: 1.5, '&:last-child': { pb: 1.5 } }}>
+              <Typography variant="h5" sx={{ fontWeight: 700 }}>
                 {analysis.content?.internalLinks || 0}
               </Typography>
               <Typography variant="body2" color="text.secondary">
@@ -120,7 +139,7 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
       {/* Main Content Layout */}
       <Grid container spacing={4}>
         {/* Left Side - SEO Data Tabs */}
-        <Grid item xs={12} lg={8}>
+        <Grid item xs={12} lg={9}>
           <Tabs
             value={tabValue}
             onChange={(_, newValue) => setTabValue(newValue)}
@@ -205,7 +224,7 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
         </Grid>
 
         {/* Right Side - Website Preview */}
-        <Grid item xs={12} lg={4}>
+        <Grid item xs={12} lg={3}>
           <Box sx={{ position: 'sticky', top: 24 }}>
             <WebsitePreview url={analysis.url} />
           </Box>
