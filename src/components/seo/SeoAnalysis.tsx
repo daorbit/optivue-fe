@@ -10,6 +10,7 @@ import SeoHeroSection from "./SeoHeroSection";
 import SeoLoadingState from "./SeoLoadingState";
 import SeoErrorAlert from "./SeoErrorAlert";
 import SeoAnalysisResults from "./SeoAnalysisResults";
+import SeoEmptyState from "./SeoEmptyState";
 
 const SeoAnalysis = () => {
   const [url, setUrl] = useState("");
@@ -52,6 +53,7 @@ const SeoAnalysis = () => {
       <Box sx={{padding:"24px"}}>
         {loading && <SeoLoadingState />}
         <SeoErrorAlert error={error} />
+        {!analysis && !loading && <SeoEmptyState onAnalyzeClick={handleAnalyze} />}
         {analysis && !loading && <SeoAnalysisResults analysis={analysis} onClear={handleClear} />}
       </Box>
     </Box>
