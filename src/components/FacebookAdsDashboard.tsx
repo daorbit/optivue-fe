@@ -5,6 +5,7 @@ import {
   AdsTableWidget,
 } from "./Metawidgets";
 import AnalyticsDrawer from "./AnalyticsDrawer";
+import MetaEmptyState from "./MetaEmptyState";
 import { HelpCircle, RefreshCw } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,14 +13,12 @@ import {
   syncFacebookAdsData,
   selectFacebookAdsData,
   selectFacebookAdsLoading,
-  selectFacebookAdsLastFetched,
 } from "../store/slices/facebookAdsSlice";
 
 const FacebookAdsDashboard = () => {
   const dispatch = useDispatch();
   const data = useSelector(selectFacebookAdsData);
   const loading = useSelector(selectFacebookAdsLoading);
-  const lastFetched = useSelector(selectFacebookAdsLastFetched);
 
   const [dateRange, setDateRange] = useState({
     startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
@@ -28,19 +27,7 @@ const FacebookAdsDashboard = () => {
   const [campaignStatusFilter, setCampaignStatusFilter] = useState("active");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Check if data was fetched recently (within last 10 minutes)
-  const isDataFresh = () => {
-    if (!lastFetched) return false;
-    const tenMinutesAgo = Date.now() - 10 * 60 * 1000;
-    return lastFetched > tenMinutesAgo;
-  };
-
-  useEffect(() => {
-    if (!data || !isDataFresh()) {
-      fetchData();
-    }
-  }, []);
-
+ 
   useEffect(() => {
     if (data) {
       fetchData();
@@ -189,7 +176,7 @@ const FacebookAdsDashboard = () => {
   const additionalMetrics = calculateAdditionalMetrics();
 
   return (
-    <div className="facebook-ads-dashboard" style={{ padding: "24px"}}>
+    <div className="facebook-ads-dashboard" style={{ padding: "24px" }}>
       <div
         style={{
           display: "flex",
@@ -237,39 +224,27 @@ const FacebookAdsDashboard = () => {
           onCampaignStatusChange={setCampaignStatusFilter}
           loading={loading}
         />
-        <PerformanceMetricsWidget
-          totals={totals}
-          currency="USD"
-          formatNumber={formatNumber}
-          formatCurrencyWithConversion={formatCurrencyWithConversion}
-          loading={loading}
-        />
+        {!data ? (
+          <MetaEmptyState />
+        ) : (
+          <>
+            <PerformanceMetricsWidget
+              totals={totals}
+              currency="USD"
+              formatNumber={formatNumber}
+              formatCurrencyWithConversion={formatCurrencyWithConversion}
+              loading={loading}
+            />
 
-        {/* {processedCampaigns && (
-          <Box sx={{ display: 'flex', gap: 3, mb: 4 }}>
-            <Box sx={{ flex: 1 }}>
-              <CampaignSummaryWidget
-                campaigns={processedCampaigns}
-                platform="facebook"
+            {data?.ads && (
+              <AdsTableWidget
+                ads={data.ads}
+                campaignStatusFilter={campaignStatusFilter}
                 formatCurrencyWithConversion={formatCurrencyWithConversion}
+                loading={loading}
               />
-            </Box>
-            <Box sx={{ flex: 1 }}>
-              <CampaignSummaryWidget
-                campaigns={processedCampaigns}
-                platform="instagram"
-                formatCurrencyWithConversion={formatCurrencyWithConversion}
-              />
-            </Box>
-          </Box>
-        )} */}
-        {data?.ads && (
-          <AdsTableWidget
-            ads={data.ads}
-            campaignStatusFilter={campaignStatusFilter}
-            formatCurrencyWithConversion={formatCurrencyWithConversion}
-            loading={loading}
-          />
+            )}
+          </>
         )}
       </div>
 
