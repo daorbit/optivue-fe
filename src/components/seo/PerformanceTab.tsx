@@ -1,4 +1,3 @@
-// React import not required with the new JSX transform
 import { useState, useEffect, useRef } from "react";
 import {
   Box,
@@ -11,11 +10,11 @@ import {
   Alert,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-// removed Recharts line chart — charts are no longer rendered here
-// Gauge rendering moved into PerformanceScores
+
 import PerformanceScores from "./PerformanceScores";
 import SeoSuggestions from "./SeoSuggestions";
 import AiSuggestions from "./AiSuggestions";
+import PerformanceMetrics from "./PerformanceMetrics";
 import { getAiSuggestions } from "../../store/slices/seoSlice";
 import { RootState } from "../../store";
 
@@ -41,7 +40,12 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
   const aiSuggestionsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!aiLoading && aiSuggestions && aiSuggestions.length > 0 && aiSuggestionsRef.current) {
+    if (
+      !aiLoading &&
+      aiSuggestions &&
+      aiSuggestions.length > 0 &&
+      aiSuggestionsRef.current
+    ) {
       setTimeout(() => {
         aiSuggestionsRef.current?.scrollIntoView({
           behavior: "smooth",
@@ -85,15 +89,10 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
     : parseScore(perf.overallScore);
   const mobileOverall = mobile ? parseScore(mobile.overallScore) : null;
 
-  // Gauge rendering moved into PerformanceScores
-
-  // Helper to safely extract raw metric entries from multiple possible shapes
   const getRawMetric = (source: any, key: string) => {
     if (!source) return null;
-    // Most modern shape: source.metrics[key]
     if (source.metrics && source.metrics[key] !== undefined)
       return source.metrics[key];
-    // Older or alternate shapes: source[key] may be the metric object or numeric value
     if (source[key] !== undefined) return source[key];
     return null;
   };
@@ -108,13 +107,11 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
         return parseScore(raw.value);
       return null;
     }
-    // fallback attempt to coerce
     const n = Number(raw);
     return Number.isFinite(n) ? n : null;
   };
 
   const data = metricKeys.map((m) => {
-    // Prefer the desktop/mobile-specific value if present, otherwise fall back to performance-level metrics
     const desktopRaw = desktop
       ? getRawMetric(desktop, m.key)
       : getRawMetric(perf, m.key);
@@ -140,8 +137,6 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
       mobileDisplay,
     };
   });
-
-  // metrics list preserved below; charting moved to PerformanceScores
 
   return (
     <Box>
@@ -190,37 +185,11 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
         </CardContent>
       </Card>
 
-      {/* Category gauges (Performance / Accessibility / Best Practices / SEO) */}
       <Box sx={{ mb: 3 }}>
         <PerformanceScores analysis={analysis} selectedStrategy={strategy} />
       </Box>
 
-      {/* Simple metric list */}
-      <Grid container spacing={2}>
-        {data.map((d) => (
-          <Grid item xs={12} sm={6} md={4} key={d.name}>
-            <Card variant="outlined" sx={{ p: 2 }}>
-              <Typography variant="subtitle2" color="text.secondary">
-                {d.name}
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                <Typography variant="body2" color="text.secondary">
-                  Desktop
-                </Typography>
-                <Typography variant="body2">{d.desktopDisplay}</Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mt: 0.5 }}
-                >
-                  Mobile
-                </Typography>
-                <Typography variant="body2">{d.mobileDisplay}</Typography>
-              </Box>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <PerformanceMetrics data={data} selectedStrategy={strategy} />
 
       <Box sx={{ mt: 3 }}>
         <Button
