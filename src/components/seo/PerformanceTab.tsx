@@ -4,6 +4,7 @@ import { Box, Card, CardContent, Grid, Typography, Chip } from "@mui/material";
 // removed Recharts line chart — charts are no longer rendered here
 // Gauge rendering moved into PerformanceScores
 import PerformanceScores from "./PerformanceScores";
+import SeoSuggestions from "./SeoSuggestions";
 
 interface PerformanceTabProps {
   analysis: any;
@@ -193,6 +194,22 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
           </Grid>
         ))}
       </Grid>
+
+      {/* SEO Suggestions */}
+      {(strategy === "desktop" ? desktop?.suggestions : mobile?.suggestions) && (
+        <SeoSuggestions
+          suggestions={strategy === "desktop" ? desktop.suggestions : mobile.suggestions}
+          strategy={strategy}
+        />
+      )}
+
+      {/* Aggregated Suggestions */}
+      {perf.suggestions && perf.suggestions.length > 0 && (
+        <SeoSuggestions
+          suggestions={perf.suggestions}
+          strategy="aggregated"
+        />
+      )}
     </Box>
   );
 };
