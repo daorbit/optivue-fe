@@ -184,17 +184,17 @@ const SeoSuggestions: React.FC<SeoSuggestionsProps> = ({
             }}
           >
             <Accordion
-              defaultExpanded={category === "performance"}
+              defaultExpanded={true}
               sx={{ boxShadow: "none", "&:before": { display: "none" } }}
             >
               <AccordionSummary
                 expandIcon={<ChevronDown size={20} />}
                 sx={{
-                  backgroundColor: `${getCategoryColor(category)}08`,
+                  backgroundColor: `${getCategoryColor(category)}20`,
                   borderRadius: 2,
                   minHeight: 64,
                   "&:hover": {
-                    backgroundColor: `${getCategoryColor(category)}12`,
+                    backgroundColor: `${getCategoryColor(category)}30`,
                   },
                   "& .MuiAccordionSummary-content": { alignItems: "center" },
                 }}
@@ -211,12 +211,12 @@ const SeoSuggestions: React.FC<SeoSuggestionsProps> = ({
                   <Box sx={{ flex: 1 }}>
                     <Typography
                       variant="subtitle1"
-                      sx={{ fontWeight: 600, textTransform: "capitalize" }}
+                      sx={{ fontWeight: 600, textTransform: "capitalize", wordWrap: 'break-word' }}
                     >
                       {category.replace("-", " ")} ({categorySuggestions.length}
                       )
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary" sx={{ wordWrap: 'break-word' }}>
                       {category === "performance" &&
                         "Speed and loading optimizations"}
                       {category === "accessibility" &&
@@ -230,13 +230,13 @@ const SeoSuggestions: React.FC<SeoSuggestionsProps> = ({
                 </Box>
               </AccordionSummary>
 
-              <AccordionDetails sx={{ p: 0 }}>
+              <AccordionDetails sx={{ p: 2 }}>
                 <List sx={{ py: 0 }}>
                   {categorySuggestions.map((suggestion, index) => (
                     <Box key={suggestion.id || index}>
                       <ListItem
                         sx={{
-                          px: 3,
+                          px: 1,
                           py: 2,
                           flexDirection: "column",
                           alignItems: "stretch",
@@ -248,7 +248,7 @@ const SeoSuggestions: React.FC<SeoSuggestionsProps> = ({
                             display: "flex",
                             alignItems: "flex-start",
                             gap: 2,
-                            mb: 2,
+                            mb: 3,
                             width: "100%",
                           }}
                         >
@@ -265,7 +265,7 @@ const SeoSuggestions: React.FC<SeoSuggestionsProps> = ({
                           <Box sx={{ flex: 1 }}>
                             <Typography
                               variant="subtitle1"
-                              sx={{ fontWeight: 600, mb: 1, lineHeight: 1.3 }}
+                              sx={{ fontWeight: 600, mb: 1, lineHeight: 1.3, wordWrap: 'break-word' }}
                             >
                               {suggestion.title}
                             </Typography>
@@ -317,10 +317,11 @@ const SeoSuggestions: React.FC<SeoSuggestionsProps> = ({
                         <Typography
                           variant="body2"
                           sx={{
-                            color: "#555",
+                            color: "text.primary",
                             lineHeight: 1.6,
                             mb: suggestion.fixSuggestions?.length ? 2 : 0,
                             pl: 2.5,
+                            wordWrap: 'break-word'
                           }}
                         >
                           {suggestion.description ||
@@ -362,7 +363,7 @@ const SeoSuggestions: React.FC<SeoSuggestionsProps> = ({
                                       </Typography>
                                       <Typography
                                         variant="body2"
-                                        sx={{ color: "#555", lineHeight: 1.4 }}
+                                        sx={{ color: "text.primary", lineHeight: 1.4, wordWrap: 'break-word' }}
                                       >
                                         {fix}
                                       </Typography>
