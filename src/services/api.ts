@@ -215,7 +215,7 @@ class ApiService {
 
   // SEO Analysis API
   async analyzeSeo(url: string): Promise<any> {
-    return await ApiUtils.post('/api/seo/analyze', { url }, 'analyze SEO');
+    return await ApiUtils.post('/api/seo/analyze?nocaching=true', { url }, 'analyze SEO');
   }
 }
 
