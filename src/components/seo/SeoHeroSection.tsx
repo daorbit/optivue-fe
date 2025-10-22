@@ -23,8 +23,7 @@ const SeoHeroSection = ({
       sx={{
         background: "linear-gradient(135deg, #eef7ee 0%, #dff3df 100%)",
         py: { xs: 6, md: 8},
-        mb: 4,
-      }}
+       }}
     >
       <Container maxWidth="lg">
         <Box sx={{ textAlign: "center", mb: 4 }}>

@@ -87,7 +87,6 @@ const AiSuggestions: React.FC<AiSuggestionsProps> = ({
     );
   }
 
-  // Group suggestions by priority
   const groupedSuggestions = suggestions.reduce((acc, suggestion) => {
     const priority = suggestion.priority || "other";
     if (!acc[priority]) {
@@ -110,7 +109,6 @@ const AiSuggestions: React.FC<AiSuggestionsProps> = ({
 
   return (
     <Box sx={{ mt: 3 ,borderTop: '1px solid #e0e0e0', pt: 3}}>
-      {/* Header with Summary */}
       <Box sx={{ mb: 3 }}>
         <Typography
           variant="h6"

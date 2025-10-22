@@ -166,10 +166,9 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
               }
             }}>
               <CardContent sx={{ 
-                p: 3,
+                p: 2,
                 overflow: 'auto',
-                paddingRight: '6px', // Reserve space for scrollbar
-                '&::-webkit-scrollbar': {
+                 '&::-webkit-scrollbar': {
                   width: '0px',
                 },
                 '&::-webkit-scrollbar-track': {

@@ -1,6 +1,15 @@
 // React import not required with the new JSX transform
 import { useState, useEffect, useRef } from "react";
-import { Box, Card, CardContent, Grid, Typography, Chip, Button, Alert } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+  Chip,
+  Button,
+  Alert,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 // removed Recharts line chart — charts are no longer rendered here
 // Gauge rendering moved into PerformanceScores
@@ -25,18 +34,23 @@ const metricKeys = [
 
 const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
   const dispatch = useDispatch();
-  const { aiSuggestions, aiLoading, aiError } = useSelector((state: RootState) => state.seo);
+  const { aiSuggestions, aiLoading, aiError } = useSelector(
+    (state: RootState) => state.seo
+  );
   const perf = analysis.performance || {};
   const aiSuggestionsRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to AI suggestions when they load
   useEffect(() => {
-    if (aiSuggestions && aiSuggestions.length > 0 && aiSuggestionsRef.current) {
-      aiSuggestionsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!aiLoading && aiSuggestions && aiSuggestions.length > 0 && aiSuggestionsRef.current) {
+      setTimeout(() => {
+        aiSuggestionsRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }, 100);
     }
-  }, [aiSuggestions]);
+  }, [aiLoading, aiSuggestions]);
 
-  // Determine available strategies and selected strategy state
   const desktopAvailable = !!perf.desktop;
   const mobileAvailable = !!perf.mobile;
   const defaultStrategy: "desktop" | "mobile" = desktopAvailable
@@ -48,20 +62,18 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
     defaultStrategy
   );
 
-  // Support both older format (metrics at root) and the newer mobile/desktop structure
   const desktop = perf.desktop || null;
   const mobile = perf.mobile || null;
 
   const parseScore = (value: any) => {
     if (value === null || value === undefined) return null;
-    // value may be a string or number
     const n = Number(value);
     return Number.isFinite(n) ? n : null;
   };
 
   const handleGetAiSuggestions = () => {
-    // Collect issues from current strategy only
-    const currentSuggestions = strategy === "desktop" ? desktop?.suggestions : mobile?.suggestions;
+    const currentSuggestions =
+      strategy === "desktop" ? desktop?.suggestions : mobile?.suggestions;
 
     if (currentSuggestions && currentSuggestions.length > 0) {
       dispatch(getAiSuggestions(currentSuggestions) as any);
@@ -134,7 +146,7 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
   return (
     <Box>
       <Card sx={{ boxShadow: "none" }}>
-        <CardContent>
+        <CardContent sx={{ p: 0 }}>
           <Typography variant="h6" gutterBottom>
             Performance Analysis
           </Typography>
@@ -156,11 +168,7 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
                 >
                   {desktopAvailable && (
                     <Chip
-                      label={
-                        desktopOverall !== null
-                          ? `Desktop`
-                          : "Desktop"
-                      }
+                      label={desktopOverall !== null ? `Desktop` : "Desktop"}
                       color={strategy === "desktop" ? "primary" : "default"}
                       onClick={() => setStrategy("desktop")}
                       clickable
@@ -169,11 +177,7 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
 
                   {mobileAvailable && (
                     <Chip
-                      label={
-                        mobileOverall !== null
-                          ? `Mobile`
-                          : "Mobile"
-                      }
+                      label={mobileOverall !== null ? `Mobile` : "Mobile"}
                       color={strategy === "mobile" ? "primary" : "default"}
                       onClick={() => setStrategy("mobile")}
                       clickable
@@ -218,15 +222,15 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
         ))}
       </Grid>
 
-      <Box sx={{ mt: 3}}>
+      <Box sx={{ mt: 3 }}>
         <Button
           variant="contained"
           color="primary"
           onClick={handleGetAiSuggestions}
           disabled={aiLoading}
-          sx={{ minWidth: 200, borderRadius: '6px' ,float: 'right'}}
+          sx={{ minWidth: 200, borderRadius: "6px", float: "right" }}
         >
-          {aiLoading ? 'Get AI Suggestions...' : 'Get AI Suggestions'}
+          {aiLoading ? "Get AI Suggestions..." : "Get AI Suggestions"}
         </Button>
       </Box>
 
@@ -236,9 +240,13 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
         </Alert>
       )}
 
-      {(strategy === "desktop" ? desktop?.suggestions : mobile?.suggestions) && (
+      {(strategy === "desktop"
+        ? desktop?.suggestions
+        : mobile?.suggestions) && (
         <SeoSuggestions
-          suggestions={strategy === "desktop" ? desktop.suggestions : mobile.suggestions}
+          suggestions={
+            strategy === "desktop" ? desktop.suggestions : mobile.suggestions
+          }
           strategy={strategy}
         />
       )}
@@ -246,10 +254,7 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
       {/* AI Suggestions Display */}
       {aiSuggestions && aiSuggestions.length > 0 && (
         <Box ref={aiSuggestionsRef} sx={{ mt: 3 }}>
-          <AiSuggestions
-            suggestions={aiSuggestions}
-            strategy={strategy}
-          />
+          <AiSuggestions suggestions={aiSuggestions} strategy={strategy} />
         </Box>
       )}
     </Box>
