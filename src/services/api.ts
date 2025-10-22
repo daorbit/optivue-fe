@@ -217,6 +217,14 @@ class ApiService {
   async analyzeSeo(url: string): Promise<any> {
     return await ApiUtils.post('/api/seo/analyze?nocaching=true', { url }, 'analyze SEO');
   }
+
+  async getAiSuggestions(issues: any[]): Promise<any> {
+    return await ApiUtils.makeRequest('/api/seo/ai-suggestions', {
+      method: 'POST',
+      data: { issues },
+      timeout: 60000 
+    }, 'get AI suggestions');
+  }
 }
 
 export const apiService = new ApiService();
