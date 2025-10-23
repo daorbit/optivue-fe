@@ -221,7 +221,7 @@ const Login: React.FC = () => {
 
               <SignupLink>
                 <Typography variant="body2">
-                  Don't have an account? <Link to="/signup">Sign up</Link>
+                  Don't have an account? <Link to="/signup" style={{color:"#2e7d32"}}>Sign up</Link>
                 </Typography>
               </SignupLink>
             </LoginForm>
