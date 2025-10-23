@@ -24,7 +24,7 @@ import {
   ForgotPasswordLink,
   LeftPane,
   RightPane,
-  SocialButton,
+  // SocialButton,
 } from "../styles/Login.styles";
 
 const Login: React.FC = () => {
@@ -34,7 +34,7 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isAuthenticated } = useAppSelector<any>((state) => state.auth);
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />;
@@ -59,11 +59,14 @@ const Login: React.FC = () => {
       <LoginWrapper>
         <LoginCard elevation={0}>
           <LeftPane>
-            <LogoSection>
- 
-              <LoginTitle variant="h4">OptiVue</LoginTitle>
-              <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-                Sign in to your account
+            <LogoSection sx={{ width: "100%", mb: 4 }}>
+              <LoginTitle>Welcome back!</LoginTitle>
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                sx={{ mt: 1, fontSize: "14px" }}
+              >
+                Enter your Credentials to access your account
               </Typography>
             </LogoSection>
 
@@ -75,12 +78,15 @@ const Login: React.FC = () => {
 
             <LoginForm component="form" onSubmit={handleSubmit}>
               <StyledTextField>
+                <Typography variant="body2" sx={{ mb: 1, fontWeight: 600 }}>
+                  Email address
+                </Typography>
                 <TextField
                   required
                   fullWidth
                   id="email"
                   name="email"
-                  label="Email address"
+                  placeholder="Enter your email"
                   autoComplete="email"
                   autoFocus
                   type="email"
@@ -97,11 +103,14 @@ const Login: React.FC = () => {
               </StyledTextField>
 
               <StyledTextField>
+                <Typography variant="body2" sx={{ mb: 1, fontWeight: 600 }} >
+                  Password
+                </Typography>
                 <TextField
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  placeholder="Enter your password"
                   type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="current-password"
@@ -133,13 +142,21 @@ const Login: React.FC = () => {
                 />
               </StyledTextField>
 
-              <Box sx={{ textAlign: "right", mb: 3 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  mb: 2,
+                }}
+              >
+               
                 <ForgotPasswordLink>
                   <Link
                     to="/forgot-password"
                     style={{ textDecoration: "none" }}
                   >
-                    Forgot your password?
+                    Forgot password
                   </Link>
                 </ForgotPasswordLink>
               </Box>
@@ -150,7 +167,7 @@ const Login: React.FC = () => {
                 variant="contained"
                 disabled={loading}
               >
-                {loading ? "Signing in..." : "Sign in"}
+                {loading ? "Signing in..." : "Login"}
               </LoginButton>
 
               <Box
@@ -169,7 +186,7 @@ const Login: React.FC = () => {
                     borderBottom: "1px solid rgba(0,0,0,0.06)",
                   }}
                 />
-                <Typography variant="body2" color="text.secondary">
+                {/* <Typography variant="body2" color="text.secondary">
                   Or
                 </Typography>
                 <Box
@@ -178,10 +195,10 @@ const Login: React.FC = () => {
                     height: 1,
                     borderBottom: "1px solid rgba(0,0,0,0.06)",
                   }}
-                />
+                /> */}
               </Box>
 
-              <Box
+              {/* <Box
                 sx={{
                   display: "flex",
                   gap: 12,
@@ -200,7 +217,7 @@ const Login: React.FC = () => {
                 >
                   Sign in with Google
                 </SocialButton>
-              </Box>
+              </Box> */}
 
               <SignupLink>
                 <Typography variant="body2">

@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { TextField, Typography } from '@mui/material';
+import { TextField, Typography, InputAdornment } from '@mui/material';
+import { Mail } from 'lucide-react';
 import { useAppDispatch } from '../store/hooks';
 import { verifyOtp } from '../store/slices/authSlice';
+import { SignupTitle, LoginLink } from '../styles/Signup.styles';
 import {
-  SignupContainer,
-  SignupWrapper,
-  SignupPaper,
-  SignupTitle,
-  StyledAlert,
-  SignupForm,
+  LoginContainer,
+  LoginWrapper,
+  LoginCard,
+  LeftPane,
+  RightPane,
+  LogoSection,
+  LoginForm,
   StyledTextField,
-  SignupButton,
-  LoginLink
-} from '../styles/Signup.styles';
+  LoginButton,
+  StyledAlert,
+} from '../styles/Login.styles';
 
 const VerifyOtp: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -63,79 +66,91 @@ const VerifyOtp: React.FC = () => {
   };
 
   return (
-    <SignupContainer  >
-      <SignupWrapper>
-        <SignupPaper elevation={3}>
-          <SignupTitle variant="h4">
-            Verify Your Email
-          </SignupTitle>
-          <Typography variant="body1" sx={{ mb: 2, textAlign: 'center', color: 'text.secondary' }}>
-            We've sent a 6-digit OTP to your email address. Please enter it below to verify your account.
-          </Typography>
-          {error && (
-            <StyledAlert severity="error">
-              {error}
-            </StyledAlert>
-          )}
-          <SignupForm component="form" onSubmit={handleSubmit}>
-            <StyledTextField>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={!!location.state?.email}
-              />
-            </StyledTextField>
-            <StyledTextField>
-              <TextField
-                required
-                fullWidth
-                id="otp"
-                label="OTP Code"
-                name="otp"
-                autoComplete="one-time-code"
-                inputProps={{
-                  maxLength: 6,
-                  pattern: '[0-9]*'
-                }}
-                value={otp}
-                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
-                helperText="Enter the 6-digit code sent to your email"
-              />
-            </StyledTextField>
-            <SignupButton
-              type="submit"
-              fullWidth
-              variant="contained"
-              disabled={loading}
-            >
-              {loading ? 'Verifying...' : 'Verify OTP'}
-            </SignupButton>
-            <Typography
-              variant="body2"
-              sx={{ mt: 2, textAlign: 'center', cursor: 'pointer', color: 'primary.main' }}
-              onClick={handleResendOtp}
-            >
-              Didn't receive the code? Click here to resend
+    <LoginContainer>
+      <LoginWrapper>
+        <LoginCard elevation={3}>
+          <LeftPane>
+            <LogoSection>
+              <SignupTitle variant="h4">Verify Your Email</SignupTitle>
+            </LogoSection>
+
+            <Typography variant="body1" sx={{ mb: 2, textAlign: 'center', color: 'text.secondary' }}>
+              We've sent a 6-digit OTP to your email address. Please enter it below to verify your account.
             </Typography>
-            <LoginLink>
-              <Typography variant="body2">
-                Remember your password?{' '}
-                <Link to="/login">
-                  Sign In
-                </Link>
+
+            {error && <StyledAlert severity="error">{error}</StyledAlert>}
+
+            <LoginForm component="form" onSubmit={handleSubmit}>
+              <StyledTextField>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={!!location.state?.email}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Mail size={18} color="#666" />
+                      </InputAdornment>
+                    ),
+                  }}
+                  InputLabelProps={{ shrink: true }}
+                />
+              </StyledTextField>
+
+              <StyledTextField>
+                <TextField
+                  required
+                  fullWidth
+                  id="otp"
+                  label="OTP Code"
+                  name="otp"
+                  autoComplete="one-time-code"
+                  inputProps={{
+                    maxLength: 6,
+                    pattern: '[0-9]*',
+                  }}
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                  helperText="Enter the 6-digit code sent to your email"
+                  InputLabelProps={{ shrink: true }}
+                />
+              </StyledTextField>
+
+              <LoginButton type="submit" fullWidth variant="contained" disabled={loading}>
+                {loading ? 'Verifying...' : 'Verify OTP'}
+              </LoginButton>
+
+              <Typography
+                variant="body2"
+                sx={{ mt: 2, textAlign: 'center', cursor: 'pointer', color: 'primary.main' }}
+                onClick={handleResendOtp}
+              >
+                Didn't receive the code? Click here to resend
               </Typography>
-            </LoginLink>
-          </SignupForm>
-        </SignupPaper>
-      </SignupWrapper>
-    </SignupContainer>
+
+              <LoginLink>
+                <Typography variant="body2">
+                  Remember your password? <Link to="/login">Sign In</Link>
+                </Typography>
+              </LoginLink>
+            </LoginForm>
+          </LeftPane>
+
+          <RightPane
+            sx={{
+              backgroundImage: `url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=5b1e9650d1d3c1c6a2b8d9b4b3c3f7b7')`,
+            }}
+          />
+        </LoginCard>
+      </LoginWrapper>
+    </LoginContainer>
   );
 };
 

@@ -53,9 +53,10 @@ export const LogoSection = styled(Box)(({ theme }) => ({
 }));
 
 export const LoginTitle = styled(Typography)(({ theme }) => ({
-  fontWeight: 700,
-  color: "#2f855a",
-  fontSize: "2rem",
+  fontWeight: 600,
+  color: "#111",
+  fontSize: "2.25rem",
+  alignItems: "center",
   marginBottom: theme.spacing(1),
 }));
 
@@ -80,10 +81,21 @@ export const StyledTextField = styled("div")(({ theme }) => ({
     width: "100%",
   },
   "& .MuiOutlinedInput-root": {
-    borderRadius: 12,
-    backgroundColor: theme.palette.background.paper,
-    transition: "all 0.3s ease",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+    borderRadius: 8,
+    backgroundColor: "#fff",
+    transition: "all 0.18s ease",
+    boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+    minHeight: 44,
+    border: "1px solid rgba(0,0,0,0.06)",
+    "& .MuiOutlinedInput-input": {
+      padding: "10px 12px",
+      fontSize: "0.95rem",
+      color: "#222",
+      "&::placeholder": {
+        color: "#bfbfbf",
+        opacity: 1,
+      },
+    },
     "&:hover": {
       boxShadow: "0 4px 12px rgba(0, 0, 0, 0.12)",
       "& .MuiOutlinedInput-notchedOutline": {
@@ -91,49 +103,63 @@ export const StyledTextField = styled("div")(({ theme }) => ({
       },
     },
     "&.Mui-focused": {
-      boxShadow: `0 4px 20px rgba(102, 126, 234, 0.25)`,
+      boxShadow: `0 6px 30px rgba(46,125,50,0.08)`,
       "& .MuiOutlinedInput-notchedOutline": {
         borderWidth: 2,
-        borderColor: theme.palette.primary.main,
+        borderColor: "#2e7d32",
       },
     },
   },
   "& .MuiInputLabel-root": {
-    fontWeight: 500,
-    color: theme.palette.text.secondary,
+    fontWeight: 600,
+    color: "#333",
+    display: "block",
+    fontSize: "0.85rem",
+    marginBottom: theme.spacing(1),
     "&.Mui-focused": {
-      color: theme.palette.primary.main,
-      fontWeight: 600,
+      color: "#2e7d32",
+      fontWeight: 700,
     },
   },
   "& .MuiInputBase-input": {
     paddingLeft: theme.spacing(1),
+    paddingTop: 0,
+    paddingBottom: 0,
+    height: 20,
   },
 }));
 
-export const ForgotPasswordLink = styled(Typography)(({ theme }) => ({
-  fontSize: "0.875rem",
-  color: theme.palette.primary.main,
-  cursor: "pointer",
-  fontWeight: 500,
-  transition: "all 0.2s ease",
-  "&:hover": {
-    color: theme.palette.primary.dark,
-    textDecoration: "underline",
+export const ForgotPasswordLink = styled(Typography)(() => ({
+  "& a": {
+    fontSize: "0.875rem",
+    color: "#2e7d32",
+    cursor: "pointer",
+    fontWeight: 500,
+    transition: "all 0.2s ease",
+    textAlign: "right",
+    "&:hover": {
+      color: "#2e7d32",
+      textDecoration: "underline",
+    },
   },
 }));
 
 export const LoginButton = styled(Button)(({ theme }) => ({
-  padding: theme.spacing(1.75),
+  height: 44,
+  padding: "0 18px",
   borderRadius: 12,
   fontWeight: 600,
   fontSize: "1rem",
   textTransform: "none",
-  background: `linear-gradient(135deg, #667eea 0%, #764ba2 100%)`,
-  transition: "all 0.3s ease",
+  background: "#2e7d32",
+  color: "#fff",
+  transition: "all 0.15s ease",
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
   "&:hover": {
-    background: `linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)`,
-    boxShadow: "0 6px 20px rgba(102, 126, 234, 0.6)",
+    background: "#276027",
+    boxShadow: "0 6px 18px rgba(39,96,39,0.12)",
   },
   "&:active": {
     transform: "translateY(0)",

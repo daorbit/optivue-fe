@@ -38,12 +38,11 @@ export const SignupPaper = styled(Paper)(({ theme }) => ({
 }));
 
 export const SignupTitle = styled(Typography)(({ theme }) => ({
-  textAlign: 'center',
-  marginBottom: theme.spacing(3),
-  fontWeight: 700,
-  color: '#2e7d32',
-  fontSize: '2rem',
-  position: 'relative',
+ fontWeight: 600,
+  color: "#111",
+  fontSize: "2.25rem",
+  textAlign:"center",
+  marginBottom: theme.spacing(1),
 }));
 
 export const StyledAlert = styled(Alert)(({ theme }) => ({
@@ -64,13 +63,27 @@ export const StyledTextField = styled('div')(({ theme }) => ({
     width: '100%',
   },
   '& .MuiOutlinedInput-root': {
-    borderRadius: theme.shape.borderRadius,
-    transition: 'all 0.3s ease',
+    borderRadius: 8,
+    transition: 'all 0.18s ease',
+    minHeight: 44,
+    border: '1px solid rgba(0,0,0,0.06)',
+    backgroundColor: '#fff',
+    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+    '& .MuiOutlinedInput-input': {
+      padding: '10px 12px',
+      fontSize: '0.95rem',
+      color: '#222',
+      '&::placeholder': {
+        color: '#bfbfbf',
+        opacity: 1,
+      },
+    },
     '&:hover .MuiOutlinedInput-notchedOutline': {
       borderColor: '#4caf50',
     },
     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
       borderWidth: 2,
+      borderColor: '#2e7d32',
     },
   },
   '& .MuiInputLabel-root': {
@@ -81,18 +94,23 @@ export const StyledTextField = styled('div')(({ theme }) => ({
 export const SignupButton = styled(Button)(({ theme }) => ({
   marginTop: theme.spacing(3),
   marginBottom: theme.spacing(2),
-  padding: theme.spacing(1.5),
+  height: 44,
+  padding: '0 18px',
   borderRadius: theme.shape.borderRadius,
   fontWeight: 600,
   fontSize: '1rem',
   textTransform: 'none',
-  background: `linear-gradient(45deg, #4caf50 30%, #2e7d32 90%)`,
-  boxShadow: theme.shadows[4],
-  transition: 'all 0.3s ease',
+  background: '#2e7d32',
+  color: '#fff',
+  boxShadow: '0 2px 6px rgba(46,125,50,0.18)',
+  transition: 'all 0.15s ease',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   '&:hover': {
-    background: `linear-gradient(45deg, #2e7d32 30%, #4caf50 90%)`,
-    boxShadow: theme.shadows[8],
-    transform: 'translateY(-2px)',
+    background: '#276027',
+    boxShadow: '0 6px 18px rgba(39,96,39,0.12)',
+    transform: 'translateY(-1px)',
   },
   '&:disabled': {
     background: theme.palette.grey[400],
