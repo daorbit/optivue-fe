@@ -55,7 +55,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <SignupContainer maxWidth="sm">
+    <SignupContainer >
       <SignupWrapper>
         <SignupPaper elevation={3}>
           <SignupTitle variant="h4">

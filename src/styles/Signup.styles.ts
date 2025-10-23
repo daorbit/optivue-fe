@@ -1,6 +1,6 @@
-import { styled, Container, Paper, Button, Typography, Box, Alert } from '@mui/material';
+import { styled, Paper, Button, Typography, Box, Alert } from '@mui/material';
 
-export const SignupContainer = styled(Container)(({ theme }) => ({
+export const SignupContainer = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
   display: 'flex',
   alignItems: 'center',
