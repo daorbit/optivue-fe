@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import { Activity, Trash2, Plus, BarChart3, Search } from "lucide-react";
 import AddApplicationDialog from "./profile/AddApplicationDialog";
+import { useMetaTags } from "../utils/useMetaTags";
 
 const Profile: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,14 @@ const Profile: React.FC = () => {
   const [addOpen, setAddOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const metaTags = useMetaTags({
+    title: "Your Profile - OptiVue Account Settings",
+    description: "Manage your OptiVue account settings, applications, and preferences. Configure your SEO analysis tools and Facebook Ads integrations.",
+    keywords: "profile, account settings, OptiVue dashboard, user preferences, application configuration",
+    ogTitle: "OptiVue Profile - Manage Your Account",
+    ogDescription: "Access your OptiVue profile to configure applications, manage settings, and optimize your digital marketing tools."
+  });
 
   useEffect(() => {
     if (user) {
@@ -103,7 +112,9 @@ const Profile: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ py: 2, position: "relative" }}>
+    <>
+      {metaTags}
+      <Container maxWidth="md" sx={{ py: 2, position: "relative" }}>
       <Typography
         variant="h4"
         fontWeight="bold"
@@ -352,6 +363,7 @@ const Profile: React.FC = () => {
         onAdd={addApplication}
       />
     </Container>
+    </>
   );
 };
 

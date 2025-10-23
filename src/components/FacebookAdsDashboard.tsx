@@ -8,6 +8,7 @@ import AnalyticsDrawer from "./AnalyticsDrawer";
 import MetaEmptyState from "./MetaEmptyState";
 import { HelpCircle, RefreshCw } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
+import { useMetaTags } from "../utils/useMetaTags";
 import {
   fetchFacebookAdsData,
   syncFacebookAdsData,
@@ -27,7 +28,15 @@ const FacebookAdsDashboard = () => {
   const [campaignStatusFilter, setCampaignStatusFilter] = useState("active");
   const [drawerOpen, setDrawerOpen] = useState(false);
 
- 
+
+  const metaTags = useMetaTags({
+    title: "Facebook Ads Dashboard - OptiVue Analytics",
+    description: "Monitor and optimize your Facebook advertising campaigns with comprehensive analytics, performance metrics, and insights. Track ROI, engagement, and campaign effectiveness.",
+    keywords: "Facebook ads, advertising dashboard, campaign analytics, performance metrics, ROI tracking, ad optimization",
+    ogTitle: "Facebook Ads Analytics - OptiVue",
+    ogDescription: "Get deep insights into your Facebook advertising performance with OptiVue's comprehensive analytics dashboard."
+  });
+
   useEffect(() => {
     if (data) {
       fetchData();
@@ -176,7 +185,9 @@ const FacebookAdsDashboard = () => {
   const additionalMetrics = calculateAdditionalMetrics();
 
   return (
-    <div className="facebook-ads-dashboard" style={{ padding: "24px" }}>
+    <>
+      {metaTags}
+      <div className="facebook-ads-dashboard" style={{ padding: "24px" }}>
       <div
         style={{
           display: "flex",
@@ -259,6 +270,7 @@ const FacebookAdsDashboard = () => {
         formatCurrencyWithConversion={formatCurrencyWithConversion}
       />
     </div>
+    </>
   );
 };
 

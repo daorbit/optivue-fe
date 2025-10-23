@@ -4,6 +4,7 @@ import { TextField, Typography, InputAdornment } from "@mui/material";
 import { Mail } from "lucide-react";
 import { useAppDispatch } from "../store/hooks";
 import { verifyOtp } from "../store/slices/authSlice";
+import { useMetaTags } from "../utils/useMetaTags";
 import { SignupTitle, LoginLink } from "../styles/Signup.styles";
 import {
   LoginContainer,
@@ -26,6 +27,14 @@ const VerifyOtp: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const metaTags = useMetaTags({
+    title: "Verify Your Email - OptiVue Account Verification",
+    description: "Enter the verification code sent to your email to complete your OptiVue account registration and access our digital optimization tools.",
+    keywords: "verify email, OTP, verification code, OptiVue account, email verification",
+    ogTitle: "Verify Your OptiVue Account",
+    ogDescription: "Complete your account verification to access powerful SEO analysis and Facebook Ads management tools."
+  });
 
   useEffect(() => {
     // Get email from location state if passed from signup
@@ -66,7 +75,9 @@ const VerifyOtp: React.FC = () => {
   };
 
   return (
-    <LoginContainer>
+    <>
+      {metaTags}
+      <LoginContainer>
       <LoginWrapper>
         <LoginCard elevation={3}>
           <LeftPane>
@@ -161,6 +172,7 @@ const VerifyOtp: React.FC = () => {
         </LoginCard>
       </LoginWrapper>
     </LoginContainer>
+    </>
   );
 };
 

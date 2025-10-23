@@ -11,6 +11,7 @@ import SeoLoadingState from "./SeoLoadingState";
 import SeoErrorAlert from "./SeoErrorAlert";
 import SeoAnalysisResults from "./SeoAnalysisResults";
 import SeoEmptyState from "./SeoEmptyState";
+import { useMetaTags } from "../../utils/useMetaTags";
 
 const SeoAnalysis = () => {
   const [url, setUrl] = useState("");
@@ -38,10 +39,18 @@ const SeoAnalysis = () => {
     dispatch(clearAnalysis());
   };
 
- 
+  const metaTags = useMetaTags({
+    title: "SEO Analysis Tool - OptiVue Website Optimization",
+    description: "Analyze your website's SEO performance with comprehensive tools. Get detailed insights on meta tags, performance scores, technical SEO, and actionable recommendations.",
+    keywords: "SEO analysis, website optimization, meta tags, performance scores, technical SEO, search engine optimization",
+    ogTitle: "SEO Analysis - OptiVue",
+    ogDescription: "Comprehensive SEO analysis tool to optimize your website's search engine performance and visibility."
+  });
 
   return (
-    <Box sx={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+    <>
+      {metaTags}
+      <Box sx={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
       <SeoHeroSection
         url={url}
         setUrl={setUrl}
@@ -57,6 +66,7 @@ const SeoAnalysis = () => {
         {analysis && !loading && <SeoAnalysisResults analysis={analysis} onClear={handleClear} />}
       </Box>
     </Box>
+    </>
   );
 };
 

@@ -9,6 +9,7 @@ import {
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { useAppSelector } from "../store/hooks";
 import { apiService } from "../services/api";
+import { useMetaTags } from "../utils/useMetaTags";
 import { SignupTitle, LoginLink } from "../styles/Signup.styles";
 import {
   LoginForm,
@@ -35,6 +36,14 @@ const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+
+  const metaTags = useMetaTags({
+    title: "Sign Up for OptiVue - Join Our Digital Optimization Platform",
+    description: "Create your OptiVue account to access powerful SEO analysis tools, Facebook Ads management, and comprehensive digital marketing optimization features.",
+    keywords: "sign up, register, OptiVue account, SEO tools, Facebook ads, digital marketing platform",
+    ogTitle: "Join OptiVue - Transform Your Digital Presence",
+    ogDescription: "Sign up for OptiVue and unlock powerful tools for SEO analysis, Facebook Ads management, and digital marketing optimization."
+  });
 
   if (isAuthenticated) {
     return <Navigate to="/" replace />;
@@ -65,7 +74,9 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <LoginContainer>
+    <>
+      {metaTags}
+      <LoginContainer>
       <LoginWrapper>
         <LoginCard elevation={3}>
           <LeftPane>
@@ -219,6 +230,7 @@ const Signup: React.FC = () => {
         </LoginCard>
       </LoginWrapper>
     </LoginContainer>
+    </>
   );
 };
 

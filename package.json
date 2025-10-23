@@ -23,6 +23,7 @@
     "react": "^18.2.0",
     "react-device-frameset": "^1.0.0",
     "react-dom": "^18.2.0",
+    "react-helmet-async": "^2.0.5",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.8.0",
     "recharts": "^2.6.2"

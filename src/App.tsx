@@ -3,6 +3,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { Provider } from 'react-redux'
 import { useEffect } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
 import { publicRoutes, privateRoutes } from './routes'
 import PrivateRoute from './components/PrivateRoute'
 import Layout from './components/Layout'
@@ -60,9 +61,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Provider store={store}>
-      <AppContent />
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <AppContent />
+      </Provider>
+    </HelmetProvider>
   )
 }
 
