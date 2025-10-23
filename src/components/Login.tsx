@@ -229,7 +229,7 @@ const Login: React.FC = () => {
 
           <RightPane
             sx={{
-              backgroundImage: `url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=5b1e9650d1d3c1c6a2b8d9b4b3c3f7b7')`,
+              backgroundImage: `url('/assets/login.webp')`,
             }}
           />
         </LoginCard>

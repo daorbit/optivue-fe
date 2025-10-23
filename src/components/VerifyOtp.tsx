@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { TextField, Typography, InputAdornment } from '@mui/material';
-import { Mail } from 'lucide-react';
-import { useAppDispatch } from '../store/hooks';
-import { verifyOtp } from '../store/slices/authSlice';
-import { SignupTitle, LoginLink } from '../styles/Signup.styles';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation, Link } from "react-router-dom";
+import { TextField, Typography, InputAdornment } from "@mui/material";
+import { Mail } from "lucide-react";
+import { useAppDispatch } from "../store/hooks";
+import { verifyOtp } from "../store/slices/authSlice";
+import { SignupTitle, LoginLink } from "../styles/Signup.styles";
 import {
   LoginContainer,
   LoginWrapper,
@@ -16,12 +16,12 @@ import {
   StyledTextField,
   LoginButton,
   StyledAlert,
-} from '../styles/Login.styles';
+} from "../styles/Login.styles";
 
 const VerifyOtp: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -37,24 +37,24 @@ const VerifyOtp: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!email || !otp) {
-      setError('Please fill in all fields');
+      setError("Please fill in all fields");
       return;
     }
 
     if (otp.length !== 6) {
-      setError('OTP must be 6 digits');
+      setError("OTP must be 6 digits");
       return;
     }
 
     setLoading(true);
     try {
       await dispatch(verifyOtp({ email, otp })).unwrap();
-      navigate('/', { replace: true });
+      navigate("/", { replace: true });
     } catch (err: any) {
-      setError(err || 'OTP verification failed');
+      setError(err || "OTP verification failed");
     } finally {
       setLoading(false);
     }
@@ -62,7 +62,7 @@ const VerifyOtp: React.FC = () => {
 
   const handleResendOtp = async () => {
     // TODO: Implement resend OTP functionality
-    setError('Resend OTP functionality not implemented yet');
+    setError("Resend OTP functionality not implemented yet");
   };
 
   return (
@@ -74,20 +74,19 @@ const VerifyOtp: React.FC = () => {
               <SignupTitle variant="h4">Verify Your Email</SignupTitle>
             </LogoSection>
 
-            <Typography variant="body1" sx={{ mb: 2, textAlign: 'center', color: 'text.secondary' }}>
-              We've sent a 6-digit OTP to your email address. Please enter it below to verify your account.
-            </Typography>
-
             {error && <StyledAlert severity="error">{error}</StyledAlert>}
 
             <LoginForm component="form" onSubmit={handleSubmit}>
               <StyledTextField>
+                <Typography variant="body2" sx={{ mb: 1, fontWeight: 600 }}>
+                  Email address
+                </Typography>
                 <TextField
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
                   name="email"
+                  placeholder="Enter your email"
                   autoComplete="email"
                   type="email"
                   value={email}
@@ -100,36 +99,47 @@ const VerifyOtp: React.FC = () => {
                       </InputAdornment>
                     ),
                   }}
-                  InputLabelProps={{ shrink: true }}
                 />
               </StyledTextField>
 
               <StyledTextField>
+                <Typography variant="body2" sx={{ mb: 1, fontWeight: 600 }}>
+                  OTP Code
+                </Typography>
                 <TextField
                   required
                   fullWidth
                   id="otp"
-                  label="OTP Code"
                   name="otp"
+                  placeholder="Enter your OTP"
                   autoComplete="one-time-code"
                   inputProps={{
                     maxLength: 6,
-                    pattern: '[0-9]*',
+                    pattern: "[0-9]*",
                   }}
                   value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
                   helperText="Enter the 6-digit code sent to your email"
-                  InputLabelProps={{ shrink: true }}
                 />
               </StyledTextField>
 
-              <LoginButton type="submit" fullWidth variant="contained" disabled={loading}>
-                {loading ? 'Verifying...' : 'Verify OTP'}
+              <LoginButton
+                type="submit"
+                fullWidth
+                variant="contained"
+                disabled={loading}
+              >
+                {loading ? "Verifying..." : "Verify OTP"}
               </LoginButton>
 
               <Typography
                 variant="body2"
-                sx={{ mt: 2, textAlign: 'center', cursor: 'pointer', color: 'primary.main' }}
+                sx={{
+                  mt: 2,
+                  textAlign: "center",
+                  cursor: "pointer",
+                  color: "#2e7d32",
+                }}
                 onClick={handleResendOtp}
               >
                 Didn't receive the code? Click here to resend
