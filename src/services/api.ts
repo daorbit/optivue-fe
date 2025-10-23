@@ -11,6 +11,11 @@ interface SignupData {
   password: string;
 }
 
+interface VerifyOtpData {
+  email: string;
+  otp: string;
+}
+
 interface UpdateAccountData {
   username?: string;
   applications?: Array<{
@@ -169,6 +174,20 @@ class ApiService {
       ApiUtils.setToken(response.token);
     }
     
+    return response;
+  }
+
+  async verifyOtp(data: VerifyOtpData): Promise<AuthResponse> {
+    const response = await ApiUtils.post<AuthResponse>(
+      '/auth/verify-otp',
+      data,
+      'verify otp'
+    );
+
+    if (response.success && response.token) {
+      ApiUtils.setToken(response.token);
+    }
+
     return response;
   }
 

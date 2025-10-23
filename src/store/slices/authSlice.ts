@@ -83,6 +83,22 @@ export const signup = createAsyncThunk(
   }
 );
 
+export const verifyOtp = createAsyncThunk(
+  'auth/verifyOtp',
+  async ({ email, otp }: { email: string; otp: string }, { rejectWithValue }) => {
+    try {
+      const response = await apiService.verifyOtp({ email, otp });
+      if (response.success && response.user && response.token) {
+        return response.user;
+      } else {
+        return rejectWithValue(response.message || 'OTP verification failed');
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'OTP verification failed');
+    }
+  }
+);
+
 export const refreshUser = createAsyncThunk(
   'auth/refreshUser',
   async () => {
@@ -160,6 +176,21 @@ const authSlice = createSlice({
       .addCase(signup.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string || action.error.message || 'Signup failed';
+      })
+      // verifyOtp
+      .addCase(verifyOtp.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(verifyOtp.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(verifyOtp.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string || action.error.message || 'OTP verification failed';
       })
       // refreshUser
       .addCase(refreshUser.fulfilled, (state, action) => {

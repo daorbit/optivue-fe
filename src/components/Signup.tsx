@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 import { TextField, Typography } from '@mui/material';
-import { useAppSelector, useAppDispatch } from '../store/hooks';
-import { signup as signupAction } from '../store/slices/authSlice';
+import { useAppSelector } from '../store/hooks';
+import { apiService } from '../services/api';
 import {
   SignupContainer,
   SignupWrapper,
@@ -14,6 +14,7 @@ import {
   SignupButton,
   LoginLink
 } from '../styles/Signup.styles';
+ 
 
 const Signup: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -22,7 +23,7 @@ const Signup: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   if (isAuthenticated) {
@@ -40,9 +41,14 @@ const Signup: React.FC = () => {
 
     setLoading(true);
     try {
-      await dispatch(signupAction({ username, email, password })).unwrap();
+      const response = await apiService.signup({ username, email, password });
+      if (response.success) {
+        navigate('/verify-otp', { state: { email } });
+      } else {
+        setError(response.message || 'Signup failed');
+      }
     } catch (err: any) {
-      setError(err || 'Signup failed');
+      setError(err.message || 'Signup failed');
     } finally {
       setLoading(false);
     }
