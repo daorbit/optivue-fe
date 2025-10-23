@@ -234,7 +234,11 @@ class ApiService {
 
   // SEO Analysis API
   async analyzeSeo(url: string): Promise<any> {
-    return await ApiUtils.post('/api/seo/analyze?nocaching=true', { url }, 'analyze SEO');
+    return await ApiUtils.makeRequest('/api/seo/analyze?nocaching=true', {
+      method: 'POST',
+      data: { url },
+      timeout: 120000
+    }, 'analyze SEO');
   }
 
   async getAiSuggestions(issues: any[]): Promise<any> {

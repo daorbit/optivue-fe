@@ -1,9 +1,5 @@
-import {
-  Grid,
-  TextField,
-  Button,
-} from '@mui/material';
-import { Search } from 'lucide-react';
+import { Grid, TextField, Button } from "@mui/material";
+import { Search } from "lucide-react";
 
 interface UrlInputSectionProps {
   url: string;
@@ -23,7 +19,13 @@ const UrlInputSection = ({
 }: UrlInputSectionProps) => {
   return (
     <>
-       <Grid container spacing={2} alignItems="center" justifyContent="center" sx={{ mb: 3 }}>
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifyContent="center"
+        sx={{ mb: 3 }}
+      >
         <Grid item xs={12} md={8}>
           <TextField
             fullWidth
@@ -31,29 +33,29 @@ const UrlInputSection = ({
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://example.com"
-            onKeyPress={(e) => e.key === 'Enter' && onAnalyze()}
+            onKeyPress={(e) => e.key === "Enter" && onAnalyze()}
             sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: '12px',
-                backgroundColor: '#ffffff',
-                boxShadow: '0 6px 18px rgba(46,125,50,0.06)',
-                '& fieldset': {
-                  borderColor: '#eef2f0',
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "12px",
+                backgroundColor: "#ffffff",
+                boxShadow: "0 6px 18px rgba(46,125,50,0.06)",
+                "& fieldset": {
+                  borderColor: "#eef2f0",
                 },
-                '&:hover fieldset': {
-                  borderColor: '#cfe9d2',
+                "&:hover fieldset": {
+                  borderColor: "#cfe9d2",
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#2e7d32',
-                  borderWidth: '2px',
+                "&.Mui-focused fieldset": {
+                  borderColor: "#2e7d32",
+                  borderWidth: "2px",
                 },
-                minHeight: '52px',
+                minHeight: "52px",
               },
-              '& .MuiOutlinedInput-input': {
-                padding: '12px 16px',
-                fontSize: '16px',
-                '&::placeholder': {
-                  color: '#bfc9c1',
+              "& .MuiOutlinedInput-input": {
+                padding: "12px 16px",
+                fontSize: "16px",
+                "&::placeholder": {
+                  color: "#bfc9c1",
                 },
               },
             }}
@@ -64,28 +66,35 @@ const UrlInputSection = ({
             fullWidth
             variant="contained"
             onClick={onAnalyze}
+            disabled={loading || !url.trim()}
             startIcon={<Search size={16} color="#fff" />}
             sx={{
-              borderRadius: '10px',
-              padding: '11px 18px',
-              fontSize: '15px',
-              textTransform: 'none',
-              backgroundColor: '#2e7d32',
-              color: '#fff',
-              boxShadow: '0 6px 18px rgba(46,125,50,0.15)',
-              '&:hover': {
-                backgroundColor: '#245e25',
+              borderRadius: "10px",
+              padding: "11px 18px",
+              fontSize: "15px",
+              textTransform: "none",
+              backgroundColor: "#2e7d32",
+              color: "#fff",
+              boxShadow: "0 6px 18px rgba(46,125,50,0.15)",
+              "&:hover": {
+                backgroundColor: "#245e25",
               },
-              minHeight: '48px',
+              "&:disabled": {
+                backgroundColor: "#a5d6a7",
+                color: "#ffffff",
+                boxShadow: "none",
+                "&:hover": {
+                  cursor: "not-allowed",
+                },
+              },
+              minHeight: "48px",
               fontWeight: 700,
             }}
           >
-            {loading ? 'Analyzing...' : 'Analyze'}
+            {loading ? "Analyzing..." : "Analyze"}
           </Button>
         </Grid>
       </Grid>
-
-     
     </>
   );
 };
