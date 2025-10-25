@@ -177,6 +177,33 @@ class ApiService {
     return response;
   }
 
+  async getGoogleAuthUrl(): Promise<{ success: boolean; authUrl?: string; message?: string }> {
+    const response = await ApiUtils.get<any>('/auth/google', undefined, 'get Google auth URL');
+    
+    if (response.success && response.data?.authUrl) {
+      return {
+        success: true,
+        authUrl: response.data.authUrl
+      };
+    }
+    
+    return response;
+  }
+
+  async googleLogin(code: string): Promise<AuthResponse> {
+    const response = await ApiUtils.post<AuthResponse>(
+      '/auth/google/callback',
+      { code },
+      'Google login'
+    );
+
+    if (response.success && response.token) {
+      ApiUtils.setToken(response.token);
+    }
+    
+    return response;
+  }
+
   async verifyOtp(data: VerifyOtpData): Promise<AuthResponse> {
     const response = await ApiUtils.post<AuthResponse>(
       '/auth/verify-otp',

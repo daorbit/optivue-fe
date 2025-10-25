@@ -20,6 +20,8 @@ interface AuthState {
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
+  googleAuthUrl: string | null;
+  googleLoading: boolean;
 }
 
 const initialState: AuthState = {
@@ -27,6 +29,8 @@ const initialState: AuthState = {
   isAuthenticated: false,
   loading: true,
   error: null,
+  googleAuthUrl: null,
+  googleLoading: false,
 };
 
 // Async thunks
@@ -83,6 +87,38 @@ export const signup = createAsyncThunk(
   }
 );
 
+export const googleLogin = createAsyncThunk(
+  'auth/googleLogin',
+  async (code: string, { rejectWithValue }) => {
+    try {
+      const response = await apiService.googleLogin(code);
+      if (response.success && response.user) {
+        return response.user;
+      } else {
+        return rejectWithValue(response.message || 'Google login failed');
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Google login failed');
+    }
+  }
+);
+
+export const getGoogleAuthUrl = createAsyncThunk(
+  'auth/getGoogleAuthUrl',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await apiService.getGoogleAuthUrl();
+      if (response.success && response.authUrl) {
+        return response.authUrl;
+      } else {
+        return rejectWithValue(response.message || 'Failed to get Google auth URL');
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Failed to get Google auth URL');
+    }
+  }
+);
+
 export const verifyOtp = createAsyncThunk(
   'auth/verifyOtp',
   async ({ email, otp }: { email: string; otp: string }, { rejectWithValue }) => {
@@ -121,9 +157,14 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.loading = false;
       state.error = null;
+      state.googleAuthUrl = null;
+      state.googleLoading = false;
     },
     clearError: (state) => {
       state.error = null;
+    },
+    clearGoogleAuthUrl: (state) => {
+      state.googleAuthUrl = null;
     },
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
@@ -192,6 +233,36 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string || action.error.message || 'OTP verification failed';
       })
+      // googleLogin
+      .addCase(googleLogin.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(googleLogin.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isAuthenticated = true;
+        state.loading = false;
+        state.error = null;
+        state.googleAuthUrl = null;
+      })
+      .addCase(googleLogin.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string || action.error.message || 'Google login failed';
+      })
+      // getGoogleAuthUrl
+      .addCase(getGoogleAuthUrl.pending, (state) => {
+        state.googleLoading = true;
+        state.error = null;
+      })
+      .addCase(getGoogleAuthUrl.fulfilled, (state, action) => {
+        state.googleAuthUrl = action.payload;
+        state.googleLoading = false;
+        state.error = null;
+      })
+      .addCase(getGoogleAuthUrl.rejected, (state, action) => {
+        state.googleLoading = false;
+        state.error = action.payload as string || action.error.message || 'Failed to get Google auth URL';
+      })
       // refreshUser
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload;
@@ -204,5 +275,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, clearError, setLoading } = authSlice.actions;
+export const { logout, clearError, setLoading, clearGoogleAuthUrl } = authSlice.actions;
 export default authSlice.reducer;
