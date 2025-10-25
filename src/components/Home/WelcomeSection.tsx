@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Button, Grid, Card, CardContent } from '@mui/material';
 import { styled, keyframes } from '@mui/material/styles';
 import { TrendingUp, BarChart3, Zap, Users, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 
 // Animations
@@ -70,8 +71,7 @@ const ActionButton = styled(Button)(({ theme }) => ({
   boxShadow: '0 1px 3px rgba(16, 185, 129, 0.2)',
   '&:hover': {
     backgroundColor: theme.palette.primary.dark,
-    transform: 'translateY(-1px)',
-    boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+     boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
   },
   '& .MuiButton-endIcon': {
     marginLeft: '6px',
@@ -159,18 +159,20 @@ const WelcomeSection: React.FC<WelcomeSectionProps> = ({
             </WelcomeSubtitle>
 
             <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-              <ActionButton
-                endIcon={<ArrowRight size={16} />}
-                onClick={() => window.location.href = '/seo-analysis'}
-              >
-                Start SEO Analysis
-              </ActionButton>
-              <ActionButton
-                endIcon={<BarChart3 size={16} />}
-                onClick={() => window.location.href = '/facebook-ads'}
-              >
-                View Ads Dashboard
-              </ActionButton>
+              <Link to="/seo-analysis" style={{ textDecoration: 'none' }}>
+                <ActionButton
+                  endIcon={<ArrowRight size={16} />}
+                >
+                  Start SEO Analysis
+                </ActionButton>
+              </Link>
+              <Link to="/facebook-ads" style={{ textDecoration: 'none' }}>
+                <ActionButton
+                  endIcon={<BarChart3 size={16} />}
+                >
+                  View Ads Dashboard
+                </ActionButton>
+              </Link>
             </Box>
           </Box>
         </Grid>
