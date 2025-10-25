@@ -11,7 +11,7 @@ import PrivateRoute from './components/PrivateRoute'
 import Layout from './components/Layout'
 import { store } from './store'
 import { checkAuth } from './store/slices/authSlice'
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 const theme = createTheme({
   palette: {
     mode: 'light',
