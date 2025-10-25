@@ -11,7 +11,7 @@ import PrivateRoute from './components/PrivateRoute'
 import Layout from './components/Layout'
 import { store } from './store'
 import { checkAuth } from './store/slices/authSlice'
-
+import { Analytics } from "@vercel/analytics/next"
 const theme = createTheme({
   palette: {
     mode: 'light',
@@ -69,6 +69,7 @@ function AppContent() {
           theme="light"
         />
       </BrowserRouter>
+      <Analytics />
     </ThemeProvider>
   );
 }
