@@ -16,6 +16,15 @@ interface VerifyOtpData {
   otp: string;
 }
 
+interface ForgotPasswordData {
+  email: string;
+}
+
+interface ResetPasswordData {
+  token: string;
+  password: string;
+}
+
 interface UpdateAccountData {
   username?: string;
   applications?: Array<{
@@ -209,6 +218,30 @@ class ApiService {
       '/auth/verify-otp',
       data,
       'verify otp'
+    );
+
+    if (response.success && response.token) {
+      ApiUtils.setToken(response.token);
+    }
+
+    return response;
+  }
+
+  async forgotPassword(data: ForgotPasswordData): Promise<{ success: boolean; message: string }> {
+    const response = await ApiUtils.post<{ success: boolean; message: string }>(
+      '/auth/forgot-password',
+      data,
+      'forgot password'
+    );
+
+    return response;
+  }
+
+  async resetPassword(data: ResetPasswordData): Promise<AuthResponse> {
+    const response = await ApiUtils.post<AuthResponse>(
+      '/auth/reset-password',
+      data,
+      'reset password'
     );
 
     if (response.success && response.token) {

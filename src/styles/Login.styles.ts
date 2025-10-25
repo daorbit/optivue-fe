@@ -169,6 +169,7 @@ export const LoginButton = styled(Button)(({ theme }) => ({
     color: theme.palette.grey[600],
     boxShadow: "none",
     transform: "none",
+    cursor: "pointer",
   },
 }));
 

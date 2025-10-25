@@ -135,6 +135,38 @@ export const verifyOtp = createAsyncThunk(
   }
 );
 
+export const forgotPassword = createAsyncThunk(
+  'auth/forgotPassword',
+  async (email: string, { rejectWithValue }) => {
+    try {
+      const response = await apiService.forgotPassword({ email });
+      if (response.success) {
+        return response.message;
+      } else {
+        return rejectWithValue(response.message || 'Failed to send reset email');
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Failed to send reset email');
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async ({ token, password }: { token: string; password: string }, { rejectWithValue }) => {
+    try {
+      const response = await apiService.resetPassword({ token, password });
+      if (response.success && response.user) {
+        return response.user;
+      } else {
+        return rejectWithValue(response.message || 'Password reset failed');
+      }
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Password reset failed');
+    }
+  }
+);
+
 export const refreshUser = createAsyncThunk(
   'auth/refreshUser',
   async () => {

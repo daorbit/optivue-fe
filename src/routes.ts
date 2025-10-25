@@ -4,6 +4,8 @@ import About from './components/About'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import VerifyOtp from './components/VerifyOtp'
+import ForgotPassword from './components/ForgotPassword'
+import ResetPassword from './components/ResetPassword'
 import Profile from './components/Profile'
 import FacebookAdsDashboard from './components/FacebookAdsDashboard'
 import SeoAnalysis from './components/seo/SeoAnalysis'
@@ -18,6 +20,8 @@ export const publicRoutes: RouteConfig[] = [
   { path: '/login', component: Login },
   { path: '/signup', component: Signup },
   { path: '/verify-otp', component: VerifyOtp },
+  { path: '/forgot-password', component: ForgotPassword },
+  { path: '/reset-password', component: ResetPassword },
   { path: '/auth/google/callback', component: GoogleCallback },
 ]
 
