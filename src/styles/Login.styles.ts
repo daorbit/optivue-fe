@@ -196,9 +196,10 @@ export const SocialButton = styled(Button)(() => ({
   borderRadius: 12,
   textTransform: "none",
   padding: "6px 14px",
-  justifyContent: "flex-start",
+  justifyContent: "center",
   background: "#fff",
-  border: "1px solid rgba(0,0,0,0.08)",
+  color: "#2e7d32",
+  border: "1px solid #2e7d32",
   boxShadow: "none",
   "&:hover": {
     boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
