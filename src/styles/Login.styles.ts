@@ -201,7 +201,9 @@ export const SocialButton = styled(Button)(() => ({
   color: "#2e7d32",
   border: "1px solid #2e7d32",
   boxShadow: "none",
+  transition: "all 0.15s ease",
+
   "&:hover": {
-    boxShadow: "0 6px 18px rgba(0,0,0,0.06)",
+    boxShadow: "0 6px 18px rgba(39,96,39,0.12)",
   },
 }));
