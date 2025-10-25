@@ -232,7 +232,7 @@ const Signup: React.FC = () => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
-                  gap: 12,
+                  gap: { xs: 2, md: 3 },
                   mt: 3,
                   mb: 1,
                 }}
@@ -259,7 +259,7 @@ const Signup: React.FC = () => {
               <Box
                 sx={{
                   display: "flex",
-                  gap: 12,
+                  gap: { xs: 2, md: 3 },
                   flexDirection: "column",
                   mt: 2,
                   mb: 3,

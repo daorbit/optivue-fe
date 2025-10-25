@@ -43,6 +43,9 @@ export const SignupTitle = styled(Typography)(({ theme }) => ({
   fontSize: "2.25rem",
   textAlign:"center",
   marginBottom: theme.spacing(1),
+  "@media (max-width: 768px)": {
+    fontSize: "1.75rem",
+  },
 }));
 
 export const SignupForm = styled(Box)(({ theme }) => ({

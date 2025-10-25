@@ -26,6 +26,11 @@ export const LoginCard = styled(Paper)(() => ({
   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
   border: "1px solid #e8f5e8",
   overflow: "hidden",
+  "@media (max-width: 768px)": {
+    flexDirection: "column",
+    minHeight: "100vh",
+    borderRadius: 0,
+  },
 }));
 
 export const LeftPane = styled(Box)(({ theme }) => ({
@@ -37,6 +42,11 @@ export const LeftPane = styled(Box)(({ theme }) => ({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
+  "@media (max-width: 768px)": {
+    flex: 1,
+    width: "100%",
+    padding: theme.spacing(3),
+  },
 }));
 
 export const RightPane = styled(Box)(() => ({
@@ -45,6 +55,9 @@ export const RightPane = styled(Box)(() => ({
   display: "block",
   backgroundSize: "cover",
   backgroundPosition: "center",
+  "@media (max-width: 768px)": {
+    display: "none",
+  },
 }));
 
 export const LogoSection = styled(Box)(({ theme }) => ({
@@ -58,6 +71,9 @@ export const LoginTitle = styled(Typography)(({ theme }) => ({
   fontSize: "2.25rem",
   alignItems: "center",
   marginBottom: theme.spacing(1),
+  "@media (max-width: 768px)": {
+    fontSize: "1.75rem",
+  },
 }));
 
 export const LoginForm = styled(Box)(({ theme }) => ({
@@ -66,6 +82,9 @@ export const LoginForm = styled(Box)(({ theme }) => ({
   marginTop: theme.spacing(1),
   marginLeft: "auto",
   marginRight: "auto",
+  "@media (max-width: 768px)": {
+    maxWidth: "100%",
+  },
 }));
 
 export const StyledTextField = styled("div")(({ theme }) => ({
