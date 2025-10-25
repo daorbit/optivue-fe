@@ -1,60 +1,109 @@
 import React from 'react';
 import { Grid, Card, CardContent, Typography, Box } from '@mui/material';
-import { styled, useTheme, alpha } from '@mui/material/styles';
-import { Users, TrendingUp, DollarSign, Activity, LucideIcon } from 'lucide-react';
+import { styled, keyframes } from '@mui/material/styles';
+import { Users, TrendingUp, DollarSign, Activity, LucideIcon, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+
+// Animations
+const slideInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+ 
 
 const StatsGridContainer = styled(Grid)(() => ({
   marginBottom: 32,
 }));
 
-const StatCard = styled(Card)(() => ({
+const StatCard = styled(Card)<{ gradient: string }>(() => ({
   borderRadius: 12,
-  // border: `1px solid ${alpha(theme.palette.divider, 0.7)}`,
-  boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-  transition: 'all 0.18s ease',
+  background: '#ffffff',
+  border: '1px solid #e5e7eb',
+  boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+  transition: 'all 0.2s ease',
+  position: 'relative',
+  overflow: 'hidden',
+  animation: `${slideInUp} 0.5s ease-out forwards`,
   '&:hover': {
-    boxShadow: '0 6px 18px rgba(16,24,40,0.08)',
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
   },
 }));
 
 const StatCardContent = styled(CardContent)(({ theme }) => ({
   padding: theme.spacing(3),
-  '&:last-child': {
-    paddingBottom: theme.spacing(3),
-  },
+  position: 'relative',
+  zIndex: 2,
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 }));
 
-const StatValue = styled(Typography)(({ theme }) => ({
-  fontSize: '2rem',
-  fontWeight: 700,
-  color: theme.palette.text.primary,
-  marginBottom: theme.spacing(1),
-}));
+const StatHeader = styled(Box)({
+  display: 'flex',
+  alignItems: 'flex-start',
+  justifyContent: 'space-between',
+  marginBottom: 16,
+});
 
-const StatLabel = styled(Typography)(({ theme }) => ({
-  color: theme.palette.text.secondary,
-  fontSize: '0.875rem',
-  fontWeight: 500,
-  textTransform: 'uppercase',
-  letterSpacing: '0.5px',
-}));
-
-const StatIcon = styled(Box)<{ color: string }>(({ color }) => ({
+const StatIcon = styled(Box)<{ bgColor: string }>(({ bgColor }) => ({
   width: 48,
   height: 48,
-  borderRadius: 12,
+  borderRadius: 10,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundColor: color,
-  marginBottom: 16,
+  backgroundColor: bgColor,
+  marginBottom: 12,
+}));
+
+const StatValue = styled(Typography)(({ theme }) => ({
+  fontSize: '1.75rem',
+  fontWeight: 700,
+  color: '#111827',
+  marginBottom: theme.spacing(0.5),
+  lineHeight: 1,
+}));
+
+const StatLabel = styled(Typography)({
+  color: '#6b7280',
+  fontSize: '0.8rem',
+  fontWeight: 500,
+  textTransform: 'uppercase',
+  letterSpacing: '0.5px',
+});
+
+const StatChange = styled(Box)<{ isPositive: boolean }>(({ isPositive }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: 4,
+  padding: '4px 8px',
+  borderRadius: 12,
+  backgroundColor: isPositive ? 'rgba(34, 197, 94, 0.2)' : 'rgba(239, 68, 68, 0.2)',
+  border: `1px solid ${isPositive ? 'rgba(34, 197, 94, 0.3)' : 'rgba(239, 68, 68, 0.3)'}`,
+}));
+
+const ChangeText = styled(Typography)<{ isPositive: boolean }>(({ isPositive }) => ({
+  fontSize: '0.75rem',
+  fontWeight: 700,
+  color: isPositive ? '#22c55e' : '#ef4444',
 }));
 
 interface StatItem {
   icon: LucideIcon;
   label: string;
   value: string;
-  color: string;
+  change?: string;
+  changeType?: 'positive' | 'negative';
+  gradient: string;
+  iconBg: string;
   iconColor: string;
 }
 
@@ -64,53 +113,83 @@ interface StatsSectionProps {
 
 const StatsSection: React.FC<StatsSectionProps> = ({
   stats = [
-    ({
+    {
       icon: Users,
       label: 'Total Reach',
       value: '2.4M',
-      color: '#dbeafe',
-      iconColor: '#3b82f6',
-    } as StatItem),
-    ({
+      change: '+12.5%',
+      changeType: 'positive',
+      gradient: '#ffffff',
+      iconBg: '#f3f4f6',
+      iconColor: '#10b981',
+    },
+    {
       icon: TrendingUp,
       label: 'Conversion Rate',
       value: '3.2%',
-      // use theme primary for conversion highlight; background will be derived in render
-      color: '',
-      iconColor: '',
-    } as StatItem),
+      change: '+8.1%',
+      changeType: 'positive',
+      gradient: '#ffffff',
+      iconBg: '#f3f4f6',
+      iconColor: '#10b981',
+    },
     {
       icon: DollarSign,
       label: 'Total Spend',
       value: '$12.5K',
-      color: '#fef3c7',
-      iconColor: '#f59e0b',
+      change: '-2.4%',
+      changeType: 'negative',
+      gradient: '#ffffff',
+      iconBg: '#f3f4f6',
+      iconColor: '#10b981',
     },
     {
       icon: Activity,
       label: 'Active Campaigns',
       value: '24',
-      color: '#fce7f3',
-      iconColor: '#ec4899',
+      change: '+3',
+      changeType: 'positive',
+      gradient: '#ffffff',
+      iconBg: '#f3f4f6',
+      iconColor: '#10b981',
     },
   ]
 }) => {
-  const theme = useTheme();
   return (
     <StatsGridContainer container spacing={3}>
       {stats.map((stat, index) => {
         const IconComponent = stat.icon;
-         const bgColor = stat.color || (index === 1 ? alpha(theme.palette.primary.main, 0.15) : theme.palette.grey[50]);
-        const iconClr = stat.iconColor || (index === 1 ? theme.palette.primary.main : theme.palette.text.primary);
         return (
           <Grid item xs={12} sm={6} md={3} key={index}>
-            <StatCard>
+            <StatCard
+              gradient={stat.gradient}
+              style={{
+                animationDelay: `${index * 0.1}s`
+              }}
+            >
               <StatCardContent>
-                <StatIcon color={bgColor}>
-                  <IconComponent size={24} color={iconClr} />
-                </StatIcon>
-                <StatValue>{stat.value}</StatValue>
-                <StatLabel>{stat.label}</StatLabel>
+                <StatHeader>
+                  <StatIcon bgColor={stat.iconBg}>
+                    <IconComponent size={28} color={stat.iconColor} />
+                  </StatIcon>
+                  {stat.change && (
+                    <StatChange isPositive={stat.changeType === 'positive'}>
+                      {stat.changeType === 'positive' ? (
+                        <ArrowUpRight size={14} />
+                      ) : (
+                        <ArrowDownRight size={14} />
+                      )}
+                      <ChangeText isPositive={stat.changeType === 'positive'}>
+                        {stat.change}
+                      </ChangeText>
+                    </StatChange>
+                  )}
+                </StatHeader>
+
+                <Box>
+                  <StatValue>{stat.value}</StatValue>
+                  <StatLabel>{stat.label}</StatLabel>
+                </Box>
               </StatCardContent>
             </StatCard>
           </Grid>

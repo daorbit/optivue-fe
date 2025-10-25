@@ -1,6 +1,6 @@
-import QuickActionsSection from "./Home/QuickActionsSection";
-import StatsSection from "./Home/StatsSection";
 import WelcomeSection from "./Home/WelcomeSection";
+import StatsSection from "./Home/StatsSection";
+// import AIFeaturesSection from "./Home/AIFeaturesSection";
 import { useMetaTags } from "../utils/useMetaTags";
 
 const Home = () => {
@@ -15,10 +15,14 @@ const Home = () => {
   return (
     <>
       {metaTags}
-      <div style={{ padding: "24px" }}>
+      <div style={{
+        padding: "24px",
+        background: "#f9fafb",
+        minHeight: "100vh"
+      }}>
         <WelcomeSection />
-        <QuickActionsSection />
         <StatsSection />
+        {/* <AIFeaturesSection /> */}
       </div>
     </>
   );
