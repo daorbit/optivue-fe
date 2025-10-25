@@ -11,13 +11,13 @@ import { Lock, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { useAppDispatch } from "../store/hooks";
 import { resetPassword } from "../store/slices/authSlice";
 import { useMetaTags } from "../utils/useMetaTags";
+import { showSuccessToast, showErrorToast } from "../utils/toast";
 import {
   LoginContainer,
   LoginWrapper,
   LogoSection,
   LoginCard,
   LoginTitle,
-  StyledAlert,
   LoginForm,
   StyledTextField,
   LoginButton,
@@ -29,7 +29,6 @@ import {
 const ResetPassword: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -51,21 +50,20 @@ const ResetPassword: React.FC = () => {
     if (tokenFromUrl) {
       setToken(tokenFromUrl);
     } else {
-      setError("Invalid reset link. Please request a new password reset.");
+      showErrorToast("Invalid reset link. Please request a new password reset.");
     }
   }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      showErrorToast("Passwords do not match");
       return;
     }
 
     if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
+      showErrorToast("Password must be at least 6 characters long");
       return;
     }
 
@@ -73,9 +71,10 @@ const ResetPassword: React.FC = () => {
 
     try {
       await dispatch(resetPassword({ token, password })).unwrap();
+      showSuccessToast("Password reset successful! You are now logged in.");
       navigate("/"); // Redirect to home after successful reset
     } catch (err: any) {
-      setError(err || "Failed to reset password");
+      showErrorToast(err || "Failed to reset password");
     } finally {
       setLoading(false);
     }
@@ -91,17 +90,19 @@ const ResetPassword: React.FC = () => {
               <LeftPane>
                 <LogoSection sx={{ width: "100%", mb: 4 }}>
                   <Box sx={{ mb: 2 }}>
-                    <Link to="/login" style={{ textDecoration: "none", color: "inherit" }}>
-                      <ArrowLeft size={20} style={{ marginRight: 8 }} />
+                    <Link to="/login"   style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}>
+                      <ArrowLeft size={17} style={{ marginRight: 8 }} />
                       Back to Login
                     </Link>
                   </Box>
                   <LoginTitle>Reset Password</LoginTitle>
                 </LogoSection>
-
-                <StyledAlert severity="error" sx={{ mb: 3 }}>
-                  {error}
-                </StyledAlert>
 
                 <SignupLink>
                   <Typography variant="body2">
@@ -140,12 +141,6 @@ const ResetPassword: React.FC = () => {
                   Enter your new password below.
                 </Typography>
               </LogoSection>
-
-              {error && (
-                <StyledAlert severity="error" sx={{ mb: 3 }}>
-                  {error}
-                </StyledAlert>
-              )}
 
               <LoginForm component="form" onSubmit={handleSubmit}>
                 <StyledTextField>

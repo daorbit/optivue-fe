@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { refreshUser } from "../store/slices/authSlice";
 import { apiService } from "../services/api";
+import { showSuccessToast, showErrorToast } from "../utils/toast";
 import {
   Container,
   Typography,
@@ -9,7 +10,6 @@ import {
   Card,
   CardContent,
   Box,
-  Alert,
   Grid,
   Avatar,
   Chip,
@@ -36,7 +36,6 @@ const Profile: React.FC = () => {
   });
   const [addOpen, setAddOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   const metaTags = useMetaTags({
     title: "Your Profile - OptiVue Account Settings",
@@ -54,13 +53,6 @@ const Profile: React.FC = () => {
       });
     }
   }, [user]);
-
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(""), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -86,18 +78,17 @@ const Profile: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
 
     try {
       const response = await apiService.updateAccount(formData);
       if (response.success) {
-        setMessage("Account updated successfully!");
+        showSuccessToast("Account updated successfully!");
         dispatch(refreshUser()); // Refresh user data in Redux store
       } else {
-        setMessage("Failed to update account.");
+        showErrorToast("Failed to update account.");
       }
     } catch (error) {
-      setMessage("Network error. Please try again.");
+      showErrorToast("Network error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -341,21 +332,6 @@ const Profile: React.FC = () => {
       >
         Save
       </Fab>
-
-      {message && (
-        <Alert
-          severity={message.includes("successfully") ? "success" : "error"}
-          sx={{
-            position: "fixed",
-            bottom: 24,
-            left: 24,
-            borderRadius: 2,
-            minWidth: 300,
-          }}
-        >
-          {message}
-        </Alert>
-      )}
 
       <AddApplicationDialog
         open={addOpen}

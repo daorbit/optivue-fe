@@ -1,5 +1,7 @@
-import { Card, CardContent, Typography, Grid, Box, Alert } from "@mui/material";
+import { useEffect } from "react";
+import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
+import { showInfoToast, showWarningToast } from "../../utils/toast";
 
 interface PerformanceScoresProps {
   analysis: any;
@@ -27,152 +29,131 @@ const PerformanceScores = ({
     return Number.isFinite(n) ? n : null;
   };
 
+  // Show toasts for analysis notes and errors
+  useEffect(() => {
+    if (analysis?.performance?.note) {
+      showInfoToast(`Performance Note: ${analysis.performance.note}`);
+    }
+    if (analysis?.performance?.error) {
+      showWarningToast(`Performance Warning: ${analysis.performance.error}`);
+    }
+  }, [analysis?.performance?.note, analysis?.performance?.error]);
+
+  // Prefer strategy-specific scores when a strategy is provided, otherwise fall back to top-level shapes
+  const strategyScores = selectedStrategy
+    ? analysis?.performance?.[selectedStrategy]?.scores
+    : undefined;
+  const scores =
+    strategyScores || analysis?.performance?.scores || analysis?.scores || {};
+
+  const getCategoryValue = (key: string) => {
+    if (selectedStrategy) {
+      const strat = analysis?.performance?.[selectedStrategy];
+      const val = strat?.scores?.[key] ?? strat?.[key] ?? scores?.[key];
+      return toNumber(val ?? null);
+    }
+    return toNumber(scores?.[key] ?? null);
+  };
+
+  const categories = [
+    { key: "performance", label: "Performance" },
+    { key: "accessibility", label: "Accessibility" },
+    { key: "bestPractices", label: "Best Practices" },
+    { key: "seo", label: "SEO" },
+  ];
+
+  const values = categories.map((c) => ({
+    value: getCategoryValue(c.key),
+  }));
+
+  const overallNum = toNumber(
+    selectedStrategy
+      ? analysis?.performance?.[selectedStrategy]?.score
+      : analysis?.performance?.score ?? analysis?.score
+  );
+
+  const hasData = overallNum !== null || values.some((v) => v.value !== null);
+
+  if (!hasData) {
+    return (
+      <Card sx={{ mb: 3, boxShadow: "none" }}>
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            No performance scores available
+          </Typography>
+        </CardContent>
+      </Card>
+    );
+  }
+
   return (
-    <Card sx={{ mb: 3 ,boxShadow: 'none' }}>
+    <Card sx={{ mb: 3, boxShadow: "none" }}>
       <CardContent>
-       
-        {analysis?.performance?.note ? (
-          <Alert severity="info">{analysis.performance.note}</Alert>
-        ) : analysis?.performance?.error ? (
-          <Alert severity="warning">{analysis.performance.error}</Alert>
-        ) : (
-          (() => {
-            // Prefer strategy-specific scores when a strategy is provided, otherwise fall back to top-level shapes
-            const strategyScores = selectedStrategy
-              ? analysis?.performance?.[selectedStrategy]?.scores
-              : undefined;
-            const scores =
-              strategyScores ||
-              analysis?.performance?.scores ||
-              analysis?.scores ||
-              {};
-
-            const getCategoryValue = (key: string) => {
-              if (selectedStrategy) {
-                const strat = analysis?.performance?.[selectedStrategy];
-                const val =
-                  strat?.scores?.[key] ?? strat?.[key] ?? scores?.[key];
-                return toNumber(val ?? null);
-              }
-              return toNumber(scores?.[key] ?? null);
-            };
-
-            const categories = [
-              { key: "performance", label: "Performance" },
-              { key: "accessibility", label: "Accessibility" },
-              { key: "bestPractices", label: "Best Practices" },
-              { key: "seo", label: "SEO" },
-            ];
-
-            // Compute overall value (strategy-first)
-            const overallVal = selectedStrategy
-              ? analysis?.performance?.[selectedStrategy]?.overallScore ??
-                strategyScores?.performance ??
-                analysis?.performance?.overallScore ??
-                analysis?.scores?.performance ??
-                null
-              : analysis?.performance?.overallScore ??
-                scores.performance ??
-                null;
-            const overallNum = toNumber(overallVal);
-
-            const values = categories.map((c) => ({
-              ...c,
-              value: getCategoryValue(c.key),
-            }));
-            const hasAny =
-              overallNum !== null || values.some((v) => v.value !== null);
-            if (!hasAny)
-              return <Typography>No performance data available</Typography>;
-
-            return (
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Grid item xs={12} sm={6} md={4}>
-                  <Box textAlign="center">
-                    <Typography variant="subtitle2" color="text.secondary">
-                      Overall
-                    </Typography>
+        <Typography variant="h6" gutterBottom>
+          Performance Scores
+        </Typography>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <Gauge
+                width={200}
+                height={200}
+                value={overallNum ?? 0}
+                startAngle={-110}
+                endAngle={110}
+                sx={{
+                  [`& .${gaugeClasses.valueText}`]: {
+                    fontSize: 40,
+                    transform: "translate(0px, 0px)",
+                  },
+                }}
+                text={({
+                  value,
+                  valueMax,
+                }: {
+                  value: number;
+                  valueMax: number;
+                }) => `${value} / ${valueMax}`}
+              />
+            </Box>
+            <Typography variant="h6" align="center" sx={{ mt: 2 }}>
+              Overall Score
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {categories.map((category, index) => {
+                const value = values[index]?.value;
+                return (
+                  <Box
+                    key={category.key}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 2,
+                    }}
+                  >
                     <Box
                       sx={{
-                        width: 180,
-                        height: 140,
-                        mx: "auto",
-                        mt: 1,
-                        position: "relative",
+                        width: 12,
+                        height: 12,
+                        borderRadius: "50%",
+                        backgroundColor: getGaugeColor(value),
+                        flexShrink: 0,
                       }}
-                    >
-                      <Gauge
-                        value={overallNum ?? 0}
-                        valueMin={0}
-                        valueMax={100}
-                        startAngle={-110}
-                        endAngle={110}
-                        width={180}
-                        height={140}
-                        sx={(theme: any) => ({
-                          [`& .${gaugeClasses.valueArc}`]: {
-                            fill: getGaugeColor(overallNum),
-                          },
-                          [`& .${gaugeClasses.referenceArc}`]: {
-                            fill: theme.palette.action.disabledBackground,
-                          },
-                          [`& .${gaugeClasses.valueText}`]: {
-                            color: getGaugeColor(overallNum),
-                          },
-                        })}
-                      />
-                    </Box>
+                    />
+                    <Typography variant="body2" sx={{ flex: 1 }}>
+                      {category.label}
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      {value !== null ? `${value}` : "N/A"}
+                    </Typography>
                   </Box>
-                </Grid>
-
-                {values.map((v) => (
-                  <Grid item xs={6} sm={6} md={2} key={v.key}>
-                    <Box textAlign="center">
-                      <Typography variant="subtitle2" color="text.secondary">
-                        {v.label}
-                      </Typography>
-                      <Box
-                        sx={{
-                          width: 120,
-                          height: 100,
-                          mx: "auto",
-                          mt: 1,
-                          position: "relative",
-                        }}
-                      >
-                        <Gauge
-                          value={v.value ?? 0}
-                          valueMin={0}
-                          valueMax={100}
-                          startAngle={-110}
-                          endAngle={110}
-                          width={120}
-                          height={100}
-                          sx={(theme: any) => ({
-                            [`& .${gaugeClasses.valueArc}`]: {
-                              fill: getGaugeColor(v.value),
-                            },
-                            [`& .${gaugeClasses.referenceArc}`]: {
-                              fill: theme.palette.action.disabledBackground,
-                            },
-                            [`& .${gaugeClasses.valueText}`]: {
-                              color: getGaugeColor(v.value),
-                            },
-                          })}
-                        />
-                      </Box>
-                    </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            );
-          })()
-        )}
+                );
+              })}
+            </Box>
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );

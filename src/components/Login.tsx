@@ -11,6 +11,7 @@ import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { login as loginAction, getGoogleAuthUrl } from "../store/slices/authSlice";
 import { useMetaTags } from "../utils/useMetaTags";
+import { showErrorToast } from "../utils/toast";
 import { GoogleIcon } from "./GoogleIcon";
 import {
   LoginContainer,
@@ -18,7 +19,6 @@ import {
   LogoSection,
   LoginCard,
   LoginTitle,
-  StyledAlert,
   LoginForm,
   StyledTextField,
   LoginButton,
@@ -32,7 +32,6 @@ import {
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
@@ -52,13 +51,12 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
       await dispatch(loginAction({ email, password })).unwrap();
     } catch (err: any) {
-      setError(err || "Login failed");
+      showErrorToast(err || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -72,7 +70,7 @@ const Login: React.FC = () => {
         window.location.href = result;
       }
     } catch (err: any) {
-      setError(err || "Failed to initiate Google login");
+      showErrorToast(err || "Failed to initiate Google login");
     }
   };
 
@@ -93,12 +91,6 @@ const Login: React.FC = () => {
                 Enter your Credentials to access your account
               </Typography>
             </LogoSection>
-
-            {error && (
-              <StyledAlert severity="error" sx={{ mb: 3 }}>
-                {error}
-              </StyledAlert>
-            )}
 
             <LoginForm component="form" onSubmit={handleSubmit}>
               <StyledTextField>

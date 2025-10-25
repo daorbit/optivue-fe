@@ -1,27 +1,18 @@
-import { Alert, Typography } from "@mui/material";
+import { useEffect } from "react";
+import { showErrorToast } from "../../utils/toast";
 
 interface SeoErrorAlertProps {
   error: string | null;
 }
 
 const SeoErrorAlert = ({ error }: SeoErrorAlertProps) => {
-  if (!error) return null;
+  useEffect(() => {
+    if (error) {
+      showErrorToast(`Analysis Failed: ${error}`);
+    }
+  }, [error]);
 
-  return (
-    <Alert
-      severity="error"
-      sx={{
-        mb: 4,
-        borderRadius: 2,
-        boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
-      }}
-    >
-      <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
-        Analysis Failed
-      </Typography>
-      {error}
-    </Alert>
-  );
+  return null; // This component now only shows toasts, no UI
 };
 
 export default SeoErrorAlert;

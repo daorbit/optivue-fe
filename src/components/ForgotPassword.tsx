@@ -5,13 +5,13 @@ import { Mail, ArrowLeft } from "lucide-react";
 import { useAppDispatch } from "../store/hooks";
 import { forgotPassword } from "../store/slices/authSlice";
 import { useMetaTags } from "../utils/useMetaTags";
+import { showSuccessToast, showErrorToast } from "../utils/toast";
 import {
   LoginContainer,
   LoginWrapper,
   LogoSection,
   LoginCard,
   LoginTitle,
-  StyledAlert,
   LoginForm,
   StyledTextField,
   LoginButton,
@@ -22,8 +22,6 @@ import {
 
 const ForgotPassword: React.FC = () => {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -38,15 +36,13 @@ const ForgotPassword: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
     setLoading(true);
 
     try {
       const result = await dispatch(forgotPassword(email)).unwrap();
-      setSuccess(result);
+      showSuccessToast(result);
     } catch (err: any) {
-      setError(err || "Failed to send reset email");
+      showErrorToast(err || "Failed to send reset email");
     } finally {
       setLoading(false);
     }
@@ -85,18 +81,6 @@ const ForgotPassword: React.FC = () => {
                   your password.
                 </Typography>
               </LogoSection>
-
-              {error && (
-                <StyledAlert severity="error" sx={{ mb: 3 }}>
-                  {error}
-                </StyledAlert>
-              )}
-
-              {success && (
-                <StyledAlert severity="success" sx={{ mb: 3 }}>
-                  {success}
-                </StyledAlert>
-              )}
 
               <LoginForm component="form" onSubmit={handleSubmit}>
                 <StyledTextField>

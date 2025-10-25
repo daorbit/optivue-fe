@@ -7,7 +7,6 @@ import {
   Typography,
   Chip,
   Button,
-  Alert,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,6 +16,7 @@ import AiSuggestions from "./AiSuggestions";
 import PerformanceMetrics from "./PerformanceMetrics";
 import { getAiSuggestions } from "../../store/slices/seoSlice";
 import { RootState } from "../../store";
+import { showErrorToast } from "../../utils/toast";
 
 interface PerformanceTabProps {
   analysis: any;
@@ -54,6 +54,12 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
       }, 100);
     }
   }, [aiLoading, aiSuggestions]);
+
+  useEffect(() => {
+    if (aiError) {
+      showErrorToast(aiError);
+    }
+  }, [aiError]);
 
   const desktopAvailable = !!perf.desktop;
   const mobileAvailable = !!perf.mobile;
@@ -202,12 +208,6 @@ const PerformanceTab = ({ analysis }: PerformanceTabProps) => {
           {aiLoading ? "Get AI Suggestions..." : "Get AI Suggestions"}
         </Button>
       </Box>
-
-      {aiError && (
-        <Alert severity="error" sx={{ mb: 2 }}>
-          {aiError}
-        </Alert>
-      )}
 
       {(strategy === "desktop"
         ? desktop?.suggestions

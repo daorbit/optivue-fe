@@ -4,6 +4,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { Provider } from 'react-redux'
 import { useEffect } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { publicRoutes, privateRoutes } from './routes'
 import PrivateRoute from './components/PrivateRoute'
 import Layout from './components/Layout'
@@ -54,6 +56,18 @@ function AppContent() {
             ))}
           </Routes>
         </Layout>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </BrowserRouter>
     </ThemeProvider>
   );

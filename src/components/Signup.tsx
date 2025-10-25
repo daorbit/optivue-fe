@@ -12,13 +12,13 @@ import { useAppSelector, useAppDispatch } from "../store/hooks";
 import { getGoogleAuthUrl } from "../store/slices/authSlice";
 import { apiService } from "../services/api";
 import { useMetaTags } from "../utils/useMetaTags";
+import { showSuccessToast, showErrorToast } from "../utils/toast";
 import { GoogleIcon } from "./GoogleIcon";
 import { SignupTitle, LoginLink } from "../styles/Signup.styles";
 import {
   LoginForm,
   StyledTextField,
   LoginButton,
-  StyledAlert,
   SocialButton,
 } from "../styles/Login.styles";
 import {
@@ -35,7 +35,6 @@ const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -56,10 +55,9 @@ const Signup: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      showErrorToast("Passwords do not match");
       return;
     }
 
@@ -67,12 +65,13 @@ const Signup: React.FC = () => {
     try {
       const response = await apiService.signup({ username, email, password });
       if (response.success) {
+        showSuccessToast("Account created successfully! Please check your email for verification code.");
         navigate("/verify-otp", { state: { email } });
       } else {
-        setError(response.message || "Signup failed");
+        showErrorToast(response.message || "Signup failed");
       }
     } catch (err: any) {
-      setError(err.message || "Signup failed");
+      showErrorToast(err.message || "Signup failed");
     } finally {
       setLoading(false);
     }
@@ -86,7 +85,7 @@ const Signup: React.FC = () => {
         window.location.href = result;
       }
     } catch (err: any) {
-      setError(err || "Failed to initiate Google signup");
+      showErrorToast(err || "Failed to initiate Google signup");
     }
   };
 
@@ -100,8 +99,6 @@ const Signup: React.FC = () => {
             <LogoSection sx={{ textAlign: "left", width: "100%", mb: 4 }}>
               <SignupTitle>Get Started Now</SignupTitle>
             </LogoSection>
-
-            {error && <StyledAlert severity="error">{error}</StyledAlert>}
 
             <LoginForm component="form" onSubmit={handleSubmit}>
               <StyledTextField>

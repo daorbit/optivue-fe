@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Typography,
@@ -9,11 +9,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  Alert,
   Divider,
 } from "@mui/material";
 import {
-  CheckCircle,
   ChevronDown,
   Zap,
   Eye,
@@ -21,6 +19,7 @@ import {
   Search,
   Lightbulb,
 } from "lucide-react";
+import { showSuccessToast } from "../../utils/toast";
 
 interface Suggestion {
   id: string;
@@ -84,25 +83,14 @@ const SeoSuggestions: React.FC<SeoSuggestionsProps> = ({
   suggestions,
   strategy = "mobile",
 }) => {
+  useEffect(() => {
+    if (!suggestions || suggestions.length === 0) {
+      showSuccessToast(`Great job! No major issues found for ${strategy} analysis.`);
+    }
+  }, [suggestions, strategy]);
+
   if (!suggestions || suggestions.length === 0) {
-    return (
-      <Alert
-        severity="success"
-        sx={{
-          mt: 3,
-          borderRadius: 2,
-          "& .MuiAlert-icon": { color: "#4caf50" },
-        }}
-        icon={<CheckCircle size={20} />}
-      >
-        <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-          Great job! No major issues found for {strategy} analysis.
-        </Typography>
-        <Typography variant="body2" sx={{ mt: 0.5 }}>
-          Your website is performing well in this category.
-        </Typography>
-      </Alert>
-    );
+    return null;
   }
 
   // Group suggestions by category

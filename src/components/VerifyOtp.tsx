@@ -5,6 +5,7 @@ import { Mail } from "lucide-react";
 import { useAppDispatch } from "../store/hooks";
 import { verifyOtp } from "../store/slices/authSlice";
 import { useMetaTags } from "../utils/useMetaTags";
+import { showSuccessToast, showErrorToast } from "../utils/toast";
 import { SignupTitle, LoginLink } from "../styles/Signup.styles";
 import {
   LoginContainer,
@@ -16,13 +17,11 @@ import {
   LoginForm,
   StyledTextField,
   LoginButton,
-  StyledAlert,
 } from "../styles/Login.styles";
 
 const VerifyOtp: React.FC = () => {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -46,24 +45,24 @@ const VerifyOtp: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     if (!email || !otp) {
-      setError("Please fill in all fields");
+      showErrorToast("Please fill in all fields");
       return;
     }
 
     if (otp.length !== 6) {
-      setError("OTP must be 6 digits");
+      showErrorToast("OTP must be 6 digits");
       return;
     }
 
     setLoading(true);
     try {
       await dispatch(verifyOtp({ email, otp })).unwrap();
+      showSuccessToast("Email verified successfully!");
       navigate("/", { replace: true });
     } catch (err: any) {
-      setError(err || "OTP verification failed");
+      showErrorToast(err || "OTP verification failed");
     } finally {
       setLoading(false);
     }
@@ -71,7 +70,7 @@ const VerifyOtp: React.FC = () => {
 
   const handleResendOtp = async () => {
     // TODO: Implement resend OTP functionality
-    setError("Resend OTP functionality not implemented yet");
+    showErrorToast("Resend OTP functionality not implemented yet");
   };
 
   return (
@@ -84,8 +83,6 @@ const VerifyOtp: React.FC = () => {
             <LogoSection>
               <SignupTitle variant="h4">Verify Your Email</SignupTitle>
             </LogoSection>
-
-            {error && <StyledAlert severity="error">{error}</StyledAlert>}
 
             <LoginForm component="form" onSubmit={handleSubmit}>
               <StyledTextField>

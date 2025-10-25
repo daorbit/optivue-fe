@@ -1,4 +1,4 @@
-import { styled, Button, Typography, Box, Alert, Paper } from "@mui/material";
+import { styled, Button, Typography, Box, Paper } from "@mui/material";
 
 export const LoginContainer = styled(Box)(() => ({
   minHeight: "100vh",
@@ -58,13 +58,6 @@ export const LoginTitle = styled(Typography)(({ theme }) => ({
   fontSize: "2.25rem",
   alignItems: "center",
   marginBottom: theme.spacing(1),
-}));
-
-export const StyledAlert = styled(Alert)(({ theme }) => ({
-  width: "100%",
-  borderRadius: theme.shape.borderRadius,
-  fontWeight: 500,
-  boxShadow: theme.shadows[2],
 }));
 
 export const LoginForm = styled(Box)(({ theme }) => ({
