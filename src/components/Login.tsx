@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import { useAppSelector, useAppDispatch } from "../store/hooks";
-import { login as loginAction } from "../store/slices/authSlice";
+import { login as loginAction, getGoogleAuthUrl } from "../store/slices/authSlice";
 import { useMetaTags } from "../utils/useMetaTags";
+import { GoogleIcon } from "./GoogleIcon";
 import {
   LoginContainer,
   LoginWrapper,
@@ -25,7 +26,7 @@ import {
   ForgotPasswordLink,
   LeftPane,
   RightPane,
-  // SocialButton,
+  SocialButton,
 } from "../styles/Login.styles";
 
 const Login: React.FC = () => {
@@ -35,7 +36,7 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
-  const { isAuthenticated } = useAppSelector<any>((state) => state.auth);
+  const { isAuthenticated, googleLoading } = useAppSelector<any>((state) => state.auth);
 
   const metaTags = useMetaTags({
     title: "Login to OptiVue - Access Your Dashboard",
@@ -60,6 +61,18 @@ const Login: React.FC = () => {
       setError(err || "Login failed");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await dispatch(getGoogleAuthUrl()).unwrap();
+      if (result) {
+        // Redirect to Google OAuth
+        window.location.href = result;
+      }
+    } catch (err: any) {
+      setError(err || "Failed to initiate Google login");
     }
   };
 
@@ -197,7 +210,7 @@ const Login: React.FC = () => {
                     borderBottom: "1px solid rgba(0,0,0,0.06)",
                   }}
                 />
-                {/* <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary">
                   Or
                 </Typography>
                 <Box
@@ -206,10 +219,10 @@ const Login: React.FC = () => {
                     height: 1,
                     borderBottom: "1px solid rgba(0,0,0,0.06)",
                   }}
-                /> */}
+                />
               </Box>
 
-              {/* <Box
+              <Box
                 sx={{
                   display: "flex",
                   gap: 12,
@@ -218,17 +231,13 @@ const Login: React.FC = () => {
                 }}
               >
                 <SocialButton
-                  startIcon={
-                    <img
-                      src="/assets/google-logo.png"
-                      alt="g"
-                      style={{ width: 18 }}
-                    />
-                  }
+                  onClick={handleGoogleLogin}
+                  disabled={googleLoading || loading}
+                  startIcon={<GoogleIcon />}
                 >
-                  Sign in with Google
+                  {googleLoading ? "Loading..." : "Sign in with Google"}
                 </SocialButton>
-              </Box> */}
+              </Box>
 
               <SignupLink>
                 <Typography variant="body2">

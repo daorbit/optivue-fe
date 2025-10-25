@@ -7,6 +7,7 @@ import VerifyOtp from './components/VerifyOtp'
 import Profile from './components/Profile'
 import FacebookAdsDashboard from './components/FacebookAdsDashboard'
 import SeoAnalysis from './components/seo/SeoAnalysis'
+import GoogleCallback from './components/GoogleCallback'
 
 interface RouteConfig {
   path: string
@@ -17,6 +18,7 @@ export const publicRoutes: RouteConfig[] = [
   { path: '/login', component: Login },
   { path: '/signup', component: Signup },
   { path: '/verify-otp', component: VerifyOtp },
+  { path: '/auth/google/callback', component: GoogleCallback },
 ]
 
 export const privateRoutes: RouteConfig[] = [

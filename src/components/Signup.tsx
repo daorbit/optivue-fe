@@ -5,17 +5,21 @@ import {
   Typography,
   IconButton,
   InputAdornment,
+  Box,
 } from "@mui/material";
 import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { useAppSelector } from "../store/hooks";
+import { useAppSelector, useAppDispatch } from "../store/hooks";
+import { getGoogleAuthUrl } from "../store/slices/authSlice";
 import { apiService } from "../services/api";
 import { useMetaTags } from "../utils/useMetaTags";
+import { GoogleIcon } from "./GoogleIcon";
 import { SignupTitle, LoginLink } from "../styles/Signup.styles";
 import {
   LoginForm,
   StyledTextField,
   LoginButton,
   StyledAlert,
+  SocialButton,
 } from "../styles/Login.styles";
 import {
   LoginContainer,
@@ -35,7 +39,8 @@ const Signup: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const { isAuthenticated, googleLoading } = useAppSelector((state) => state.auth);
 
   const metaTags = useMetaTags({
     title: "Sign Up for OptiVue - Join Our Digital Optimization Platform",
@@ -70,6 +75,18 @@ const Signup: React.FC = () => {
       setError(err.message || "Signup failed");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleGoogleSignup = async () => {
+    try {
+      const result = await dispatch(getGoogleAuthUrl()).unwrap();
+      if (result) {
+        // Redirect to Google OAuth
+        window.location.href = result;
+      }
+    } catch (err: any) {
+      setError(err || "Failed to initiate Google signup");
     }
   };
 
@@ -213,6 +230,52 @@ const Signup: React.FC = () => {
               >
                 {loading ? "Signing Up..." : "Sign Up"}
               </LoginButton>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  mt: 3,
+                  mb: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    flex: 1,
+                    height: 1,
+                    borderBottom: "1px solid rgba(0,0,0,0.06)",
+                  }}
+                />
+                <Typography variant="body2" color="text.secondary">
+                  Or
+                </Typography>
+                <Box
+                  sx={{
+                    flex: 1,
+                    height: 1,
+                    borderBottom: "1px solid rgba(0,0,0,0.06)",
+                  }}
+                />
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 12,
+                  flexDirection: "column",
+                  mt: 2,
+                  mb: 3,
+                }}
+              >
+                <SocialButton
+                  onClick={handleGoogleSignup}
+                  disabled={googleLoading || loading}
+                  startIcon={<GoogleIcon />}
+                >
+                  {googleLoading ? "Loading..." : "Sign up with Google"}
+                </SocialButton>
+              </Box>
 
               <LoginLink>
                 <Typography variant="body2">
