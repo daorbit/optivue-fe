@@ -89,39 +89,9 @@ const PerformanceScores = ({
   return (
     <Card sx={{ mb: 3, boxShadow: "none" }}>
       <CardContent>
-        <Typography variant="h6" gutterBottom>
-          Performance Scores
-        </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <Gauge
-                width={200}
-                height={200}
-                value={overallNum ?? 0}
-                startAngle={-110}
-                endAngle={110}
-                sx={{
-                  [`& .${gaugeClasses.valueText}`]: {
-                    fontSize: 40,
-                    transform: "translate(0px, 0px)",
-                  },
-                }}
-                text={({
-                  value,
-                  valueMax,
-                }: {
-                  value: number;
-                  valueMax: number;
-                }) => `${value} / ${valueMax}`}
-              />
-            </Box>
-            <Typography variant="h6" align="center" sx={{ mt: 2 }}>
-              Overall Score
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <Grid item xs={12}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 6, justifyContent: "center" }}>
               {categories.map((category, index) => {
                 const value = values[index]?.value;
                 return (
@@ -129,24 +99,31 @@ const PerformanceScores = ({
                     key={category.key}
                     sx={{
                       display: "flex",
+                      flexDirection: "column",
                       alignItems: "center",
-                      gap: 2,
+                      justifyContent: "space-evenly",
+                      gap: 1,
                     }}
                   >
-                    <Box
+                    <Gauge
+                      width={180}
+                      height={120}
+                      value={value ?? 0}
+                      startAngle={-90}
+                      endAngle={90}
                       sx={{
-                        width: 12,
-                        height: 12,
-                        borderRadius: "50%",
-                        backgroundColor: getGaugeColor(value),
-                        flexShrink: 0,
+                        [`& .${(gaugeClasses.valueText)}`]: {
+                          fontSize: 18,
+                          transform: "translate(0px, 0px)",
+                        },
+                        [`& .${gaugeClasses.valueArc}`]: {
+                          fill: getGaugeColor(value),
+                        },
                       }}
+                      text={({ value }: { value: number }) => `${value}%`}
                     />
-                    <Typography variant="body2" sx={{ flex: 1 }}>
+                    <Typography variant="body2" align="center">
                       {category.label}
-                    </Typography>
-                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                      {value !== null ? `${value}` : "N/A"}
                     </Typography>
                   </Box>
                 );
