@@ -62,10 +62,10 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
       if (!newApp.token || newApp.token.trim() === "")
         errs.token = "Access Token is required";
     }
-    if (newApp.type === "GOOGLE_ANALYTICS") {
-      if (!newApp.ga4 || newApp.ga4.trim() === "")
-        errs.ga4 = "GA4 Measurement ID is required";
-    }
+    // if (newApp.type === "GOOGLE_ANALYTICS") {
+    //   if (!newApp.ga4 || newApp.ga4.trim() === "")
+    //     errs.ga4 = "GA4 Measurement ID is required";
+    // }
     if (Object.keys(errs).length) {
       setModalErrors(errs);
       return;
@@ -76,9 +76,9 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
       if (newApp.accountId) cfg["accountId"] = newApp.accountId;
       if (newApp.token) cfg["accessToken"] = newApp.token;
     }
-    if (newApp.type === "GOOGLE_ANALYTICS") {
-      if (newApp.ga4) cfg["ga4"] = newApp.ga4;
-    }
+    // if (newApp.type === "GOOGLE_ANALYTICS") {
+    //   if (newApp.ga4) cfg["ga4"] = newApp.ga4;
+    // }
 
     // add application
     onAdd({
@@ -147,7 +147,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                     accountId: "",
                     token: "",
                   });
-                } else if (val === "GOOGLE_ANALYTICS") {
+                } /* else if (val === "GOOGLE_ANALYTICS") {
                   setNewApp({
                     ...newApp,
                     type: val,
@@ -157,7 +157,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                     accountId: "",
                     token: "",
                   });
-                } else {
+                } */ else {
                   setNewApp({ ...newApp, type: val });
                 }
               }}
@@ -170,7 +170,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
               }}
             >
               <MenuItem value="FACEBOOK_INSIGHTS">Facebook Insights</MenuItem>
-              <MenuItem value="GOOGLE_ANALYTICS">Google Analytics</MenuItem>
+              {/* <MenuItem value="GOOGLE_ANALYTICS">Google Analytics</MenuItem> */}
             </TextField>
           </Box>
 
@@ -238,7 +238,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
           )}
 
           {/* Google fields */}
-          {newApp.type === "GOOGLE_ANALYTICS" && (
+          {/* {newApp.type === "GOOGLE_ANALYTICS" && (
             <Box sx={{ mb: 3 }}>
               <Typography
                 variant="subtitle1"
@@ -267,7 +267,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                 }}
               />
             </Box>
-          )}
+          )} */}
         </Box>
       </DialogContent>
       <DialogActions sx={{ px: 4, pb: 3, gap: 2 }}>
