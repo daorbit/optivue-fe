@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Typography, Grid, Card, CardContent, Stack, Button, Tabs, Tab } from "@mui/material";
+import { Box, Typography, Grid, Card, CardContent, Stack, Button, Tabs, Tab, Switch, FormControlLabel } from "@mui/material";
 // import KeyMetrics from "./KeyMetrics";
 import MetaTagsSection from "./MetaTagsSection";
 import TechnicalSeoSection from "./TechnicalSeoSection";
@@ -8,6 +8,7 @@ import MetaTagsTab from "./MetaTagsTab";
 import SchemasTab from "./SchemasTab";
 import WebsitePreview from "./WebsitePreview";
 import PerformanceTab from "./PerformanceTab";
+import SeoAnalysisDockview from "./SeoAnalysisDockview";
 
 interface SeoAnalysisResultsProps {
   analysis: any;
@@ -16,6 +17,7 @@ interface SeoAnalysisResultsProps {
 
 const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
   const [tabValue, setTabValue] = useState(0);
+  const [useDockView, setUseDockView] = useState(true);
 
   return (
     <Box>
@@ -25,6 +27,17 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             Analysis Results
           </Typography>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={useDockView}
+                onChange={(e) => setUseDockView(e.target.checked)}
+                color="primary"
+              />
+            }
+            label="Dockview Layout"
+            sx={{ ml: 2 }}
+          />
         </Box>
         
       </Box>
@@ -136,11 +149,16 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
         </Grid>
       </Grid>
 
-      {/* Main Content Layout */}
-      <Grid container spacing={4}>
-        {/* Left Side - SEO Data Tabs */}
-        <Grid item xs={12} lg={9}>
-          <Tabs
+      {/* Conditional Layout: Dockview or Traditional Tabs */}
+      {useDockView ? (
+        <SeoAnalysisDockview analysis={analysis} />
+      ) : (
+        <>
+          {/* Main Content Layout */}
+          <Grid container spacing={4}>
+            {/* Left Side - SEO Data Tabs */}
+            <Grid item xs={12} lg={9}>
+              <Tabs
             value={tabValue}
             onChange={(_, newValue) => setTabValue(newValue)}
             sx={{
@@ -223,13 +241,15 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
           </Box>
         </Grid>
 
-        {/* Right Side - Website Preview */}
-        <Grid item xs={12} lg={3}>
-          <Box sx={{ position: 'sticky', top: 24 }}>
-            <WebsitePreview url={analysis.url} />
-          </Box>
-        </Grid>
-      </Grid>
+            {/* Right Side - Website Preview */}
+            <Grid item xs={12} lg={3}>
+              <Box sx={{ position: 'sticky', top: 24 }}>
+                <WebsitePreview url={analysis.url} />
+              </Box>
+            </Grid>
+          </Grid>
+        </>
+      )}
 
       {/* Action Footer */}
       <Box sx={{

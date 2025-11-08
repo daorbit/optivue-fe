@@ -1,0 +1,35 @@
+/* Simple Dockview Light Theme */
+@import 'dockview-react/dist/styles/dockview.css';
+
+/* Basic container */
+.dockview-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* Basic panel content */
+.seo-panel-content {
+  padding: 16px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D3D3D3;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
