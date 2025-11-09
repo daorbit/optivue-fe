@@ -1,5 +1,5 @@
 import { Grid, TextField, Button } from "@mui/material";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 interface UrlInputSectionProps {
   url: string;
@@ -8,14 +8,16 @@ interface UrlInputSectionProps {
   onClear: () => void;
   loading: boolean;
   error?: string | null;
+  hasAnalysis: boolean;
 }
 
 const UrlInputSection = ({
   url,
   setUrl,
   onAnalyze,
-  // onClear,
+  onClear,
   loading,
+  hasAnalysis,
 }: UrlInputSectionProps) => {
   return (
     <>
@@ -24,9 +26,9 @@ const UrlInputSection = ({
         spacing={2}
         alignItems="center"
         justifyContent="center"
-        sx={{ mb: 3 }}
+        sx={{ mb: hasAnalysis ? 0 : 3 }}
       >
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={hasAnalysis ? 6 : 8}>
           <TextField
             fullWidth
             variant="outlined"
@@ -61,7 +63,7 @@ const UrlInputSection = ({
             }}
           />
         </Grid>
-        <Grid item xs={12} sm={4} md={2}>
+        <Grid item xs={6} sm={3} md={hasAnalysis ? 2 : 2}>
           <Button
             fullWidth
             variant="contained"
@@ -94,6 +96,32 @@ const UrlInputSection = ({
             {loading ? "Analyzing..." : "Analyze"}
           </Button>
         </Grid>
+        {hasAnalysis && (
+          <Grid item xs={6} sm={3} md={2}>
+            <Button
+              fullWidth
+              variant="outlined"
+              onClick={onClear}
+              startIcon={<X size={16} color="#2e7d32" />}
+              sx={{
+                borderRadius: "10px",
+                padding: "11px 18px",
+                fontSize: "15px",
+                textTransform: "none",
+                borderColor: "#2e7d32",
+                color: "#2e7d32",
+                "&:hover": {
+                  borderColor: "#245e25",
+                  backgroundColor: "#f1f8f1",
+                },
+                minHeight: "48px",
+                fontWeight: 700,
+              }}
+            >
+              Close Result
+            </Button>
+          </Grid>
+        )}
       </Grid>
     </>
   );

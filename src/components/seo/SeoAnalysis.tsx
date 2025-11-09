@@ -58,6 +58,7 @@ const SeoAnalysis = () => {
         onClear={handleClear}
         loading={loading}
         error={error}
+        hasAnalysis={!!analysis}
       />
       <Box sx={{padding:"24px"}}>
         {loading && <SeoLoadingState />}

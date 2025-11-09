@@ -8,6 +8,7 @@ interface SeoHeroSectionProps {
   onClear: () => void;
   loading: boolean;
   error: string | null;
+  hasAnalysis: boolean;
 }
 
 const SeoHeroSection = ({
@@ -17,49 +18,52 @@ const SeoHeroSection = ({
   onClear,
   loading,
   error,
+  hasAnalysis,
 }: SeoHeroSectionProps) => {
   return (
     <Box
       sx={{
         background: "linear-gradient(135deg, #eef7ee 0%, #dff3df 100%)",
-        py: { xs: 6, md: 8},
+        py: hasAnalysis ? { xs: 2, md: 3} : { xs: 6, md: 8},
        }}
     >
       <Container maxWidth="lg">
-        <Box sx={{ textAlign: "center", mb: 4 }}>
-          <Typography
-            component="h1"
-            variant="h2"
-            sx={{
-              fontWeight: 800,
-              mb: 2,
-              fontSize: { xs: "2.2rem", md: "3rem" },
-              lineHeight: 1.05,
-              color: "rgba(7, 16, 14, 0.95)",
-            }}
-          >
-            <Box component="span" sx={{ fontWeight: 800 }}>
-              SEO Analysis&nbsp;
-            </Box>
-            <Box component="span" sx={{ color: "#2e7d32" }}>
-              Tool
-            </Box>
-          </Typography>
-          <Typography
-            variant="h6"
-            sx={{
-              opacity: 0.9,
-              maxWidth: 760,
-              mx: "auto",
-              fontWeight: 400,
-              color: "rgba(7, 16, 14, 0.65)",
-              fontSize: { xs: "1rem", md: "18px" },
-            }}
-          >
-            Comprehensive SEO analysis to optimize your website's search engine
-            performance
-          </Typography>
-        </Box>
+        {!hasAnalysis && (
+          <Box sx={{ textAlign: "center", mb: 2 }}>
+            <Typography
+              component="h1"
+              variant="h2"
+              sx={{
+                fontWeight: 800,
+                mb: 2,
+                fontSize: { xs: "2.2rem", md: "3rem" },
+                lineHeight: 1.05,
+                color: "rgba(7, 16, 14, 0.95)",
+              }}
+            >
+              <Box component="span" sx={{ fontWeight: 800 }}>
+                SEO Analysis&nbsp;
+              </Box>
+              <Box component="span" sx={{ color: "#2e7d32" }}>
+                Tool
+              </Box>
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                opacity: 0.9,
+                maxWidth: 760,
+                mx: "auto",
+                fontWeight: 400,
+                color: "rgba(7, 16, 14, 0.65)",
+                fontSize: { xs: "1rem", md: "18px" },
+              }}
+            >
+              Comprehensive SEO analysis to optimize your website's search engine
+              performance
+            </Typography>
+          </Box>
+        )}
 
         <UrlInputSection
           url={url}
@@ -68,6 +72,7 @@ const SeoHeroSection = ({
           onClear={onClear}
           loading={loading}
           error={error}
+          hasAnalysis={hasAnalysis}
         />
       </Container>
     </Box>
