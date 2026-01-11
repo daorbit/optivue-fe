@@ -13,7 +13,7 @@ interface EmailTemplate {
   id: string;
   name: string;
   subject: string;
-  htmlContent: string;
+  html: string;
 }
 
 interface EmailTemplatesListProps {

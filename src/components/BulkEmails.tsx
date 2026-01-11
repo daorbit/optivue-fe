@@ -20,12 +20,13 @@ interface EmailTemplate {
   id: string;
   name: string;
   subject: string;
-  htmlContent: string;
+  html: string;
 }
 
 const BulkEmails: React.FC = () => {
   const [templates, setTemplates] = useState<EmailTemplate[]>([]);
-  const [selectedTemplate, setSelectedTemplate] = useState<EmailTemplate | null>(null);
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<EmailTemplate | null>(null);
   const [subject, setSubject] = useState<string>("");
   const [htmlContent, setHtmlContent] = useState<string>("");
   const [recipients, setRecipients] = useState<string>("");
@@ -52,11 +53,11 @@ const BulkEmails: React.FC = () => {
   };
 
   const handleTemplateSelect = (templateId: string) => {
-    const template = templates.find(t => t.id === templateId);
+    const template = templates.find((t) => t.id === templateId);
     if (template) {
       setSelectedTemplate(template);
       setSubject(template.subject);
-      setHtmlContent(template.htmlContent);
+      setHtmlContent(template.html);
     }
   };
 
@@ -69,12 +70,20 @@ const BulkEmails: React.FC = () => {
   };
 
   const handleConfirmSend = async () => {
+    if (!selectedTemplate) {
+      showErrorToast("Please select a template first");
+      return;
+    }
+
     if (!subject.trim() || !recipients.trim()) {
       showErrorToast("Please fill in all fields");
       return;
     }
 
-    const emailList = recipients.split(",").map(email => email.trim()).filter(email => email);
+    const emailList = recipients
+      .split(",")
+      .map((email) => email.trim())
+      .filter((email) => email);
     if (emailList.length === 0) {
       showErrorToast("Please enter at least one recipient email");
       return;
@@ -83,24 +92,32 @@ const BulkEmails: React.FC = () => {
     setLoading(true);
 
     try {
+      const recipientObjects = emailList.map((email) => ({
+        email: email,
+        name: email.split("@")[0], // Extract name from email
+      }));
+
       await api.sendBulkEmail({
-        toEmails: emailList,
+        templateId: selectedTemplate.id,
         subject: subject.trim(),
-        htmlContent: htmlContent.trim(),
+        recipients: recipientObjects,
+        customContent: {}, // Can be extended later for custom placeholders
       });
 
-      showSuccessToast(`Bulk email sent successfully to ${emailList.length} recipients!`);
+      showSuccessToast(
+        `Bulk email sent successfully to ${emailList.length} recipients!`
+      );
       setRecipients("");
       setSubject("");
       setSendModalOpen(false);
     } catch (err: any) {
-      showErrorToast(err.response?.data?.message || "Failed to send bulk email");
+      showErrorToast(
+        err.response?.data?.message || "Failed to send bulk email"
+      );
     } finally {
       setLoading(false);
     }
   };
-
- 
 
   const handleSaveTemplate = () => {
     setEditDialogOpen(false);
@@ -111,17 +128,7 @@ const BulkEmails: React.FC = () => {
   return (
     <Box sx={{ p: 4, backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
       {/* Header */}
-      <Box sx={{ mb: 4, textAlign: "center" }}>
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", mb: 2 }}>
-          <Sparkles size={32} color="#1976d2" />
-          <Typography variant="h3" sx={{ ml: 2, fontWeight: 700, color: "#1976d2" }}>
-            Bulk Email Campaign
-          </Typography>
-        </Box>
-        <Typography variant="h6" sx={{ color: "#6c757d", fontWeight: 400 }}>
-          Create and send beautiful emails to your audience
-        </Typography>
-      </Box>
+      <Box sx={{ mb: 4, textAlign: "center" }}></Box>
 
       <Grid container spacing={4}>
         {/* Templates List - Left Side */}
@@ -135,7 +142,14 @@ const BulkEmails: React.FC = () => {
 
         {/* Email Preview - Right Side */}
         <Grid item xs={12} md={8}>
-          <Box sx={{ mb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <Box
+            sx={{
+              mb: 2,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <Typography variant="h6" sx={{ fontWeight: 600 }}>
               Email Preview
             </Typography>
@@ -147,7 +161,8 @@ const BulkEmails: React.FC = () => {
               sx={{
                 background: "linear-gradient(135deg, #1976d2 0%, #1565c0 100%)",
                 "&:hover": {
-                  background: "linear-gradient(135deg, #1565c0 0%, #0d47a1 100%)",
+                  background:
+                    "linear-gradient(135deg, #1565c0 0%, #0d47a1 100%)",
                 },
                 "&:disabled": {
                   background: "#e0e0e0",
@@ -157,13 +172,23 @@ const BulkEmails: React.FC = () => {
               Send Email
             </Button>
           </Box>
-          <EmailPreview htmlContent={htmlContent} onHtmlContentChange={setHtmlContent} />
+          <EmailPreview
+            htmlContent={htmlContent}
+            onHtmlContentChange={setHtmlContent}
+          />
         </Grid>
       </Grid>
 
       {/* Edit Template Dialog */}
-      <Dialog open={editDialogOpen} onClose={() => setEditDialogOpen(false)} maxWidth="lg" fullWidth>
-        <DialogTitle sx={{ backgroundColor: "#f8f9fa", borderBottom: "1px solid #e9ecef" }}>
+      <Dialog
+        open={editDialogOpen}
+        onClose={() => setEditDialogOpen(false)}
+        maxWidth="lg"
+        fullWidth
+      >
+        <DialogTitle
+          sx={{ backgroundColor: "#f8f9fa", borderBottom: "1px solid #e9ecef" }}
+        >
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Mail size={20} color="#1976d2" />
             <Typography variant="h6" sx={{ ml: 1, fontWeight: 600 }}>
@@ -217,12 +242,21 @@ const BulkEmails: React.FC = () => {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <EmailPreview htmlContent={htmlContent} onHtmlContentChange={setHtmlContent} />
+                <EmailPreview
+                  htmlContent={htmlContent}
+                  onHtmlContentChange={setHtmlContent}
+                />
               </Grid>
             </Grid>
           </Box>
         </DialogContent>
-        <DialogActions sx={{ p: 3, backgroundColor: "#f8f9fa", borderTop: "1px solid #e9ecef" }}>
+        <DialogActions
+          sx={{
+            p: 3,
+            backgroundColor: "#f8f9fa",
+            borderTop: "1px solid #e9ecef",
+          }}
+        >
           <Button
             onClick={() => setEditDialogOpen(false)}
             variant="outlined"
@@ -282,12 +316,19 @@ const BulkEmails: React.FC = () => {
                 Selected Template: {selectedTemplate?.name || "None"}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Recipients will receive the email with the selected template content.
+                Recipients will receive the email with the selected template
+                content.
               </Typography>
             </Box>
           </Box>
         </DialogContent>
-        <DialogActions sx={{ p: 3, backgroundColor: "#f8f9fa", borderTop: "1px solid #e9ecef" }}>
+        <DialogActions
+          sx={{
+            p: 3,
+            backgroundColor: "#f8f9fa",
+            borderTop: "1px solid #e9ecef",
+          }}
+        >
           <Button
             onClick={() => setSendModalOpen(false)}
             variant="outlined"
