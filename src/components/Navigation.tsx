@@ -16,6 +16,7 @@ import {
   BarChart3,
   Search,
   Menu as MenuIcon,
+  Mail,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../store/hooks";
@@ -47,6 +48,7 @@ const Navigation: React.FC = () => {
       icon: <BarChart3 size={16} />,
     },
     { to: "/seo-analysis", label: "SEO Analysis", icon: <Search size={16} /> },
+    { to: "/bulk-emails", label: "Bulk Emails", icon: <Mail size={16} /> },
     { to: "/profile", label: "Profile", icon: <User size={16} /> },
   ];
 

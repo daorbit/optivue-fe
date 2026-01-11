@@ -308,6 +308,15 @@ class ApiService {
       timeout: 60000 
     }, 'get AI suggestions');
   }
+
+  // Bulk Email APIs
+  async getEmailTemplates(): Promise<any> {
+    return await ApiUtils.get('/api/bulk-emails/templates', undefined, 'get email templates');
+  }
+
+  async sendBulkEmail(data: { toEmails: string[]; subject: string; htmlContent: string }): Promise<any> {
+    return await ApiUtils.post('/api/bulk-emails/send', data, 'send bulk email');
+  }
 }
 
 export const apiService = new ApiService();

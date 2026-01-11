@@ -10,6 +10,7 @@ import Profile from './components/Profile'
 import FacebookAdsDashboard from './components/FacebookAdsDashboard'
 import SeoAnalysis from './components/seo/SeoAnalysis'
 import GoogleCallback from './components/GoogleCallback'
+import BulkEmails from './components/BulkEmails'
 
 interface RouteConfig {
   path: string
@@ -31,4 +32,5 @@ export const privateRoutes: RouteConfig[] = [
   { path: '/profile', component: Profile },
   { path: '/facebook-ads', component: FacebookAdsDashboard },
   { path: '/seo-analysis', component: SeoAnalysis },
+  { path: '/bulk-emails', component: BulkEmails },
 ]
