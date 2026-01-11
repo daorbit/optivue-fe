@@ -314,7 +314,7 @@ class ApiService {
     return await ApiUtils.get('/api/bulk-emails/templates', undefined, 'get email templates');
   }
 
-  async sendBulkEmail(data: { toEmails: string[]; subject: string; htmlContent: string }): Promise<any> {
+  async sendBulkEmail(data: { templateId: string; subject: string; recipients: Array<{email: string; name?: string}>; customContent?: any }): Promise<any> {
     return await ApiUtils.post('/api/bulk-emails/send', data, 'send bulk email');
   }
 }
