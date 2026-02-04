@@ -309,6 +309,14 @@ class ApiService {
     }, 'get AI suggestions');
   }
 
+  async checkSiteFiles(url: string): Promise<any> {
+    return await ApiUtils.makeRequest('/api/seo/check-site-files', {
+      method: 'POST',
+      data: { url },
+      timeout: 30000
+    }, 'check site files');
+  }
+
   // Bulk Email APIs
   async getEmailTemplates(): Promise<any> {
     return await ApiUtils.get('/api/bulk-emails/templates', undefined, 'get email templates');

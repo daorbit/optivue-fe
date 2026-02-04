@@ -94,12 +94,25 @@ interface SeoTechnical {
   missingAltImages: number;
 }
 
+interface SiteFiles {
+  robotsTxt: {
+    present: boolean;
+    url: string;
+  };
+  sitemap: {
+    present: boolean;
+    urls: string[];
+  };
+  error?: string;
+}
+
 interface SeoAnalysis {
   url: string;
   meta: SeoMeta;
   performance: SeoPerformance;
   technical: SeoTechnical;
   content: SeoContent;
+  siteFiles?: SiteFiles;
 }
 
 interface SeoState {
@@ -107,6 +120,9 @@ interface SeoState {
   aiSuggestions: any[] | null;
   aiLoading: boolean;
   aiError: string | null;
+  siteFiles: SiteFiles | null;
+  siteFilesLoading: boolean;
+  siteFilesError: string | null;
   loading: boolean;
   error: string | null;
 }
@@ -116,6 +132,9 @@ const initialState: SeoState = {
   aiSuggestions: null,
   aiLoading: false,
   aiError: null,
+  siteFiles: null,
+  siteFilesLoading: false,
+  siteFilesError: null,
   loading: false,
   error: null,
 };
@@ -179,6 +198,7 @@ export const analyzeSeo = createAsyncThunk(
         performance: perf as SeoPerformance,
         technical: raw.technical || ({} as any),
         content: raw.content || ({} as any),
+        siteFiles: raw.siteFiles || null,
       };
 
       return normalized;
@@ -206,6 +226,24 @@ export const getAiSuggestions = createAsyncThunk(
   }
 );
 
+// Async thunk for checking site files
+export const checkSiteFiles = createAsyncThunk(
+  'seo/checkSiteFiles',
+  async (url: string, { rejectWithValue }) => {
+    try {
+      const response = await apiService.checkSiteFiles(url);
+      
+      if (!response.success) {
+        return rejectWithValue(response.message || 'Site files check failed');
+      }
+
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.message || 'Site files check failed');
+    }
+  }
+);
+
 const seoSlice = createSlice({
   name: 'seo',
   initialState,
@@ -213,12 +251,15 @@ const seoSlice = createSlice({
     clearAnalysis: (state) => {
       state.analysis = null;
       state.aiSuggestions = null;
+      state.siteFiles = null;
       state.aiError = null;
+      state.siteFilesError = null;
       state.error = null;
     },
     clearError: (state) => {
       state.error = null;
       state.aiError = null;
+      state.siteFilesError = null;
     },
   },
   extraReducers: (builder) => {
@@ -248,6 +289,19 @@ const seoSlice = createSlice({
       .addCase(getAiSuggestions.rejected, (state, action) => {
         state.aiLoading = false;
         state.aiError = action.payload as string || action.error.message || 'AI suggestions failed';
+      })
+      .addCase(checkSiteFiles.pending, (state) => {
+        state.siteFilesLoading = true;
+        state.siteFilesError = null;
+      })
+      .addCase(checkSiteFiles.fulfilled, (state, action: PayloadAction<SiteFiles>) => {
+        state.siteFilesLoading = false;
+        state.siteFiles = action.payload;
+        state.siteFilesError = null;
+      })
+      .addCase(checkSiteFiles.rejected, (state, action) => {
+        state.siteFilesLoading = false;
+        state.siteFilesError = action.payload as string || action.error.message || 'Site files check failed';
       });
   },
 });

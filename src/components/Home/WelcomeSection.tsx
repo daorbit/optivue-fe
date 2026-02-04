@@ -166,13 +166,13 @@ const WelcomeSection: React.FC<WelcomeSectionProps> = ({
                   Start SEO Analysis
                 </ActionButton>
               </Link>
-              <Link to="/facebook-ads" style={{ textDecoration: 'none' }}>
+              {/* <Link to="/facebook-ads" style={{ textDecoration: 'none' }}>
                 <ActionButton
                   endIcon={<BarChart3 size={16} />}
                 >
                   View Ads Dashboard
                 </ActionButton>
-              </Link>
+              </Link> */}
             </Box>
           </Box>
         </Grid>

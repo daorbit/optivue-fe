@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Box, Typography, Grid, Card, CardContent, Stack, Button, Tabs, Tab } from "@mui/material";
-// import KeyMetrics from "./KeyMetrics";
+   // import KeyMetrics from "./KeyMetrics";
 import MetaTagsSection from "./MetaTagsSection";
 import TechnicalSeoSection from "./TechnicalSeoSection";
 import AdditionalSeoDetails from "./AdditionalSeoDetails";
 import MetaTagsTab from "./MetaTagsTab";
 import SchemasTab from "./SchemasTab";
+import SiteFilesTab from "./SiteFilesTab";
 import WebsitePreview from "./WebsitePreview";
 import PerformanceTab from "./PerformanceTab";
 // import SeoAnalysisDockview from "./SeoAnalysisDockview";
@@ -27,6 +28,14 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             Analysis Results
           </Typography>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={onClear}
+            sx={{ textTransform: 'none' }}
+          >
+            Clear Analysis
+          </Button>
           {/* <FormControlLabel
             control={
               <Switch
@@ -189,6 +198,7 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
             <Tab label="Additional SEO" />
             <Tab label="Meta Tags" />
             <Tab label="Schemas" />
+            <Tab label="Site Files" />
           </Tabs>
 
           <Box>
@@ -235,6 +245,12 @@ const SeoAnalysisResults = ({ analysis, onClear }: SeoAnalysisResultsProps) => {
                 {tabValue === 3 && <AdditionalSeoDetails analysis={analysis} />}
                 {tabValue === 4 && <MetaTagsTab analysis={analysis} />}
                 {tabValue === 5 && <SchemasTab analysis={analysis} />}
+                {tabValue === 6 && (
+                  <SiteFilesTab
+                    siteFiles={analysis.siteFiles}
+                    url={analysis.url}
+                  />
+                )}
               </CardContent>
             </Card>
           </Box>
