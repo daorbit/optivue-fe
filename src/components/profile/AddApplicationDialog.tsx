@@ -18,11 +18,11 @@ import {
   Fade,
   Alert,
 } from "@mui/material";
-import { 
-  Plus, 
-  X, 
-  Facebook, 
-  Search, 
+import {
+  Plus,
+  X,
+  Facebook,
+  Search,
   Activity,
   ArrowRight,
   ArrowLeft,
@@ -44,32 +44,33 @@ interface AddApplicationDialogProps {
 
 const applicationTypes = [
   {
-    id: 'FACEBOOK_INSIGHTS',
-    name: 'Facebook Insights',
-    description: 'Connect your Facebook Ads account to track campaign performance',
+    id: "FACEBOOK_INSIGHTS",
+    name: "Facebook Insights",
+    description:
+      "Connect your Facebook Ads account to track campaign performance",
     icon: Facebook,
-    category: 'SOCIAL_MEDIA',
-    color: '#1877f2',
+    category: "SOCIAL_MEDIA",
+    color: "#1877f2",
     popular: true,
   },
   {
-    id: 'GOOGLE_ANALYTICS',
-    name: 'Google Analytics',
-    description: 'Monitor website traffic and user behavior analytics',
+    id: "GOOGLE_ANALYTICS",
+    name: "Google Analytics",
+    description: "Monitor website traffic and user behavior analytics",
     icon: Search,
-    category: 'ANALYTICS',
-    color: '#ea4335',
+    category: "ANALYTICS",
+    color: "#ea4335",
     popular: true,
   },
-  {
-    id: 'CUSTOM_API',
-    name: 'Custom API',
-    description: 'Connect any custom analytics or monitoring service',
-    icon: Activity,
-    category: 'CUSTOM',
-    color: '#2f855a',
-    popular: false,
-  },
+  // {
+  //   id: 'CUSTOM_API',
+  //   name: 'Custom API',
+  //   description: 'Connect any custom analytics or monitoring service',
+  //   icon: Activity,
+  //   category: 'CUSTOM',
+  //   color: '#2f855a',
+  //   popular: false,
+  // },
 ];
 
 const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
@@ -78,7 +79,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
   onAdd,
 }) => {
   const [step, setStep] = useState(0);
-  const [selectedApp, setSelectedApp] = useState<string>('');
+  const [selectedApp, setSelectedApp] = useState<string>("");
   const [newApp, setNewApp] = useState({
     category: "",
     type: "",
@@ -93,7 +94,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
   const handleClose = () => {
     setModalErrors({});
     setStep(0);
-    setSelectedApp('');
+    setSelectedApp("");
     setNewApp({
       category: "",
       type: "",
@@ -106,10 +107,10 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
   };
 
   const handleSelectApp = (appType: string) => {
-    const app = applicationTypes.find(a => a.id === appType);
+    const app = applicationTypes.find((a) => a.id === appType);
     if (app) {
       setSelectedApp(appType);
-      setNewApp(prev => ({
+      setNewApp((prev) => ({
         ...prev,
         type: appType,
         category: app.category,
@@ -129,7 +130,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
 
   const handleAdd = async () => {
     setLoading(true);
-    
+
     // validate modal fields based on type
     const errs: Record<string, string> = {};
     if (newApp.type === "FACEBOOK_INSIGHTS") {
@@ -138,7 +139,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
       if (!newApp.token || newApp.token.trim() === "")
         errs.token = "Access Token is required";
     }
-    
+
     if (Object.keys(errs).length) {
       setModalErrors(errs);
       setLoading(false);
@@ -152,7 +153,7 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
     }
 
     // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     // add application
     onAdd({
@@ -173,20 +174,28 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
       fullWidth
       maxWidth="md"
       PaperProps={{
-        sx: { 
+        sx: {
           borderRadius: 4,
-          overflow: 'hidden'
+          overflow: "hidden",
         },
       }}
     >
-      <Box sx={{ 
-        background: 'linear-gradient(135deg, #2f855a 0%, #38a169 100%)',
-        color: 'white',
-        p: 3,
-        position: 'relative'
-      }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+      <Box
+        sx={{
+          background: "linear-gradient(135deg, #2f855a 0%, #38a169 100%)",
+          color: "white",
+          p: 3,
+          position: "relative",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <Plus size={24} />
             <Box>
               <Typography variant="h5" fontWeight="700">
@@ -197,40 +206,40 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
               </Typography>
             </Box>
           </Box>
-          <IconButton 
+          <IconButton
             onClick={handleClose}
-            sx={{ 
-              color: 'white',
-              '&:hover': {
-                bgcolor: 'rgba(255,255,255,0.1)'
-              }
+            sx={{
+              color: "white",
+              "&:hover": {
+                bgcolor: "rgba(255,255,255,0.1)",
+              },
             }}
           >
             <X size={24} />
           </IconButton>
         </Box>
-        
+
         {/* Progress Stepper */}
-        <Stepper 
-          activeStep={step} 
-          sx={{ 
+        <Stepper
+          activeStep={step}
+          sx={{
             mt: 3,
-            '& .MuiStepLabel-label': {
-              color: 'rgba(255,255,255,0.8) !important',
-              fontWeight: 600
+            "& .MuiStepLabel-label": {
+              color: "rgba(255,255,255,0.8) !important",
+              fontWeight: 600,
             },
-            '& .MuiStepLabel-label.Mui-active': {
-              color: 'white !important'
+            "& .MuiStepLabel-label.Mui-active": {
+              color: "white !important",
             },
-            '& .MuiStepIcon-root': {
-              color: 'rgba(255,255,255,0.3)',
-              '&.Mui-active': {
-                color: 'white'
+            "& .MuiStepIcon-root": {
+              color: "rgba(255,255,255,0.3)",
+              "&.Mui-active": {
+                color: "white",
               },
-              '&.Mui-completed': {
-                color: 'white'
-              }
-            }
+              "&.Mui-completed": {
+                color: "white",
+              },
+            },
           }}
         >
           <Step>
@@ -250,10 +259,15 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
         {step === 0 && (
           <Fade in timeout={300}>
             <Box sx={{ p: 4 }}>
-              <Typography variant="h6" fontWeight="600" gutterBottom sx={{ mb: 3 }}>
+              <Typography
+                variant="h6"
+                fontWeight="600"
+                gutterBottom
+                sx={{ mb: 3 }}
+              >
                 Choose an application to connect
               </Typography>
-              
+
               <Grid container spacing={3}>
                 {applicationTypes.map((app) => {
                   const IconComponent = app.icon;
@@ -261,59 +275,81 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                     <Grid item xs={12} sm={6} key={app.id}>
                       <Card
                         sx={{
-                          cursor: 'pointer',
+                          cursor: "pointer",
                           borderRadius: 3,
-                          border: selectedApp === app.id ? `2px solid ${app.color}` : '1px solid #e0e0e0',
-                          transition: 'all 0.2s ease-in-out',
-                          '&:hover': {
+                          border:
+                            selectedApp === app.id
+                              ? `2px solid ${app.color}`
+                              : "1px solid #e0e0e0",
+                          transition: "all 0.2s ease-in-out",
+                          "&:hover": {
                             borderColor: app.color,
-                            transform: 'translateY(-2px)',
-                            boxShadow: `0 8px 25px ${app.color}20`
-                          }
+                            transform: "translateY(-2px)",
+                            boxShadow: `0 8px 25px ${app.color}20`,
+                          },
                         }}
                         onClick={() => handleSelectApp(app.id)}
                       >
                         <CardContent sx={{ p: 3 }}>
-                          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
-                            <Box sx={{
-                              width: 50,
-                              height: 50,
-                              borderRadius: 2,
-                              bgcolor: `${app.color}15`,
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center'
-                            }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: 2,
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                width: 50,
+                                height: 50,
+                                borderRadius: 2,
+                                bgcolor: `${app.color}15`,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
                               <IconComponent size={24} color={app.color} />
                             </Box>
                             <Box sx={{ flex: 1 }}>
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: 1,
+                                  mb: 1,
+                                }}
+                              >
                                 <Typography variant="h6" fontWeight="600">
                                   {app.name}
                                 </Typography>
                                 {app.popular && (
-                                  <Chip 
-                                    label="Popular" 
+                                  <Chip
+                                    label="Popular"
                                     size="small"
-                                    sx={{ 
-                                      bgcolor: '#f0f9ff',
-                                      color: '#0369a1',
+                                    sx={{
+                                      bgcolor: "#f0f9ff",
+                                      color: "#0369a1",
                                       fontWeight: 600,
-                                      fontSize: '0.7rem'
+                                      fontSize: "0.7rem",
                                     }}
                                   />
                                 )}
                               </Box>
-                              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                                sx={{ mb: 2 }}
+                              >
                                 {app.description}
                               </Typography>
-                              <Chip 
-                                label={app.category} 
+                              <Chip
+                                label={app.category}
                                 size="small"
-                                sx={{ 
+                                sx={{
                                   bgcolor: `${app.color}15`,
                                   color: app.color,
-                                  fontWeight: 600
+                                  fontWeight: 600,
                                 }}
                               />
                             </Box>
@@ -336,23 +372,29 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
               {newApp.type && (
                 <>
                   {/* Selected App Header */}
-                  <Box sx={{ mb: 4, p: 3, bgcolor: '#f8f9fa', borderRadius: 2 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Box
+                    sx={{ mb: 4, p: 3, bgcolor: "#f8f9fa", borderRadius: 2 }}
+                  >
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                       {(() => {
-                        const app = applicationTypes.find(a => a.id === newApp.type);
+                        const app = applicationTypes.find(
+                          (a) => a.id === newApp.type,
+                        );
                         const IconComponent = app?.icon;
                         return (
                           <>
                             {IconComponent && (
-                              <Box sx={{
-                                width: 40,
-                                height: 40,
-                                borderRadius: 2,
-                                bgcolor: `${app?.color}15`,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}>
+                              <Box
+                                sx={{
+                                  width: 40,
+                                  height: 40,
+                                  borderRadius: 2,
+                                  bgcolor: `${app?.color}15`,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                }}
+                              >
                                 <IconComponent size={20} color={app?.color} />
                               </Box>
                             )}
@@ -360,7 +402,10 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                               <Typography variant="h6" fontWeight="600">
                                 {newApp.label}
                               </Typography>
-                              <Typography variant="body2" color="text.secondary">
+                              <Typography
+                                variant="body2"
+                                color="text.secondary"
+                              >
                                 Configure your connection settings
                               </Typography>
                             </Box>
@@ -373,18 +418,13 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                   {/* Configuration Fields */}
                   {newApp.type === "FACEBOOK_INSIGHTS" && (
                     <Grid container spacing={3}>
+                      <Grid item xs={12}></Grid>
                       <Grid item xs={12}>
-                        <Alert severity="info" sx={{ mb: 3, borderRadius: 2 }}>
-                          <Typography variant="body2">
-                            You'll need a Facebook Business account and access token. 
-                            <a href="#" style={{ color: '#2f855a', textDecoration: 'none' }}>
-                              Learn how to get these credentials →
-                            </a>
-                          </Typography>
-                        </Alert>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography variant="subtitle1" fontWeight="600" gutterBottom>
+                        <Typography
+                          variant="subtitle1"
+                          fontWeight="600"
+                          gutterBottom
+                        >
                           Facebook Account ID
                         </Typography>
                         <TextField
@@ -406,7 +446,11 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                         />
                       </Grid>
                       <Grid item xs={12}>
-                        <Typography variant="subtitle1" fontWeight="600" gutterBottom>
+                        <Typography
+                          variant="subtitle1"
+                          fontWeight="600"
+                          gutterBottom
+                        >
                           Access Token
                         </Typography>
                         <TextField
@@ -436,12 +480,17 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                       <Grid item xs={12}>
                         <Alert severity="info" sx={{ mb: 3, borderRadius: 2 }}>
                           <Typography variant="body2">
-                            Connect your Google Analytics 4 property for comprehensive website analytics.
+                            Connect your Google Analytics 4 property for
+                            comprehensive website analytics.
                           </Typography>
                         </Alert>
                       </Grid>
                       <Grid item xs={12}>
-                        <Typography variant="subtitle1" fontWeight="600" gutterBottom>
+                        <Typography
+                          variant="subtitle1"
+                          fontWeight="600"
+                          gutterBottom
+                        >
                           GA4 Measurement ID
                         </Typography>
                         <TextField
@@ -473,21 +522,30 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
         {/* Step 3: Connect & Verify */}
         {step === 2 && (
           <Fade in timeout={300}>
-            <Box sx={{ p: 4, textAlign: 'center' }}>
+            <Box sx={{ p: 4, textAlign: "center" }}>
               {loading ? (
                 <>
                   <Box sx={{ mb: 3 }}>
-                    <Activity size={48} color="#2f855a" style={{ animation: 'pulse 2s infinite' }} />
+                    <Activity
+                      size={48}
+                      color="#2f855a"
+                      style={{ animation: "pulse 2s infinite" }}
+                    />
                   </Box>
                   <Typography variant="h6" fontWeight="600" gutterBottom>
                     Connecting to {newApp.label}...
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                    We're verifying your credentials and establishing a secure connection.
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mb: 3 }}
+                  >
+                    We're verifying your credentials and establishing a secure
+                    connection.
                   </Typography>
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button 
-                      variant="outlined" 
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Button
+                      variant="outlined"
                       onClick={handleClose}
                       sx={{ borderRadius: 2 }}
                     >
@@ -503,11 +561,18 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                   <Typography variant="h6" fontWeight="600" gutterBottom>
                     Ready to Connect
                   </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-                    Click the button below to establish connection with {newApp.label}.
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mb: 4 }}
+                  >
+                    Click the button below to establish connection with{" "}
+                    {newApp.label}.
                   </Typography>
-                  
-                  <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center' }}>
+
+                  <Box
+                    sx={{ display: "flex", gap: 2, justifyContent: "center" }}
+                  >
                     <Button
                       variant="outlined"
                       onClick={handleBack}
@@ -521,9 +586,9 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
                       variant="contained"
                       startIcon={<CheckCircle size={16} />}
                       sx={{
-                        background: '#2f855a',
-                        '&:hover': {
-                          background: '#38a169',
+                        background: "#2f855a",
+                        "&:hover": {
+                          background: "#38a169",
                         },
                         borderRadius: 2,
                         px: 4,
@@ -541,16 +606,18 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
 
       {/* Footer Actions - Only show for steps 0 and 1 */}
       {step < 2 && (
-        <DialogActions sx={{ px: 4, pb: 3, gap: 2, justifyContent: 'space-between' }}>
+        <DialogActions
+          sx={{ px: 4, pb: 3, gap: 2, justifyContent: "space-between" }}
+        >
           <Button
             variant="outlined"
             onClick={step === 0 ? handleClose : handleBack}
             startIcon={step === 0 ? <X size={16} /> : <ArrowLeft size={16} />}
             sx={{ borderRadius: 2, px: 3 }}
           >
-            {step === 0 ? 'Cancel' : 'Back'}
+            {step === 0 ? "Cancel" : "Back"}
           </Button>
-          
+
           {step === 1 && (
             <Button
               onClick={handleNext}
@@ -558,9 +625,9 @@ const AddApplicationDialog: React.FC<AddApplicationDialogProps> = ({
               endIcon={<ArrowRight size={16} />}
               disabled={!newApp.type}
               sx={{
-                background: '#2f855a',
-                '&:hover': {
-                  background: '#38a169',
+                background: "#2f855a",
+                "&:hover": {
+                  background: "#38a169",
                 },
                 borderRadius: 2,
                 px: 4,
